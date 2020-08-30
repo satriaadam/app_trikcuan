@@ -43,13 +43,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0.1, 0.4, 0.7, 0.9],
+              end: Alignment.bottomRight,
+              stops: [0.5, 0.7, 0.9],
               colors: [
-                Color(0xFFF0F4C3),
-                Color(0xFFE6EE9C),
-                Color(0xFFDCE775),
-                Color(0xFFCDDC39),
+                Colors.white,
+                Colors.limeAccent[200],
+                Colors.limeAccent,
               ],
             ),
           ),
@@ -94,18 +93,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Center(
                               child: Image(
                                 image: AssetImage(
-                                  'assets/images/trikcuanlogo.png',
+                                  'assets/images/undraw_Mobile_life_re_jtih.png',
                                 ),
-                                height: 200.0,
-                                width: 200.0,
+                                height: 250.0,
+                                width: 250.0,
                               ),
                             ),
-                            SizedBox(height: 30.0),
+                            SizedBox(height: 5.0),
                             Text(
-                              'Selamat di Aplikasi\nTRIKCUAN',
+                              'Selamat di Aplikasi\nmbahgiso',
                               style: kTitleStyle,
                             ),
-                            SizedBox(height: 15.0),
+                            SizedBox(height: 5.0),
                             Text(
                               'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
                               style: kSubtitleStyle,
@@ -121,18 +120,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Center(
                               child: Image(
                                 image: AssetImage(
-                                  'assets/images/trikcuanlogo.png',
+                                  'assets/images/undraw_celebration_0jvk.png',
                                 ),
-                                height: 200.0,
-                                width: 200.0,
+                                height: 250.0,
+                                width: 250.0,
                               ),
                             ),
-                            SizedBox(height: 30.0),
+                            SizedBox(height: 5.0),
                             Text(
                               'Live your life smarter\nwith us!',
                               style: kTitleStyle,
                             ),
-                            SizedBox(height: 15.0),
+                            SizedBox(height: 5.0),
                             Text(
                               'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
                               style: kSubtitleStyle,
@@ -148,18 +147,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Center(
                               child: Image(
                                 image: AssetImage(
-                                  'assets/images/trikcuanlogo.png',
+                                  'assets/images/undraw_finance_0bdk.png',
                                 ),
-                                height: 200.0,
-                                width: 200.0,
+                                height: 250.0,
+                                width: 250.0,
                               ),
                             ),
-                            SizedBox(height: 30.0),
+                            SizedBox(height: 5.0),
                             Text(
                               'Get a new experience\nof imagination',
                               style: kTitleStyle,
                             ),
-                            SizedBox(height: 15.0),
+                            SizedBox(height: 5.0),
                             Text(
                               'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
                               style: kSubtitleStyle,

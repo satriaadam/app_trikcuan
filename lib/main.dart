@@ -27,7 +27,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
 
   void startTimer() {
-    Timer(Duration(seconds: 3),() {
+    Timer(Duration(seconds: 4),() {
       Navigator.of(context).popAndPushNamed('onboarding_screen');
     });
   }
@@ -42,14 +42,8 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/hl_bg_banner.jpg'),
-              fit: BoxFit.cover
-          ),
-        ),
           child: Center(
-            child: Image.asset('assets/images/trikcuanlogo.png',width: MediaQuery.of(context).size.width*1),
+            child: Image.asset('assets/images/logombahgiso.png',width: MediaQuery.of(context).size.width*0.5),
        ),
       ),
     );

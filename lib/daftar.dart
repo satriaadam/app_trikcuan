@@ -23,17 +23,7 @@ class _DaftarState extends State<Daftar> {
                     TextStyle(fontSize: 80.0, fontWeight: FontWeight.bold),
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(260.0, 125.0, 0.0, 0.0),
-                  child: Text(
-                    '.',
-                    style: TextStyle(
-                        fontSize: 80.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green),
-                  ),
-                )
-              ],
+              ]
             ),
           ),
           Container(
@@ -47,8 +37,10 @@ class _DaftarState extends State<Daftar> {
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.bold,
                             color: Colors.grey),
-                        // hintText: 'EMAIL',
-                        // hintStyle: ,
+                        prefixIcon: Icon(
+                          Icons.phone_android,
+                          color: Colors.black,
+                        ),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.green))),
                   ),
@@ -60,6 +52,10 @@ class _DaftarState extends State<Daftar> {
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.bold,
                             color: Colors.grey),
+                        prefixIcon: Icon(
+                          Icons.person,
+                          color: Colors.black,
+                        ),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.green))),
                   ),
@@ -71,6 +67,10 @@ class _DaftarState extends State<Daftar> {
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.bold,
                             color: Colors.grey),
+                        prefixIcon: Icon(
+                          Icons.lock,
+                          color: Colors.black,
+                        ),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.green))),
                     obscureText: true,
@@ -78,11 +78,14 @@ class _DaftarState extends State<Daftar> {
                   SizedBox(height: 50.0),
                   Container(
                       height: 40.0,
-                      child: Material(
-                        borderRadius: BorderRadius.circular(20.0),
-                        shadowColor: Colors.greenAccent,
-                        color: Colors.green,
-                        elevation: 7.0,
+                      child: Container(width: 400,height: 75,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Colors.lightGreen[800], Colors.lightGreen[200]],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            borderRadius: BorderRadius.circular(20)),
                         child: GestureDetector(
                           onTap: () {},
                           child: Center(

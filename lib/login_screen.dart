@@ -20,18 +20,11 @@ class _LoginState extends State<Login> {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.fromLTRB(16.0, 150.0, 0.0, 0.0),
-                    child: Text('Log in',
-                        style: TextStyle(
-                            fontSize: 80.0, fontWeight: FontWeight.bold)),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(250.0, 150.0, 0.0, 0.0),
-                    child: Text('.',
+                    child: Text('Login',
                         style: TextStyle(
                             fontSize: 80.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green)),
-                  )
+                            fontWeight: FontWeight.bold)),
+                  ),
                 ],
               ),
             ),
@@ -46,6 +39,10 @@ class _LoginState extends State<Login> {
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold,
                               color: Colors.grey),
+                          prefixIcon: Icon(
+                            Icons.person,
+                            color: Colors.black,
+                          ),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.green))),
                     ),
@@ -57,6 +54,10 @@ class _LoginState extends State<Login> {
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold,
                               color: Colors.grey),
+                          prefixIcon: Icon(
+                            Icons.lock,
+                            color: Colors.black,
+                          ),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.green))),
                       obscureText: true,
@@ -79,11 +80,14 @@ class _LoginState extends State<Login> {
                     SizedBox(height: 40.0),
                     Container(
                       height: 40.0,
-                      child: Material(
-                        borderRadius: BorderRadius.circular(20.0),
-                        shadowColor: Colors.greenAccent,
-                        color: Colors.green,
-                        elevation: 7.0,
+                      child: Container(width: 400,height: 75,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Colors.lightGreen[800], Colors.lightGreen[200]],
+                            begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(20)),
                         child: GestureDetector(
                           onTap: () {
                             Navigator.push(context, new MaterialPageRoute(

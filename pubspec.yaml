@@ -21,6 +21,9 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  intl: ^0.16.1
+  neuomorphic_container: ^2.0.3
+  tuple: ^1.0.3
   curved_navigation_bar: ^0.3.3 #latest version
   flutter:
     sdk: flutter
@@ -47,8 +50,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - assets/images/trikcuanlogo.png
-     - assets/images/hl_bg_banner.jpg
+     - assets/images/logombahgiso.png
+     - assets/images/undraw_celebration_0jvk.png
+     - assets/images/undraw_finance_0bdk.png
+     - assets/images/undraw_Mobile_life_re_jtih.png
+     - assets/images/undraw_under_construction_46pa.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
