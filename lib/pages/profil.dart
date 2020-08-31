@@ -17,6 +17,7 @@ class _ProfilState extends State<Profil> {
   bool _crossFadeStateShowFirst = true;
   final money = NumberFormat("#,##0","en_US");
   final nominal = TextEditingController();
+  var _nom;
 
   @override
   void initState() {
@@ -332,9 +333,9 @@ class _ProfilState extends State<Profil> {
                                   GestureDetector(
                                     onTap: (){
                                       _confirmPaymentModalBottomSheet(context);
-                                      // setState(() {
-                                      //   _nom = nominal.text;
-                                      // });
+                                      setState(() {
+                                        _nom = nominal.text;
+                                      });
                                     },
                                     child: Container( height: 40.0, width: double.infinity,
                                       decoration: BoxDecoration(

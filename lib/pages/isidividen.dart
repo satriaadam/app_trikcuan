@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trikcuan_app/pages/dividen.dart';
 import 'package:tuple/tuple.dart';
 
 class IsiDividen extends StatelessWidget {
@@ -38,13 +39,18 @@ class IsiDividen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: isidividenpage.map((isidividenpage) => _buildListItem(isidividenpage)).toList(),
+      children: isidividenpage.map((isidividenpage) => _buildListItem(context, isidividenpage)).toList(),
     );
   }
 }
 
-Widget _buildListItem(Tuple5 isidividenpage) {
+Widget _buildListItem(BuildContext context, Tuple5 isidividenpage) {
   return GestureDetector(
+    onTap: () {
+      Navigator.push(context, MaterialPageRoute(
+      builder: (isidividenpage) => Dividen(),
+      ));
+    },
     child: Container(
     padding: const EdgeInsets.all(5.0),
     child: Material(
@@ -98,7 +104,7 @@ Widget myLeadingDetails(Tuple5 isidividenpage) {
             color: Colors.black,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.bold,
-            fontSize: 6.0
+            fontSize: 10.0
         ),
           textAlign: TextAlign.left,  ),),
     ],)
@@ -119,6 +125,7 @@ Widget potensi(Tuple5 isidividenpage) {
                 fontSize: 12.0
             ),
               textAlign: TextAlign.left,  ),),
+          SizedBox(height: 10.0),
           Container(
             child: Text(
               isidividenpage.item3, style: TextStyle(
@@ -145,6 +152,7 @@ Widget cumdate(Tuple5 isidividenpage) {
                 fontSize: 12.0
             ),
               textAlign: TextAlign.left,  ),),
+          SizedBox(height: 10.0),
           Container(
             child: Text(
               isidividenpage.item4, style: TextStyle(
@@ -171,6 +179,7 @@ Widget exdate(Tuple5 isidividenpage) {
                 fontSize: 12.0
             ),
               textAlign: TextAlign.left,  ),),
+          SizedBox(height: 10.0),
           Container(
             child: Text(
               isidividenpage.item5, style: TextStyle(

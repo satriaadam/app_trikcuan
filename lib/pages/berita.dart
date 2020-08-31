@@ -50,18 +50,43 @@ class Berita extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListWheelScrollView(
-      children: indexpage.map((indexpage) => _buildListItem(indexpage)).toList(),
-      itemExtent: 90,
-      diameterRatio: 3,
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {},
+          color: Colors.blueGrey[600],
+        ),
+        backgroundColor: Colors.limeAccent,
+        title: Text('BERITA',
+          style: TextStyle(
+              color: Colors.blueGrey[600],
+              fontWeight: FontWeight.bold),),
+      ),
+      body: ListView(
+      children: indexpage.map((indexpage) => _buildListItem(context, indexpage)).toList(),
+    ),
     );
   }
 }
 
-Card _buildListItem(Tuple2 indexpage) {
-  return Card(
-    margin: const EdgeInsets.all(5),
-    child: Row(
+Widget _buildListItem(BuildContext context, Tuple2 indexpage) {
+  return GestureDetector(
+      onTap: () {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (indexpage) => Berita(),
+    ));
+  },
+    child: Container(
+    padding: const EdgeInsets.all(5),
+      child: Material(
+        color: Colors.white,
+        elevation: 14.0,
+        borderRadius: BorderRadius.circular(10.0),
+        shadowColor: Color(0x802196F3),
+        child: Padding(
+        padding: EdgeInsets.all(15.0),
+          child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -82,5 +107,8 @@ Card _buildListItem(Tuple2 indexpage) {
             ),
            ],
           ),
+    ),
+  ),
+    ),
     );
 }

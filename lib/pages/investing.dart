@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trikcuan_app/pages/rekomendasi.dart';
 import 'package:tuple/tuple.dart';
 
 class Investing extends StatelessWidget {
@@ -40,22 +41,28 @@ class Investing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: investingpage.map((investingpage) => _buildListItem(investingpage)).toList(),
+      children: investingpage.map((investingpage) => _buildListItem(context, investingpage)).toList(),
     );
   }
 }
 
-Widget _buildListItem(Tuple3 investingpage) {
-  return Padding(
-    padding: const EdgeInsets.all(5.0),
-    child: Material(
+Widget _buildListItem(BuildContext context, Tuple3 investingpage) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(context, MaterialPageRoute(
+        builder: (investingpage) => Rekomendasi(),
+      ));
+    },
+    child: Container(
+      padding: const EdgeInsets.all(5.0),
+      child: Material(
       color: Colors.white,
       elevation: 14.0,
       borderRadius: BorderRadius.circular(10.0),
       shadowColor: Color(0x802196F3),
-      child: Padding(
+        child: Padding(
         padding: EdgeInsets.all(15.0),
-        child: myCurrencies(
+          child: myCurrencies(
             investingpage
           //   currencyVal,
           //   currencyPercentage,
@@ -63,6 +70,7 @@ Widget _buildListItem(Tuple3 investingpage) {
           //   colorVal
         ),
       ),
+    ),
     ),
   );
 }
@@ -100,7 +108,7 @@ Widget myLeadingDetails(Tuple3 investingpage) {
                 color: Colors.black,
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.bold,
-                fontSize: 6.0
+                fontSize: 10.0
             ),
               textAlign: TextAlign.left,  ),),
         ],)

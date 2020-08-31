@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trikcuan_app/pages/rekomendasi.dart';
 import 'package:tuple/tuple.dart';
 
 class Swing extends StatelessWidget {
@@ -30,13 +31,19 @@ class Swing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: swingpage.map((swingpage) => _buildListItem(swingpage)).toList(),
+      children: swingpage.map((swingpage) => _buildListItem(context, swingpage)).toList(),
     );
   }
 }
 
-Widget _buildListItem(Tuple3 swingpage) {
-  return Padding(
+Widget _buildListItem(BuildContext context, Tuple3 swingpage) {
+  return GestureDetector(
+      onTap: () {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (swingpage) => Rekomendasi(),
+    ));
+  },
+    child: Container(
     padding: const EdgeInsets.all(5.0),
     child: Material(
       color: Colors.white,
@@ -53,6 +60,7 @@ Widget _buildListItem(Tuple3 swingpage) {
           //   colorVal
         ),
       ),
+    ),
     ),
   );
 }
