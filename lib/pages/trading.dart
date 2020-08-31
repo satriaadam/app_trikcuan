@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trikcuan_app/pages/rekomendasi.dart';
 import 'package:tuple/tuple.dart';
 
 class Trading extends StatelessWidget {
@@ -35,13 +36,19 @@ class Trading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: tradingpage.map((tradingpage) => _buildListItem(tradingpage)).toList(),
+      children: tradingpage.map((tradingpage) => _buildListItem(context, tradingpage)).toList(),
     );
   }
 }
 
-Widget _buildListItem(Tuple3 tradingpage) {
-  return Padding(
+Widget _buildListItem(BuildContext context, Tuple3 tradingpage) {
+  return GestureDetector(
+      onTap: () {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (tradingpage) => Rekomendasi(),
+    ));
+  },
+    child: Container(
     padding: const EdgeInsets.all(5.0),
     child: Material(
       color: Colors.white,
@@ -58,6 +65,7 @@ Widget _buildListItem(Tuple3 tradingpage) {
           //   colorVal
         ),
       ),
+    ),
     ),
   );
 }

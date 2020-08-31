@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trikcuan_app/pages/profil.dart';
+import 'package:trikcuan_app/pages/curvedapp.dart';
 
 class DataPerusahaan extends StatefulWidget {
   @override
@@ -16,7 +16,7 @@ class _DataPerusahaanState extends State<DataPerusahaan> {
           icon: Icon(Icons.arrow_back, color: Colors.blueGrey[600],),
           onPressed: () {
             Navigator.push(context, new MaterialPageRoute(
-                builder: (context) => Profil())
+                builder: (context) => App())
             );},
         ),
         title: Text('Data Perusahaan', style: TextStyle(

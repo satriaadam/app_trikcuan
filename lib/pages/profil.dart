@@ -17,6 +17,7 @@ class _ProfilState extends State<Profil> {
   bool _crossFadeStateShowFirst = true;
   final money = NumberFormat("#,##0","en_US");
   final nominal = TextEditingController();
+  var nom;
 
   @override
   void initState() {
@@ -331,10 +332,7 @@ class _ProfilState extends State<Profil> {
                                   SizedBox(height: 5.0),
                                   GestureDetector(
                                     onTap: (){
-                                      _confirmPaymentModalBottomSheet(context);
-                                      setState(() {
-                                        _nom = nominal.text;
-                                      });
+                                       return _confirmPaymentModalBottomSheet(context);
                                     },
                                     child: Container( height: 40.0, width: double.infinity,
                                       decoration: BoxDecoration(
@@ -554,7 +552,8 @@ class _ProfilState extends State<Profil> {
 }
 
 void _confirmPaymentModalBottomSheet(context) {
-  showModalBottomSheet(context: context, builder: (BuildContext payment) {
+  var nom;
+  showModalBottomSheet(context: context, builder: (BuildContext context) {
     return Container(height: 225.0, width: double.infinity,
         padding: EdgeInsets.all(5),
         child: Column(
@@ -585,7 +584,7 @@ void _confirmPaymentModalBottomSheet(context) {
                   Text(
                     'Jumlah Isi Saldo'
                   ),
-                  Text("Rp.")
+                  Text("Rp.$nom")
                 ],
               ),
             ),
@@ -599,7 +598,7 @@ void _confirmPaymentModalBottomSheet(context) {
                     'Biaya Admin'
                   ),
                   Text(
-                    'Rp.2000'
+                    'Rp.2,000'
                   ),
                 ],
               ),
