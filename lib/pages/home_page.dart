@@ -6,11 +6,11 @@ import 'package:trikcuan_app/pages/dividen.dart';
 import 'package:trikcuan_app/pages/profil.dart';
 import 'package:trikcuan_app/pages/rekomendasi.dart';
 
-class App extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _AppState createState() => _AppState();
+  _HomePageState createState() => _HomePageState();
 }
-class _AppState extends State<App> {
+class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   @override

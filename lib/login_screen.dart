@@ -7,7 +7,8 @@ import 'package:trikcuan_app/core/bloc/auth/auth_state.dart';
 import 'package:trikcuan_app/widget/button.dart';
 import 'package:trikcuan_app/widget/form.dart';
 
-import 'pages/curvedapp.dart';
+import 'daftar.dart';
+import 'pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -28,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
       listener: (context, state) {
         if(state is AuthLoginSuccess) {
           Navigator.pushReplacement(context, MaterialPageRoute(
-            builder: (context) => App()
+            builder: (context) => HomePage()
           ));
           setState(() {
             isLoading = false;
@@ -108,7 +109,9 @@ class _LoginPageState extends State<LoginPage> {
                       radius: 50,
                       padding: 16,
                       text: "Daftar",
-                      onPressed: () {},
+                      onPressed: () => Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => Daftar()
+                      )),
                     ),
                   )
                 ],

@@ -51,3 +51,30 @@ class Account {
         "expires_in": expiresIn,
     };
 }
+
+class RegisterAccount {
+    RegisterAccount({
+        this.name,
+        this.username,
+        this.email,
+        this.phoneNumber,
+        this.city,
+        this.password,
+    });
+
+    String name;
+    String username;
+    String email;
+    String phoneNumber;
+    String city;
+    String password;
+    
+    Map<String, dynamic> toMap() => {
+        "name": name,
+        "username": username,
+        "email": email,
+        "phone_number": phoneNumber,
+        "city": city,
+        "password": password
+    };
+}

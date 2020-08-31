@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:bloc/bloc.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +21,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is AppStarted) {
       final isAuthenticated = prefs.getBool("isAuthenticated") ?? false;
       await Future.delayed(Duration(seconds: 3));
-
       if (isAuthenticated) {
         yield AuthAuthenticated();
       } else {
@@ -28,30 +28,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     }
     
-    // if (event is RegisterAccount) {
-    //   yield AuthLoading();
-    //   try {
-    //     final response = await api.registerAccount(
-    //       data: event.data
-    //     );
-    //     prefs.setString("apiToken", response.token);
-    //     prefs.setString("account", jsonEncode(response));
-    //     prefs.setBool("isAuthenticated", true);
-    //     FirebaseMessaging().getToken().then((String token) async {
-    //       await AuthApi().storeToken(token: token);
-    //     });
-    //     yield RegisterSuccess(data: response);
-    //   } catch (error) {
-    //     print("ERROR: $error");
-    //     yield AuthFailure(error: error.toString());
-    //   }
-    // }
+    if (event is Register) {
+      yield AuthLoading();
+      try {
+        final response = await api.register(data: event.data);
+        prefs.setString("apiToken", response.accessToken);
+        prefs.setString("account", jsonEncode(response));
+        prefs.setBool("isAuthenticated", true);
+        yield RegisterSuccess(data: response);
+      } catch (error) {
+        print("ERROR: $error");
+        yield AuthFailure(error: error.toString());
+      }
+    }
     
     if (event is Login) {
       yield AuthLoading();
       try {
         final response = await api.login(username: event.username, password: event.password);
         prefs.setString("apiToken", response.accessToken);
+        prefs.setString("account", jsonEncode(response));
         prefs.setBool("isAuthenticated", true);
         yield AuthLoginSuccess(data: response);
       } catch (error) {

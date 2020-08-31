@@ -17,5 +17,17 @@ class AuthApi extends MainApi {
       throw Exception(error);
     }
   }
+  
+  Future<Account> register({RegisterAccount data}) async {
+    try {
+      final response = await postRequest(
+        url: "$host/register",
+        body: data.toMap().toString()
+      );
+      return accountFromMap(response);
+    } catch (error) {
+      throw Exception(error);
+    }
+  }
 
 }

@@ -1,4 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toast/toast.dart';
+import 'package:trikcuan_app/core/bloc/auth/auth_bloc.dart';
+import 'package:trikcuan_app/core/bloc/auth/auth_event.dart';
+import 'package:trikcuan_app/core/bloc/auth/auth_state.dart';
+import 'package:trikcuan_app/core/model/account_model.dart';
+import 'package:trikcuan_app/widget/button.dart';
+import 'package:trikcuan_app/widget/form.dart';
+
+import 'pages/home_page.dart';
 
 class Daftar extends StatefulWidget {
   @override
@@ -6,150 +16,139 @@ class Daftar extends StatefulWidget {
 }
 
 class _DaftarState extends State<Daftar> {
+
+  bool isLoading = false;
+  final bloc = AuthBloc();
+  final nameController = TextEditingController();
+  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  final passwordController = TextEditingController();
+  final cityController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return BlocListener(
+      cubit: bloc,
+      listener: (context, state) {
+        if(state is AuthLoginSuccess) {
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => HomePage()
+          ));
+          setState(() {
+            isLoading = false;
+          });
+        } else if(state is AuthFailure) {
+          Toast.show(state.error, context);
+          setState(() {
+            isLoading = false;
+          });
+        }
+      },
+      child: Scaffold(
         resizeToAvoidBottomPadding: false,
-        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
-            Widget>[
-          Container(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
-                  child: Text(
-                    'Daftar',
-                    style:
-                    TextStyle(fontSize: 80.0, fontWeight: FontWeight.bold),
+        body: ListView(
+          padding: EdgeInsets.only(bottom: 80),
+          children: <Widget>[
+            Container(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
+                    child: Text(
+                      'Daftar',
+                      style:
+                      TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-              ]
+                ]
+              ),
             ),
-          ),
-          Container(
+            Container(
               padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
               child: Column(
                 children: <Widget>[
-                  TextField(
-                    decoration: InputDecoration(
-                        labelText: 'No. HP',
-                        labelStyle: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
-                        prefixIcon: Icon(
-                          Icons.phone_android,
-                          color: Colors.black,
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green))),
+                  TextFieldBorderBottom(
+                    controller: nameController,
+                    textHint: "NAMA",
+                    icon: Icons.person,
                   ),
-                  SizedBox(height: 10.0),
-                  TextField(
-                    decoration: InputDecoration(
-                        labelText: 'USERNAME ',
-                        labelStyle: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
-                        prefixIcon: Icon(
-                          Icons.person,
-                          color: Colors.black,
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green))),
+                  SizedBox(height: 20.0),
+                  TextFieldBorderBottom(
+                    controller: usernameController,
+                    textHint: "USERNAME",
+                    icon: Icons.account_circle,
                   ),
-                  SizedBox(height: 10.0),
-                  TextField(
-                    decoration: InputDecoration(
-                        labelText: 'PASSWORD ',
-                        labelStyle: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
-                        prefixIcon: Icon(
-                          Icons.lock,
-                          color: Colors.black,
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green))),
-                    obscureText: true,
+                  SizedBox(height: 20.0),
+                  TextFieldBorderBottom(
+                    controller: emailController,
+                    textHint: "EMAIL",
+                    inputType: TextInputType.emailAddress,
+                    icon: Icons.phone,
+                  ),
+                  SizedBox(height: 20.0),
+                  TextFieldBorderBottom(
+                    controller: phoneNumberController,
+                    inputType: TextInputType.phone,
+                    textHint: "NO HP",
+                    icon: Icons.phone,
+                  ),
+                  SizedBox(height: 20.0),
+                  TextFieldBorderBottom(
+                    controller: cityController,
+                    textHint: "KOTA",
+                    icon: Icons.location_city,
+                  ),
+                  SizedBox(height: 20.0),
+                  TextFieldBorderBottom(
+                    controller: passwordController,
+                    textHint: "PASSWORD",
+                    isObsecure: true,
+                    icon: Icons.lock,
                   ),
                   SizedBox(height: 50.0),
                   Container(
-                      height: 40.0,
-                      child: Container(width: 400,height: 75,
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Colors.lightGreen[800], Colors.lightGreen[200]],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Center(
-                            child: Text(
-                              'DAFTAR',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat'),
-                            ),
-                          ),
-                        ),
-                      )),
+                    width: MediaQuery.of(context).size.width,
+                    child: RaisedButtonPrimary(
+                      text: "DAFTAR",
+                      isLoading: isLoading,
+                      radius: 50,
+                      padding: 16,
+                      onPressed: () => !isLoading ? register() : null,
+                    ),
+                  ),
                   SizedBox(height: 20.0),
                   Container(
-                    height: 40.0,
-                    color: Colors.transparent,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Colors.black,
-                              style: BorderStyle.solid,
-                              width: 1.0),
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(20.0)),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child:
-                        Center(
-                          child: Text('Go Back',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat')),
-                        ),
-
-
-                      ),
+                    width: MediaQuery.of(context).size.width,
+                    child: OutlineButtonPrimary(
+                      radius: 50,
+                      padding: 16,
+                      text: "KEMBALI",
+                      onPressed: () => Navigator.pop(context),
                     ),
                   ),
                 ],
-              )),
-          // SizedBox(height: 15.0),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: <Widget>[
-          //     Text(
-          //       'New to Spotify?',
-          //       style: TextStyle(
-          //         fontFamily: 'Montserrat',
-          //       ),
-          //     ),
-          //     SizedBox(width: 5.0),
-          //     InkWell(
-          //       child: Text('Register',
-          //           style: TextStyle(
-          //               color: Colors.green,
-          //               fontFamily: 'Montserrat',
-          //               fontWeight: FontWeight.bold,
-          //               decoration: TextDecoration.underline)),
-          //     )
-          //   ],
-          // )
-        ]));
+              )
+            ),
+          ]
+        )
+      ),
+    );
+  }
+
+  register() {
+    print("REGISTER");
+    final data = RegisterAccount();
+    data.username = usernameController.text;
+    data.name = nameController.text;
+    data.phoneNumber = phoneNumberController.text;
+    data.password = passwordController.text;
+    data.city = cityController.text;
+    bloc.add(Register(data: data));
+    setState(() {
+      isLoading = true;
+    });
   }
 }
