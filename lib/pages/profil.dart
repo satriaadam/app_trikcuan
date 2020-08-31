@@ -332,9 +332,9 @@ class _ProfilState extends State<Profil> {
                                   GestureDetector(
                                     onTap: (){
                                       _confirmPaymentModalBottomSheet(context);
-                                      setState(() {
-                                        _nom = nominal.text;
-                                      });
+                                      // setState(() {
+                                      //   _nom = nominal.text;
+                                      // });
                                     },
                                     child: Container( height: 40.0, width: double.infinity,
                                       decoration: BoxDecoration(

@@ -6,7 +6,6 @@ class CurrencyFormat extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    // TODO: implement formatEditUpdate
   if (newValue.selection.baseOffset == 0) {
     return newValue;
   }
