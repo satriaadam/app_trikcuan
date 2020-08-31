@@ -63,7 +63,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: FlatButton(
                     onPressed: () {
                       Navigator.push(context, new MaterialPageRoute(
-                          builder: (context)=> Login()),
+                          builder: (context)=> LoginPage()),
                       );
                     },
                     child: Text(
@@ -223,7 +223,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             SharedPreferences prefs = await SharedPreferences.getInstance();
             prefs.setBool("skipStartup", true);
             Navigator.push(context, new MaterialPageRoute(
-            builder: (context) => Login())
+            builder: (context) => LoginPage())
             );
           },
           child: Center(

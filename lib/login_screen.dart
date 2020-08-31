@@ -1,16 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:trikcuan_app/daftar.dart';
-import 'package:trikcuan_app/pages/curvedapp.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toast/toast.dart';
+import 'package:trikcuan_app/core/bloc/auth/auth_bloc.dart';
+import 'package:trikcuan_app/core/bloc/auth/auth_event.dart';
+import 'package:trikcuan_app/core/bloc/auth/auth_state.dart';
+import 'package:trikcuan_app/widget/button.dart';
+import 'package:trikcuan_app/widget/form.dart';
 
-class Login extends StatefulWidget {
+import 'pages/curvedapp.dart';
+
+class LoginPage extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginPageState extends State<LoginPage> {
+
+  bool isLoading = false;
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final bloc = AuthBloc();
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return BlocListener(
+      cubit: bloc,
+      listener: (context, state) {
+        if(state is AuthLoginSuccess) {
+          Navigator.pushReplacement(context, MaterialPageRoute(
+            builder: (context) => App()
+          ));
+          setState(() {
+            isLoading = false;
+          });
+        } else if(state is AuthFailure) {
+          Toast.show(state.error, context);
+          setState(() {
+            isLoading = false;
+          });
+        }
+      },
+      child: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,130 +50,80 @@ class _LoginState extends State<Login> {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.fromLTRB(16.0, 150.0, 0.0, 0.0),
-                    child: Text('Login',
-                        style: TextStyle(
-                            fontSize: 80.0,
-                            fontWeight: FontWeight.bold)),
+                    child: Text('Login', style: TextStyle(
+                      fontSize: 80.0,
+                      fontWeight: FontWeight.bold
+                    )),
                   ),
                 ],
               ),
             ),
             Container(
-                padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
-                child: Column(
-                  children: <Widget>[
-                    TextField(
-                      decoration: InputDecoration(
-                          labelText: 'USERNAME / No. HP',
-                          labelStyle: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey),
-                          prefixIcon: Icon(
-                            Icons.person,
-                            color: Colors.black,
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.green))),
-                    ),
-                    SizedBox(height: 20.0),
-                    TextField(
-                      decoration: InputDecoration(
-                          labelText: 'PASSWORD',
-                          labelStyle: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey),
-                          prefixIcon: Icon(
-                            Icons.lock,
-                            color: Colors.black,
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.green))),
-                      obscureText: true,
-                    ),
-                    SizedBox(height: 5.0),
-                    Container(
-                      alignment: Alignment(1.0, 0.0),
-                      padding: EdgeInsets.only(top: 15.0, left: 20.0),
-                      child: InkWell(
-                        child: Text(
-                          'Forgot Password',
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Montserrat',
-                              decoration: TextDecoration.underline),
+              padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
+              child: Column(
+                children: <Widget>[
+                  TextFieldBorderBottom(
+                    controller: usernameController,
+                    textHint: "USERNAME",
+                    icon: Icons.person,
+                  ),
+                  SizedBox(height: 20.0),
+                  TextFieldBorderBottom(
+                    controller: passwordController,
+                    textHint: "PASSWORD",
+                    isObsecure: true,
+                    icon: Icons.lock,
+                  ),
+                  SizedBox(height: 5.0),
+                  Container(
+                    alignment: Alignment(1.0, 0.0),
+                    padding: EdgeInsets.only(top: 15.0, left: 20.0),
+                    child: InkWell(
+                      child: Text(
+                        'Forgot Password',
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat',
+                          decoration: TextDecoration.underline
                         ),
                       ),
                     ),
-                    SizedBox(height: 40.0),
-                    Container(
-                      height: 40.0,
-                      child: Container(width: 400,height: 75,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Colors.lightGreen[800], Colors.lightGreen[200]],
-                            begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(20)),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(context, new MaterialPageRoute(
-                                builder: (context) => App())
-                            );
-                          },
-                          child: Center(
-                            child: Text(
-                              'LOGIN',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat'),
-                            ),
-                          ),
-                        ),
-                      ),
+                  ),
+                  SizedBox(height: 40.0),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: RaisedButtonPrimary(
+                      text: "Login",
+                      isLoading: isLoading,
+                      radius: 50,
+                      padding: 16,
+                      onPressed: () => !isLoading ? login() : null,
                     ),
-                    SizedBox(height: 20.0),
-                    Container(
-                      height: 40.0,
-                      color: Colors.transparent,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Colors.black,
-                                style: BorderStyle.solid,
-                                width: 1.0),
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(20.0)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(width: 10.0),
-                            Center(
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context, new MaterialPageRoute(
-                                      builder: (context) => Daftar())
-                                  );
-                                },
-                              child: Text('DAFTAR',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Montserrat')),
-                            ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-    ),
-    ],
-    ),
+                  ),
+                  SizedBox(height: 20.0),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: OutlineButtonPrimary(
+                      radius: 50,
+                      padding: 16,
+                      text: "Daftar",
+                      onPressed: () {},
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
+  }
+
+  login() {
+    bloc.add(Login(username: usernameController.text, password: passwordController.text));
+    setState(() {
+      isLoading = true;
+    });
   }
 }

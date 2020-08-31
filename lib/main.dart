@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trikcuan_app/onboarding_screen.dart';
-
+import 'package:trikcuan_app/utilities/bloc_delegate.dart';
 import 'login_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = SimpleBlocDelegate();
   runApp(MyApp());
 }
 
@@ -17,7 +20,7 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(),
       routes: {
         'onboarding_screen':(context)=> OnboardingScreen(),
-        'login_screen':(context)=> Login()
+        'login_screen':(context)=> LoginPage()
       },
     );
   }
