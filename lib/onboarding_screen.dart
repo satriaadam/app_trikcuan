@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trikcuan_app/utilities/styles.dart';
 import 'package:trikcuan_app/login_screen.dart';
 
@@ -218,7 +219,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         width: double.infinity,
         color: Colors.blueGrey[600],
         child: GestureDetector(
-          onTap: () {
+          onTap: () async { 
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.setBool("skipStartup", true);
             Navigator.push(context, new MaterialPageRoute(
             builder: (context) => Login())
             );
