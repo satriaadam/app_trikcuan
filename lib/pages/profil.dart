@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indonesia/indonesia.dart';
+import 'package:trikcuan_app/core/bloc/account/account_bloc.dart';
+import 'package:trikcuan_app/core/bloc/account/account_event.dart';
+import 'package:trikcuan_app/core/bloc/account/account_state.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_bloc.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_event.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_state.dart';
+import 'package:trikcuan_app/core/model/account_model.dart';
 import 'package:trikcuan_app/pages/corporate.dart';
 import 'package:trikcuan_app/pages/daftarkelas.dart';
 import 'package:trikcuan_app/pages/dataperusahaan.dart';
@@ -24,9 +29,13 @@ class _ProfilState extends State<Profil> {
   final nominal = TextEditingController();
 
   final bloc = AuthBloc();
+  final accountBloc = AccountBloc();
+
+  Account account;
 
   @override
   void initState() {
+    accountBloc.add(GetAccount());
     super.initState();
   }
 
@@ -53,6 +62,16 @@ class _ProfilState extends State<Profil> {
               Navigator.pushReplacement(context, MaterialPageRoute(
                 builder: (context) => LoginPage()
               ));
+            }
+          },
+        ),
+        BlocListener(
+          cubit: accountBloc,
+          listener: (context, state) {
+            if(state is AccountSuccess) {
+              setState(() {
+                account = state.data;
+              });
             }
           },
         )
@@ -91,7 +110,7 @@ class _ProfilState extends State<Profil> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Halo,\nADAM SATRIA',
+                      "Halo,\n${account?.name}",
                       style: kTitleStyle,
                     ),
                     SizedBox(height: 10.0),
@@ -118,7 +137,7 @@ class _ProfilState extends State<Profil> {
                           SizedBox(height: 5.0),
                           Container(
                             child: Text(
-                              'Rp. 500.000',
+                              rupiah(account?.balance),
                               style: TextStyle(
                                   color: Colors.blueGrey[600],
                                   fontFamily: 'Poppins',

@@ -21,6 +21,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       yield AccountLoading();
       try {
         String json = prefs.getString("account");
+        print(json);
         var account = accountFromMap(json);
         yield AccountSuccess(data: account);
         // final response = await api.getAccount();

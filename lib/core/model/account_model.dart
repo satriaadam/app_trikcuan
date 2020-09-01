@@ -14,8 +14,6 @@ class Account {
         this.city,
         this.balance,
         this.accessToken,
-        this.tokenType,
-        this.expiresIn,
     });
 
     int id;
@@ -26,20 +24,16 @@ class Account {
     String city;
     String balance;
     String accessToken;
-    String tokenType;
-    int expiresIn;
 
     factory Account.fromMap(Map<String, dynamic> json) => Account(
         id: json["id"],
         name: json["name"],
         username: json["username"],
-        email: json["email"],
+        email: json["email"] ?? "",
         phoneNumber: json["phone_number"],
         city: json["city"],
         balance: json["balance"],
         accessToken: json["access_token"],
-        tokenType: json["token_type"],
-        expiresIn: json["expires_in"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -51,8 +45,6 @@ class Account {
         "city": city,
         "balance": balance,
         "access_token": accessToken,
-        "token_type": tokenType,
-        "expires_in": expiresIn,
     };
 }
 
