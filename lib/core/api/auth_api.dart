@@ -12,6 +12,7 @@ class AuthApi extends MainApi {
           "password": password
         }
       );
+      print(response);
       return accountFromMap(response);
     } catch (error) {
       throw Exception(error);

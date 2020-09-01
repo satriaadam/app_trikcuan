@@ -9,6 +9,7 @@ class Account {
         this.id,
         this.name,
         this.username,
+        this.email,
         this.phoneNumber,
         this.city,
         this.balance,
@@ -20,6 +21,7 @@ class Account {
     int id;
     String name;
     String username;
+    String email;
     String phoneNumber;
     String city;
     String balance;
@@ -31,6 +33,7 @@ class Account {
         id: json["id"],
         name: json["name"],
         username: json["username"],
+        email: json["email"],
         phoneNumber: json["phone_number"],
         city: json["city"],
         balance: json["balance"],
@@ -43,6 +46,7 @@ class Account {
         "id": id,
         "name": name,
         "username": username,
+        "email": email,
         "phone_number": phoneNumber,
         "city": city,
         "balance": balance,

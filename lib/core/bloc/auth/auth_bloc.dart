@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:bloc/bloc.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,7 +32,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final response = await api.register(data: event.data);
         prefs.setString("apiToken", response.accessToken);
-        prefs.setString("account", jsonEncode(response));
+        prefs.setString("account", response.toMap().toString());
         prefs.setBool("isAuthenticated", true);
         yield RegisterSuccess(data: response);
       } catch (error) {
@@ -47,7 +46,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final response = await api.login(username: event.username, password: event.password);
         prefs.setString("apiToken", response.accessToken);
-        prefs.setString("account", jsonEncode(response));
+        prefs.setString("account", response.toMap().toString());
         prefs.setBool("isAuthenticated", true);
         yield AuthLoginSuccess(data: response);
       } catch (error) {
