@@ -33,7 +33,7 @@ class Account {
         phoneNumber: json["phone_number"],
         city: json["city"],
         balance: json["balance"],
-        accessToken: json["access_token"],
+        accessToken: json["access_token"] ?? "",
     );
 
     Map<String, dynamic> toMap() => {

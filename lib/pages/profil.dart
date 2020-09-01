@@ -11,6 +11,7 @@ import 'package:trikcuan_app/core/model/account_model.dart';
 import 'package:trikcuan_app/pages/corporate.dart';
 import 'package:trikcuan_app/pages/daftarkelas.dart';
 import 'package:trikcuan_app/pages/dataperusahaan.dart';
+import 'package:trikcuan_app/pages/topup_saldo.dart';
 import 'package:trikcuan_app/utilities/app_consts.dart';
 import 'package:trikcuan_app/utilities/styles.dart';
 import 'package:intl/intl.dart';
@@ -81,132 +82,124 @@ class _ProfilState extends State<Profil> {
         appBar: AppBar(
           backgroundColor: Colors.limeAccent,
           title: Text('PROFIL', style: TextStyle(color: Colors.blueGrey[600], fontWeight: FontWeight.bold),),
-          elevation: 0
+          elevation: 1
         ),
         body: ListView(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomRight,
-                  stops: [0.2, 0.4, 0.7],
-                  colors: [
-                    Colors.limeAccent,
-                    Colors.limeAccent[100],
-                    Colors.white,
-                  ],
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Halo,\n${account?.name}",
-                      style: kTitleStyle,
-                    ),
-                    SizedBox(height: 10.0),
-                    Box(
-                      padding: 24,
-                      borderRadius: 16,
-                      color: Colors.white,
-                      boxShadow: [AppBoxShadow.type3],
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(height: 5.0),
-                          Container(
-                            child: Text(
-                              'Saldo',
-                              style: TextStyle(
-                                color: Colors.blueGrey[600],
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 5.0),
-                          Container(
-                            child: Text(
-                              rupiah(account?.balance),
-                              style: TextStyle(
-                                  color: Colors.blueGrey[600],
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 35.0),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          Divider(height: 5.0, thickness: 2.0),
-                          SizedBox(height: 5.0),
-                          Container(
-                            child: Text(
-                              'Klik Disini Untuk Top Up Saldo',
-                              style: TextStyle(
-                                color: Colors.blueGrey[600],
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    RaisedButtonCustom(
-                      color: Colors.white,
-                      elevation: 1,
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => DaftarKelas()
-                      )),
-                      textColor: Colors.black54,
-                      text: "Daftar Kelas Trik Cuan"
-                    ),
-                    SizedBox(height: 16),
-                    Row(
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Halo,\n${account?.name}",
+                    style: kTitleStyle,
+                  ),
+                  SizedBox(height: 16),
+                  Box(
+                    borderRadius: 16,
+                    color: Colors.white,
+                    boxShadow: [AppBoxShadow.type3],
+                    child: Column(
                       children: [
-                        Expanded(
-                          child: RaisedButtonCustom(
-                            color: Colors.white,
-                            elevation: 1,
-                            onPressed: () => Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => DataPerusahaan()
-                            )),
-                            textColor: Colors.black54,
-                            text: "Data Perusahaan"
+                        Box(
+                          padding: 16,
+                          color: Colors.transparent,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                child: Text(
+                                  'Saldo',
+                                  style: TextStyle(
+                                    color: Colors.blueGrey[600],
+                                    fontFamily: 'Poppins',
+                                    fontSize: 15.0
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 5.0),
+                              Container(
+                                child: Text(
+                                  rupiah(account?.balance),
+                                  style: TextStyle(
+                                    color: Colors.blueGrey[900],
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 28
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(width: 16),
-                        Expanded(
-                          child: RaisedButtonCustom(
-                            color: Colors.white,
-                            elevation: 1,
-                            onPressed: () => Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => Corporate()
-                            )),
-                            textColor: Colors.black54,
-                            text: "Corporate Action"
+                        Divider(),
+                        Box(
+                          color: Colors.transparent,
+                          padding: 16,
+                          onPressed: () => Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => TopupSaldoPage()
+                          )),
+                          child: Text(
+                            'Klik Disini Untuk Top Up Saldo',
+                            style: TextStyle(
+                              color: Colors.blueGrey[600],
+                              fontFamily: 'Poppins',
+                              fontSize: 15.0
+                            ),
+                            textAlign: TextAlign.left,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 16),
-                    RaisedButtonCustom(
-                      color: Colors.red,
-                      onPressed: () => bloc.add(Logout()),
-                      elevation: 1,
-                      textColor: Colors.white,
-                      text: "Logout"
-                    )
-                  ],
-                ),
+                  ),
+                  SizedBox(height: 24),
+                  RaisedButtonCustom(
+                    color: Colors.white,
+                    elevation: 1,
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => DaftarKelas()
+                    )),
+                    textColor: Colors.black54,
+                    text: "Daftar Kelas Trik Cuan"
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: RaisedButtonCustom(
+                          color: Colors.white,
+                          elevation: 1,
+                          onPressed: () => Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => DataPerusahaan()
+                          )),
+                          textColor: Colors.black54,
+                          text: "Data Perusahaan"
+                        ),
+                      ),
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: RaisedButtonCustom(
+                          color: Colors.white,
+                          elevation: 1,
+                          onPressed: () => Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => Corporate()
+                          )),
+                          textColor: Colors.black54,
+                          text: "Corporate Action"
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  RaisedButtonCustom(
+                    color: Colors.red,
+                    onPressed: () => bloc.add(Logout()),
+                    elevation: 1,
+                    textColor: Colors.white,
+                    text: "Logout"
+                  )
+                ],
               ),
             ),
           ],

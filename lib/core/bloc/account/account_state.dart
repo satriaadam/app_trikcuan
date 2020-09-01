@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:trikcuan_app/core/model/account_model.dart';
+import 'package:trikcuan_app/core/model/topup_model.dart';
 
 abstract class AccountState extends Equatable {
   const AccountState();
@@ -34,6 +35,15 @@ class EditProfileSuccess extends AccountState {
   final Account data;
 
   const EditProfileSuccess({@required this.data});
+
+  @override
+  List<Object> get props => [data];
+}
+
+class RequestTopupSaldoSuccess extends AccountState {
+  final TopupModel data;
+
+  const RequestTopupSaldoSuccess({@required this.data});
 
   @override
   List<Object> get props => [data];

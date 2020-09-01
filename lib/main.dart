@@ -21,6 +21,29 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        appBarTheme: AppBarTheme(
+          color: Colors.limeAccent,
+          elevation: 1,
+          textTheme: TextTheme(
+            headline6: TextStyle(
+              color: Colors.blueGrey[600],
+              fontSize: 16,
+              fontWeight: FontWeight.w700
+            )
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.blueGrey[600]
+          )
+        ),
+        dividerTheme: DividerThemeData(
+          color: Colors.grey[200],
+          thickness: 1,
+          space: 0,
+          indent: 0
+        )
+      ),
       routes: {
         'onboarding_screen':(context)=> OnboardingScreen(),
         'login_screen':(context)=> LoginPage()

@@ -32,3 +32,14 @@ class EditProfile extends AccountEvent {
   @override
   List<Object> get props => [data];
 }
+
+class RequestTopupSaldo extends AccountEvent {
+  final int saldo;
+
+  const RequestTopupSaldo({
+    @required this.saldo
+  });
+
+  @override
+  List<Object> get props => [saldo];
+}

@@ -33,7 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final response = await api.register(data: event.data);
         prefs.setString("apiToken", response.accessToken);
-        prefs.setString("account", response.toMap().toString());
+        prefs.setString("account", jsonEncode(response.toMap()));
         prefs.setBool("isAuthenticated", true);
         yield RegisterSuccess(data: response);
       } catch (error) {
