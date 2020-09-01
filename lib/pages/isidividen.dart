@@ -104,7 +104,7 @@ Widget myLeadingDetails(Tuple5 isidividenpage) {
             color: Colors.black,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.bold,
-            fontSize: 10.0
+            fontSize: 8.0
         ),
           textAlign: TextAlign.left,  ),),
     ],)
