@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trikcuan_app/utilities/styles.dart';
-import 'package:trikcuan_app/login_screen.dart';
+import 'package:trikcuan_app/login_page.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override

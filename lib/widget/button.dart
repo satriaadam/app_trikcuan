@@ -200,6 +200,8 @@ class RaisedButtonCustom extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: fontSize ?? 16,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w600,
               color: textColor
             )
           ),

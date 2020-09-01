@@ -4,10 +4,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_bloc.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_event.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_state.dart';
+import 'package:trikcuan_app/login_page.dart';
 import 'package:trikcuan_app/onboarding_screen.dart';
 import 'package:trikcuan_app/pages/home_page.dart';
 import 'package:trikcuan_app/utilities/bloc_delegate.dart';
-import 'login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
