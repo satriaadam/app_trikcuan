@@ -18,18 +18,12 @@ class _RekomendasiState extends State<Rekomendasi> {
     Tuple2('INVESTING', Investing()),
   ];
 
-
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: _pages.length,
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.menu, color: Colors.blueGrey[600],),
-          onPressed: () {},
-          ),
           backgroundColor: Colors.limeAccent,
           title: Text('REKOMENDASI', style: TextStyle(color: Colors.blueGrey[600], fontWeight: FontWeight.bold),),
           bottom: TabBar(

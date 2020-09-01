@@ -22,10 +22,6 @@ class _DividenState extends State<Dividen> {
       length: _pages.length,
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.menu, color: Colors.blueGrey[600],),
-          onPressed: () {},
-          ),
           backgroundColor: Colors.limeAccent,
           title: Text('DIVIDEN', style: TextStyle(color: Colors.blueGrey[600], fontWeight: FontWeight.bold),),
         ),

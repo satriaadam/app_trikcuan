@@ -80,14 +80,8 @@ class _ProfilState extends State<Profil> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.limeAccent,
-          elevation: 0,
-          leading: IconButton(
-            icon: Icon(
-              Icons.menu,
-              color: Colors.blueGrey[600],
-            ),
-            onPressed: () {},
-          ),
+          title: Text('PROFIL', style: TextStyle(color: Colors.blueGrey[600], fontWeight: FontWeight.bold),),
+          elevation: 0
         ),
         body: ListView(
           children: [

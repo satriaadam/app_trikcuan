@@ -52,16 +52,12 @@ class Berita extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: () {},
-          color: Colors.blueGrey[600],
-        ),
         backgroundColor: Colors.limeAccent,
         title: Text('BERITA',
-          style: TextStyle(
-              color: Colors.blueGrey[600],
-              fontWeight: FontWeight.bold),),
+        style: TextStyle(
+          color: Colors.blueGrey[600],
+          fontWeight: FontWeight.bold),
+        ),
       ),
       body: ListView(
       children: indexpage.map((indexpage) => _buildListItem(context, indexpage)).toList(),
