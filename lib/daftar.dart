@@ -31,7 +31,7 @@ class _DaftarState extends State<Daftar> {
     return BlocListener(
       cubit: bloc,
       listener: (context, state) {
-        if(state is AuthLoginSuccess) {
+        if(state is RegisterSuccess) {
           Navigator.pop(context);
           Navigator.pop(context);
           Navigator.push(context, MaterialPageRoute(
@@ -86,7 +86,7 @@ class _DaftarState extends State<Daftar> {
                     controller: emailController,
                     textHint: "EMAIL",
                     inputType: TextInputType.emailAddress,
-                    icon: Icons.phone,
+                    icon: Icons.mail,
                   ),
                   SizedBox(height: 20.0),
                   TextFieldBorderBottom(
@@ -139,10 +139,10 @@ class _DaftarState extends State<Daftar> {
   }
 
   register() {
-    print("REGISTER");
     final data = RegisterAccount();
-    data.username = usernameController.text;
     data.name = nameController.text;
+    data.username = usernameController.text;
+    data.email = emailController.text;
     data.phoneNumber = phoneNumberController.text;
     data.password = passwordController.text;
     data.city = cityController.text;

@@ -23,7 +23,7 @@ class AuthApi extends MainApi {
     try {
       final response = await postRequest(
         url: "$host/register",
-        body: data.toMap().toString()
+        body: data.toMap()
       );
       return accountFromMap(response);
     } catch (error) {

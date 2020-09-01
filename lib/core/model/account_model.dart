@@ -70,7 +70,7 @@ class RegisterAccount {
         "username": username,
         "email": email,
         "phone_number": phoneNumber,
-        "city": city,
-        "password": password
+        "password": password,
+        "city": city
     };
 }
