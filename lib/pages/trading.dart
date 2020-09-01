@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indonesia/indonesia.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:toast/toast.dart';
+import 'package:trikcuan_app/core/bloc/account/account_bloc.dart';
+import 'package:trikcuan_app/core/bloc/account/account_event.dart';
+import 'package:trikcuan_app/core/bloc/account/account_state.dart';
 import 'package:trikcuan_app/core/bloc/recomendation/recomendation_bloc.dart';
 import 'package:trikcuan_app/core/bloc/recomendation/recomendation_event.dart';
 import 'package:trikcuan_app/core/bloc/recomendation/recomendation_state.dart';
+import 'package:trikcuan_app/core/model/account_model.dart';
 import 'package:trikcuan_app/core/model/recomendation_model.dart';
+import 'package:trikcuan_app/core/model/recomendation_price_model.dart';
 import 'package:trikcuan_app/pages/recomendation_detail.dart';
 import 'package:trikcuan_app/widget/box.dart';
+import 'package:trikcuan_app/widget/button.dart';
 import 'package:trikcuan_app/widget/text.dart';
 
 class Trading extends StatefulWidget {
@@ -22,28 +30,75 @@ class _TradingState extends State<Trading> {
   List<RecomendationModel> data = <RecomendationModel>[];
   final bloc = RecomendationBloc();
   bool isLoading = true;
+  bool showRecomendation = true;
+  RecomendationPriceModel price;
   final RefreshController refreshController = RefreshController();
+  
+  final accountBloc = AccountBloc();
+  Account account;
 
   @override
   void initState() {
-    bloc.add(LoadRecomendation(type: "trading"));
+    bloc.add(LoadRecomendationToday());
+    accountBloc.add(GetAccount());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener(
-      cubit: bloc,
-      listener: (context, state) {
-        if(state is RecomendationTradingLoaded) {
-          setState(() {
-            refreshController.refreshCompleted();
-            isLoading = false;
-            data = state.data;
-          });
-        }
-      },
-      child: SmartRefresher(
+    return MultiBlocListener(
+      listeners: [
+        BlocListener(
+          cubit: bloc,
+          listener: (context, state) {
+            if(state is RecomendationTradingLoaded) {
+              setState(() {
+                refreshController.refreshCompleted();
+                isLoading = false;
+                data = state.data;
+              });
+            } else if(state is RecomendationTodayLoaded) {
+              final haveRecomendationToday = state.data.firstWhere((item) => item.recomendationType == "trading", orElse: () => null);
+              if(haveRecomendationToday != null) {
+                print("SUDAH BELI");
+                bloc.add(LoadRecomendation(type: "trading"));
+                setState(() {
+                  showRecomendation = true;
+                });
+              } else {
+                print("BELUM BELI");
+                bloc.add(LoadRecomendationPrice());
+                setState(() {
+                  showRecomendation = false;
+                });
+              }
+            } else if(state is RecomendationPriceLoaded) {
+              refreshController.refreshCompleted();
+              setState(() {
+                isLoading = false;
+                price = state.data.firstWhere((item) => item.recomendation == "trading");
+              });
+            } else if(state is RecomendationFailure) {
+              Toast.show(state.error, context);
+              setState(() {
+                isLoading = false;
+                refreshController.refreshCompleted();
+              });
+            }
+          }
+        ),
+        BlocListener(
+          cubit: accountBloc,
+          listener: (context, state) {
+            if(state is AccountSuccess) {
+              setState(() {
+                account = state.data;
+              });
+            }
+          }
+        )
+      ],
+      child: showRecomendation ? SmartRefresher(
         controller: refreshController,
         onRefresh: () => onRefresh(),
         child: ListView.separated(
@@ -79,6 +134,36 @@ class _TradingState extends State<Trading> {
               ),
             );
           }, 
+        ),
+      ) : Container(
+        padding: EdgeInsets.all(32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextCustom(
+              "Silahkan bayar untuk melihat rekomendasi saham hari ini ", 
+              textAlign: TextAlign.center, 
+              fontSize: 18,
+              maxLines: 3
+            ),
+            SizedBox(height: 24),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              child: RaisedButtonPrimary(
+                isLoading: isLoading,
+                onPressed: int.parse(account?.balance) < int.parse(price?.price) ? null : (){
+                  setState(() {
+                    isLoading = true;
+                    bloc.add(BuyRecomendationToday(type: "trading"));
+                  });
+                },
+                text: rupiah(price?.price)
+              ),
+            ),
+            SizedBox(height: 16),
+            int.parse(account?.balance) < int.parse(price?.price) ? TextCustom("Saldo Anda ${rupiah(account?.balance)} tidak cukup", color: Colors.red) : Text("")
+          ],
         ),
       )
     );
