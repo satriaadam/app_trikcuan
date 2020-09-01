@@ -7,10 +7,8 @@ import 'package:trikcuan_app/core/bloc/recomendation/recomendation_event.dart';
 import 'package:trikcuan_app/core/bloc/recomendation/recomendation_state.dart';
 import 'package:trikcuan_app/core/model/recomendation_model.dart';
 import 'package:trikcuan_app/pages/recomendation_detail.dart';
-import 'package:trikcuan_app/pages/rekomendasi.dart';
 import 'package:trikcuan_app/widget/box.dart';
 import 'package:trikcuan_app/widget/text.dart';
-import 'package:tuple/tuple.dart';
 
 class Trading extends StatefulWidget {
   const Trading({Key key}) : super(key: key);
@@ -28,7 +26,7 @@ class _TradingState extends State<Trading> {
 
   @override
   void initState() {
-    bloc.add(LoadRecomendationTrading());
+    bloc.add(LoadRecomendation(type: "trading"));
     super.initState();
   }
 
@@ -106,7 +104,7 @@ class _TradingState extends State<Trading> {
   }
 
   onRefresh() {
-    bloc.add(LoadRecomendationTrading());
+    bloc.add(LoadRecomendation(type: "trading"));
     setState(() {
       isLoading = true;
     });

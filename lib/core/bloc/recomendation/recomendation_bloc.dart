@@ -14,10 +14,10 @@ class RecomendationBloc extends Bloc<RecomendationEvent, RecomendationState> {
     RecomendationEvent event,
   ) async* {
 
-    if (event is LoadRecomendationTrading) {
+    if (event is LoadRecomendation) {
       yield RecomendationLoading();
       try {
-        final response = await api.trading();
+        final response = await api.getData(event.type);
         yield RecomendationTradingLoaded(data: response);
       } catch (error) {
         print("ERROR: $error");

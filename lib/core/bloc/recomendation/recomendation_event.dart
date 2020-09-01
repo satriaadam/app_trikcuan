@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class RecomendationEvent extends Equatable {
@@ -7,6 +8,13 @@ abstract class RecomendationEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadRecomendationTrading extends RecomendationEvent {}
-class LoadRecomendationSwing extends RecomendationEvent {}
-class LoadRecomendationInvest extends RecomendationEvent {}
+class LoadRecomendation extends RecomendationEvent {
+  final String type;
+
+  const LoadRecomendation({
+    @required this.type
+  });
+
+  @override
+  List<Object> get props => [type];
+}
