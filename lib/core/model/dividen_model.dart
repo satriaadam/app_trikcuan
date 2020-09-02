@@ -5,41 +5,45 @@ List<DividenModel> dividenModelFromMap(String str) => List<DividenModel>.from(js
 String dividenModelToMap(List<DividenModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toMap())));
 
 class DividenModel {
-  DividenModel({
-    this.kodeSaham,
-    this.potensiKenaikan,
-    this.fundamental,
-    this.teknikal,
-    this.sentimen,
-    this.beli,
-    this.jual,
-  });
+    DividenModel({
+        this.kodeSaham,
+        this.potensi,
+        this.cumdate,
+        this.exdate,
+        this.keterangan,
+        this.beli,
+        this.jual,
+        this.price,
+    });
 
-  String kodeSaham;
-  String potensiKenaikan;
-  String fundamental;
-  String teknikal;
-  String sentimen;
-  String beli;
-  String jual;
+    String kodeSaham;
+    String potensi;
+    DateTime cumdate;
+    DateTime exdate;
+    String keterangan;
+    String beli;
+    String jual;
+    int price;
 
-  factory DividenModel.fromMap(Map<String, dynamic> json) => DividenModel(
-    kodeSaham: json["kode_saham"],
-    potensiKenaikan: json["potensi_kenaikan"],
-    fundamental: json["fundamental"],
-    teknikal: json["teknikal"],
-    sentimen: json["sentimen"],
-    beli: json["beli"],
-    jual: json["jual"],
-  );
+    factory DividenModel.fromMap(Map<String, dynamic> json) => DividenModel(
+        kodeSaham: json["kode_saham"],
+        potensi: json["potensi"],
+        cumdate: DateTime.parse(json["cumdate"]),
+        exdate: DateTime.parse(json["exdate"]),
+        keterangan: json["keterangan"],
+        beli: json["beli"],
+        jual: json["jual"],
+        price: json["price"],
+    );
 
-  Map<String, dynamic> toMap() => {
-    "kode_saham": kodeSaham,
-    "potensi_kenaikan": potensiKenaikan,
-    "fundamental": fundamental,
-    "teknikal": teknikal,
-    "sentimen": sentimen,
-    "beli": beli,
-    "jual": jual,
-  };
+    Map<String, dynamic> toMap() => {
+        "kode_saham": kodeSaham,
+        "potensi": potensi,
+        "cumdate": cumdate.toIso8601String(),
+        "exdate": exdate.toIso8601String(),
+        "keterangan": keterangan,
+        "beli": beli,
+        "jual": jual,
+        "price": price,
+    };
 }

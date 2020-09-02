@@ -12,16 +12,7 @@ class LoadDividenPrice extends DividenEvent {}
 
 class LoadDividenToday extends DividenEvent {}
 
-class LoadDividen extends DividenEvent {
-  final String type;
-
-  const LoadDividen({
-    @required this.type
-  });
-
-  @override
-  List<Object> get props => [type];
-}
+class LoadDividen extends DividenEvent {}
 
 class BuyDividenToday extends DividenEvent {
   final String type;
