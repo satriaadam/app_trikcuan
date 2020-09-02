@@ -25,7 +25,6 @@ class Profil extends StatefulWidget {
 }
 
 class _ProfilState extends State<Profil> {
-  bool _crossFadeStateShowFirst = true;
   final money = NumberFormat("#,##0", "en_US");
   final nominal = TextEditingController();
 
@@ -44,12 +43,6 @@ class _ProfilState extends State<Profil> {
   void dispose() {
     nominal.dispose();
     super.dispose();
-  }
-
-  void _crossFade() {
-    setState(() {
-      _crossFadeStateShowFirst = _crossFadeStateShowFirst ? false : true;
-    });
   }
 
   @override
@@ -207,75 +200,4 @@ class _ProfilState extends State<Profil> {
       ),
     );
   }
-}
-
-void _confirmPaymentModalBottomSheet(context) {
-  showModalBottomSheet(
-      context: context,
-      builder: (BuildContext payment) {
-        return Container(
-          height: 225.0,
-          width: double.infinity,
-          padding: EdgeInsets.all(5),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.close, color: Colors.red[400], size: 30.0),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              Text(
-                '   KONFIRMASI ISI SALDO',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 15),
-              Container(
-                padding: EdgeInsets.only(left: 15.0, right: 15.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[Text('Jumlah Isi Saldo'), Text("Rp.")],
-                ),
-              ),
-              SizedBox(height: 10.0),
-              Container(
-                padding: EdgeInsets.only(left: 15.0, right: 15.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Biaya Admin'),
-                    Text('Rp.2000'),
-                  ],
-                ),
-              ),
-              SizedBox(height: 15.0),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                    height: 40.0,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Colors.green[300], Colors.green[600]],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        border:
-                            Border.all(width: 2.0, color: Colors.grey.shade500),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Center(
-                      child: Text('ISI SALDO SEKARANG'),
-                    )),
-              ),
-            ],
-          ),
-        );
-      });
 }
