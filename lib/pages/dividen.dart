@@ -8,6 +8,7 @@ import 'package:trikcuan_app/core/bloc/dividen/dividen_bloc.dart';
 import 'package:trikcuan_app/core/bloc/dividen/dividen_event.dart';
 import 'package:trikcuan_app/core/bloc/dividen/dividen_state.dart';
 import 'package:trikcuan_app/core/model/dividen_model.dart';
+import 'package:trikcuan_app/pages/dividen_detail.dart';
 import 'package:trikcuan_app/widget/box.dart';
 import 'package:trikcuan_app/widget/text.dart';
 
@@ -65,9 +66,9 @@ class _DividenState extends State<Dividen> {
             itemCount: isLoading ? 3 : dividens.length,
             itemBuilder: (context, index) {
               return isLoading ? shimmerData(context) : Box(
-                // onPressed: () => Navigator.push(context, MaterialPageRoute(
-                //   builder: (context) => RecomendationDetailpage(recomendation: dividens[index])
-                // )),
+                onPressed: () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => DividenDetail(dividen: dividens[index])
+                )),
                 padding: 16,
                 color: Colors.white,
                 child: Column(
