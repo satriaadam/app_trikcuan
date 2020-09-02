@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:indonesia/indonesia.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:toast/toast.dart';
-import 'package:trikcuan_app/core/bloc/account/account_bloc.dart';
-import 'package:trikcuan_app/core/bloc/account/account_event.dart';
-import 'package:trikcuan_app/core/bloc/account/account_state.dart';
 import 'package:trikcuan_app/core/bloc/market/market_bloc.dart';
 import 'package:trikcuan_app/core/bloc/market/market_event.dart';
 import 'package:trikcuan_app/core/bloc/market/market_state.dart';
-import 'package:trikcuan_app/core/model/account_model.dart';
 import 'package:trikcuan_app/core/model/market_model.dart';
 import 'package:trikcuan_app/core/model/market_price_model.dart';
 import 'package:trikcuan_app/widget/box.dart';
-import 'package:trikcuan_app/widget/button.dart';
 import 'package:trikcuan_app/widget/text.dart';
 
 class Index extends StatefulWidget {
@@ -33,13 +27,9 @@ class _IndexState extends State<Index> {
   MarketPriceModel price;
   final RefreshController refreshController = RefreshController();
 
-  final accountBloc = AccountBloc();
-  Account account;
-
   @override
   void initState() {
-    bloc.add(LoadMarketToday());
-    accountBloc.add(GetAccount());
+    bloc.add(LoadMarket(type: "index"));
     super.initState();
   }
 
@@ -50,32 +40,11 @@ class _IndexState extends State<Index> {
           BlocListener(
               cubit: bloc,
               listener: (context, state) {
-                if(state is MarketTradingLoaded) {
+                if(state is MarketLoaded) {
                   setState(() {
                     refreshController.refreshCompleted();
                     isLoading = false;
                     data = state.data;
-                  });
-                } else if(state is MarketTodayLoaded) {
-                  final haveMarketToday = state.data.firstWhere((item) => item.marketType == "index", orElse: () => null);
-                  if(haveMarketToday != null) {
-                    print("SUDAH BELI");
-                    bloc.add(LoadMarket(type: "index"));
-                    setState(() {
-                      showMarket = true;
-                    });
-                  } else {
-                    print("BELUM BELI");
-                    bloc.add(LoadMarketPrice());
-                    setState(() {
-                      showMarket = false;
-                    });
-                  }
-                } else if(state is MarketPriceLoaded) {
-                  refreshController.refreshCompleted();
-                  setState(() {
-                    isLoading = false;
-                    price = state.data.firstWhere((item) => item.market == "index");
                   });
                 } else if(state is MarketFailure) {
                   Toast.show(state.error, context);
@@ -86,18 +55,8 @@ class _IndexState extends State<Index> {
                 }
               }
           ),
-          BlocListener(
-              cubit: accountBloc,
-              listener: (context, state) {
-                if(state is AccountSuccess) {
-                  setState(() {
-                    account = state.data;
-                  });
-                }
-              }
-          )
         ],
-        child: showMarket ? SmartRefresher(
+        child: SmartRefresher(
           controller: refreshController,
           onRefresh: () => onRefresh(),
           child: ListView.separated(
@@ -112,19 +71,34 @@ class _IndexState extends State<Index> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextCustom(
-                      data[index].kodeSaham,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextCustom(
+                            data[index].code,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20,
+                          ),
+                          TextCustom(
+                            data[index].description + data[index].description,
+                            maxLines: 3,
+                          ),
+                        ],
+                      ),
                     ),
+                    SizedBox(width: 16),
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        SmallText("Potensi"),
                         TextCustom(
-                          data[index].potensiKenaikan,
-                          fontWeight: FontWeight.w600,
+                          data[index].price,
+                          fontWeight: FontWeight.bold,
                           fontSize: 20,
+                          color: int.parse(data[index].priceChange) > 0 ? Colors.green : Colors.red,
+                        ),
+                        LabelText(
+                          "${data[index].priceChange} (${data[index].percentageChange})",
                         ),
                       ],
                     ),
@@ -132,36 +106,6 @@ class _IndexState extends State<Index> {
                 ),
               );
             },
-          ),
-        ) : Container(
-          padding: EdgeInsets.all(32),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextCustom(
-                  "Silahkan bayar untuk melihat rekomendasi saham hari ini ",
-                  textAlign: TextAlign.center,
-                  fontSize: 18,
-                  maxLines: 3
-              ),
-              SizedBox(height: 24),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: RaisedButtonPrimary(
-                    isLoading: isLoading,
-                    onPressed: int.parse(account?.balance) < int.parse(price?.price) ? null : (){
-                      setState(() {
-                        isLoading = true;
-                        bloc.add(BuyMarketToday(type: "index"));
-                      });
-                    },
-                    text: rupiah(price?.price)
-                ),
-              ),
-              SizedBox(height: 16),
-              int.parse(account?.balance) < int.parse(price?.price) ? TextCustom("Saldo Anda ${rupiah(account?.balance)} tidak cukup", color: Colors.red) : Text("")
-            ],
           ),
         )
     );
