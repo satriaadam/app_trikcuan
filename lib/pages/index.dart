@@ -1,177 +1,197 @@
 import 'package:flutter/material.dart';
-import 'package:tuple/tuple.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indonesia/indonesia.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:toast/toast.dart';
+import 'package:trikcuan_app/core/bloc/account/account_bloc.dart';
+import 'package:trikcuan_app/core/bloc/account/account_event.dart';
+import 'package:trikcuan_app/core/bloc/account/account_state.dart';
+import 'package:trikcuan_app/core/bloc/market/market_bloc.dart';
+import 'package:trikcuan_app/core/bloc/market/market_event.dart';
+import 'package:trikcuan_app/core/bloc/market/market_state.dart';
+import 'package:trikcuan_app/core/model/account_model.dart';
+import 'package:trikcuan_app/core/model/market_model.dart';
+import 'package:trikcuan_app/core/model/market_price_model.dart';
+//import 'package:trikcuan_app/pages/market_detail.dart';
+import 'package:trikcuan_app/widget/box.dart';
+import 'package:trikcuan_app/widget/button.dart';
+import 'package:trikcuan_app/widget/text.dart';
 
-class Index extends StatelessWidget {
+class Index extends StatefulWidget {
   const Index({Key key}) : super(key: key);
 
-  static const List<Tuple5> indexpage = [
-    const Tuple5<String, String, String, String, String>(
-      'DOW30',
-      'Dow Jones Industrial Average| America',
-      '28,248.44',
-      '-60.02',
-      '(-0.21%)',
-    ),
-    const Tuple5<String, String, String, String, String>(
-      'IHSG',
-      'Index Harga Saham Gabungan| Indonesia',
-      '5,332.53',
-      '-6.36',
-      '(-0.12%)',
-    ),
-    const Tuple5<String, String, String, String, String>(
-      'SP500',
-      'S&P500| USA',
-      '3,443.62',
-      '+12.34',
-      '(+0.36%)',
+  @override
+  _IndexState createState() => _IndexState();
+}
 
-    ),
-    const Tuple5<String, String, String, String, String>(
-      'NASDAQ',
-      'Nasdaq| USA',
-      '11,466.47',
-      '+86.75',
-      '(+0.76%)',
-    ),
-    const Tuple5<String, String, String, String, String>(
-      'NIKKEI',
-      'NIkkei| Japan',
-      '23,252.00',
-      '-44.77',
-      '(-0.19%)'
-    ),
-    const Tuple5<String, String, String, String, String>(
-      'HANGSENG',
-      'Hang Seng|',
-      '25,449.67',
-      '-36.55',
-      '(-0.14%)',
-    ),
-    const Tuple5<String, String, String, String, String>(
-      'SHANGHAI',
-      'Shanghai Composite| China',
-      '3,337.03',
-      '-36.55',
-      '(-1.08%)',
-    ),
-    const Tuple5<String, String, String, String, String>(
-      'FTSE',
-      'FTSE 100|',
-      '6,037.01',
-      '-67.72',
-      '(-1.11%)',
-    ),
-    const Tuple5<String, String, String, String, String>(
-      'DAX',
-      'DAX| German',
-      '13,061.62',
-      '-4.92',
-      '(-0.04%)',
-    ),
-    const Tuple5<String, String, String, String, String>(
-      'CAC40',
-      'CAC40 Index|',
-      '5,008.27',
-      '+0.38',
-      '(+0.01%)',
-    ),
-    const Tuple5<String, String, String, String, String>(
-      'EIDO',
-      'iShares MSCI| Indonesia',
-      '20.24',
-      '+0.49',
-      '(+2.48%)',
-    ),
-  ];
+class _IndexState extends State<Index> {
+
+  List<MarketModel> data = <MarketModel>[];
+  final bloc = MarketBloc();
+  bool isLoading = true;
+  bool showMarket = true;
+  MarketPriceModel price;
+  final RefreshController refreshController = RefreshController();
+
+  final accountBloc = AccountBloc();
+  Account account;
+
+  @override
+  void initState() {
+    bloc.add(LoadMarketToday());
+    accountBloc.add(GetAccount());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-            children: indexpage.map((indexpage) => _buildListItem(indexpage)).toList(),
-          );
+    return MultiBlocListener(
+        listeners: [
+          BlocListener(
+              cubit: bloc,
+              listener: (context, state) {
+                if(state is MarketTradingLoaded) {
+                  setState(() {
+                    refreshController.refreshCompleted();
+                    isLoading = false;
+                    data = state.data;
+                  });
+                } else if(state is MarketTodayLoaded) {
+                  final haveMarketToday = state.data.firstWhere((item) => item.marketType == "index", orElse: () => null);
+                  if(haveMarketToday != null) {
+                    print("SUDAH BELI");
+                    bloc.add(LoadMarket(type: "index"));
+                    setState(() {
+                      showMarket = true;
+                    });
+                  } else {
+                    print("BELUM BELI");
+                    bloc.add(LoadMarketPrice());
+                    setState(() {
+                      showMarket = false;
+                    });
+                  }
+                } else if(state is MarketPriceLoaded) {
+                  refreshController.refreshCompleted();
+                  setState(() {
+                    isLoading = false;
+                    price = state.data.firstWhere((item) => item.market == "index");
+                  });
+                } else if(state is MarketFailure) {
+                  Toast.show(state.error, context);
+                  setState(() {
+                    isLoading = false;
+                    refreshController.refreshCompleted();
+                  });
+                }
+              }
+          ),
+          BlocListener(
+              cubit: accountBloc,
+              listener: (context, state) {
+                if(state is AccountSuccess) {
+                  setState(() {
+                    account = state.data;
+                  });
+                }
+              }
+          )
+        ],
+        child: showMarket ? SmartRefresher(
+          controller: refreshController,
+          onRefresh: () => onRefresh(),
+          child: ListView.separated(
+            separatorBuilder: (context, index) => Divider(),
+            itemCount: isLoading ? 3 : data.length,
+            itemBuilder: (context, index) {
+              return isLoading ? shimmerData(context) : Box(
+                onPressed: () => Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => MarketDetailpage(market: data[index])
+                )),
+                padding: 16,
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextCustom(
+                      data[index].kodeSaham,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SmallText("Potensi"),
+                        TextCustom(
+                          data[index].potensiKenaikan,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ) : Container(
+          padding: EdgeInsets.all(32),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextCustom(
+                  "Silahkan bayar untuk melihat rekomendasi saham hari ini ",
+                  textAlign: TextAlign.center,
+                  fontSize: 18,
+                  maxLines: 3
+              ),
+              SizedBox(height: 24),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: RaisedButtonPrimary(
+                    isLoading: isLoading,
+                    onPressed: int.parse(account?.balance) < int.parse(price?.price) ? null : (){
+                      setState(() {
+                        isLoading = true;
+                        bloc.add(BuyMarketToday(type: "index"));
+                      });
+                    },
+                    text: rupiah(price?.price)
+                ),
+              ),
+              SizedBox(height: 16),
+              int.parse(account?.balance) < int.parse(price?.price) ? TextCustom("Saldo Anda ${rupiah(account?.balance)} tidak cukup", color: Colors.red) : Text("")
+            ],
+          ),
+        )
+    );
   }
-}
 
-Widget _buildListItem(Tuple5 indexpage) {
-  return Padding(
-    padding: const EdgeInsets.all(5.0),
-    child: Material(
-      color: Colors.white,
-      elevation: 14.0,
-      borderRadius: BorderRadius.circular(10.0),
-      shadowColor: Color(0x802196F3),
+  Shimmer shimmerData(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300],
+      highlightColor: Colors.grey[100],
       child: Padding(
-        padding: EdgeInsets.all(15.0),
-        child: myCurrencies(
-            indexpage
-     ),
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Box(
+                width: MediaQuery.of(context).size.width,
+                height: 8,
+                borderRadius: 8
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget myCurrencies(Tuple5 indexpage) {
-  return Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              myLeadingDetails(indexpage),
-              myCurrenciesDetails(indexpage),
-            ],)
-        ],);
-}
-
-
-Widget myLeadingDetails(Tuple5 indexpage) {
-  return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-        Container(
-          child: Text(
-        indexpage.item1, style: TextStyle(
-            color: Colors.black,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.bold,
-            fontSize: 20.0
-        ),
-        textAlign: TextAlign.left,  ),),
-        Container(
-          child: Text(
-          indexpage.item2, style: TextStyle(
-            color: Colors.black,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.bold,
-            fontSize: 10.0
-        ),
-        textAlign: TextAlign.left,  ),),
-      ],)
-  );
-}
-
-
-Widget myCurrenciesDetails(Tuple5 indexpage) {
-  return Container(child: Column(
-    children: <Widget>[
-      Container(child: Text(
-          indexpage.item3,
-          style: TextStyle(
-              color: Colors.green,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w800,
-              fontSize: 20.0
-          )
-      ),),
-      Container(child: Text(
-          indexpage.item4 + indexpage.item5,
-          style: TextStyle(
-            fontFamily: 'Poppins',
-            fontSize: 10.0,
-            fontWeight: FontWeight.bold,
-          )
-      ),),
-    ],
-  ));
+  onRefresh() {
+    bloc.add(LoadMarket(type: "index"));
+    setState(() {
+      isLoading = true;
+    });
+  }
 }
