@@ -13,7 +13,6 @@ import 'package:trikcuan_app/core/bloc/market/market_state.dart';
 import 'package:trikcuan_app/core/model/account_model.dart';
 import 'package:trikcuan_app/core/model/market_model.dart';
 import 'package:trikcuan_app/core/model/market_price_model.dart';
-//import 'package:trikcuan_app/pages/market_detail.dart';
 import 'package:trikcuan_app/widget/box.dart';
 import 'package:trikcuan_app/widget/button.dart';
 import 'package:trikcuan_app/widget/text.dart';
@@ -106,9 +105,8 @@ class _KomoditasState extends State<Komoditas> {
             itemCount: isLoading ? 3 : data.length,
             itemBuilder: (context, index) {
               return isLoading ? shimmerData(context) : Box(
-                onPressed: () => Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => MarketDetailpage(market: data[index])
-                )),
+                onPressed: () {}, //=> Navigator.push(context, MaterialPageRoute(
+       //             builder: (context) => MarketDetailpage(market: data[index]))),
                 padding: 16,
                 color: Colors.white,
                 child: Row(
