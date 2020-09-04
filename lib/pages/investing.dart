@@ -109,7 +109,7 @@ class _InvestingState extends State<Investing> {
               onPressed: () => Navigator.push(context, MaterialPageRoute(
                 builder: (context) => RecomendationDetailpage(
                   recomendation: data[index],
-                  type: "investing",
+                  type: "invest",
                 )
               )),
               padding: 16,

@@ -60,6 +60,7 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
         } else if(state is RecomendationFailure) {
           setState(() {
             isLoading = false;
+            isLoadingBuy = false;
             isOwn = false;
           });
         }
