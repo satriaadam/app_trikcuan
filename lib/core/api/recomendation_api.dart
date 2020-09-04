@@ -42,7 +42,7 @@ class RecomendationApi extends MainApi {
   }
   
   Future<List<RecomendationTodayModel>> buyRecomendation({
-    String recomendation, String type, String dataId
+    String recomendation, String type, String dataId, int price
   }) async {
     try {
       final response = await postRequest(
@@ -51,7 +51,8 @@ class RecomendationApi extends MainApi {
         body: {
           "recomendation": recomendation,
           "type": type,
-          "data_id": dataId
+          "data_id": dataId,
+          "price": price
         }
       );
       if(type == "recomendation")

@@ -141,7 +141,8 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
                           bloc.add(BuyRecomendation(
                             recomendation: widget.type,
                             type: "recomendation-data",
-                            dataId: widget.recomendation.id.toString()
+                            dataId: widget.recomendation.id.toString(),
+                            price: widget.recomendation.hargaBeli
                           ));
                         });
                       },

@@ -55,7 +55,8 @@ class RecomendationBloc extends Bloc<RecomendationEvent, RecomendationState> {
         final response = await api.buyRecomendation(
           recomendation: event.recomendation,
           type: event.type,
-          dataId: event.dataId
+          dataId: event.dataId,
+          price: event.price
         );
         prefs.setString("recomendationToday", recomendationTodayModelToMap(response));
         yield RecomendationTodayLoaded(data: response);

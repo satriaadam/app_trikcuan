@@ -36,6 +36,7 @@ dependencies:
   url_launcher: ^5.5.0
   dio: ^3.0.9
   connectivity: ^0.4.8+6
+  webview_flutter: ^0.3.22+1
   flutter:
     sdk: flutter
 

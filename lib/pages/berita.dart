@@ -1,110 +1,109 @@
 import 'package:flutter/material.dart';
-import 'package:tuple/tuple.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:toast/toast.dart';
+import 'package:trikcuan_app/core/bloc/news/news_bloc.dart';
+import 'package:trikcuan_app/core/bloc/news/news_event.dart';
+import 'package:trikcuan_app/core/bloc/news/news_state.dart';
+import 'package:trikcuan_app/core/model/news_model.dart';
+import 'package:trikcuan_app/pages/webview_page.dart';
+import 'package:trikcuan_app/widget/box.dart';
+import 'package:trikcuan_app/widget/text.dart';
 
-class Berita extends StatelessWidget {
+class Berita extends StatefulWidget {
   const Berita({Key key}) : super(key: key);
 
-  static const List<Tuple2> indexpage = [
-    const Tuple2<String, String>(
-      'DOW30',
-      '27,930.33',
-    ),
-    const Tuple2<String, String>(
-      'IHSG',
-      '5,272.81',
-    ),
-    const Tuple2<String, String>(
-      'SP500',
-      '3,397.16',
-    ),
-    const Tuple2<String, String>(
-      'NASDAQ',
-      '11,311.80',
-    ),
-    const Tuple2<String, String>(
-      'NIKKEI',
-      '22,920.30',
-    ),const Tuple2<String, String>(
-      'HANGSENG',
-      '25,113.84',
-    ),const Tuple2<String, String>(
-      'SHANGHAI',
-      '3,380.68',
-    ),const Tuple2<String, String>(
-      'FTSE',
-      '6,012.38',
-    ),
-    const Tuple2<String, String>(
-      'DAX',
-      '12,785.80',
-    ),
-    const Tuple2<String, String>(
-      'CAC40',
-      '4,896.33',
-    ),
-    const Tuple2<String, String>(
-      'EIDO',
-      '19.49',
-    ),
-  ];
+  @override
+  _BeritaState createState() => _BeritaState();
+}
+
+class _BeritaState extends State<Berita> {
+
+  List<NewsModel> data = <NewsModel>[];
+  final bloc = NewsBloc();
+  bool isLoading = true;
+  final RefreshController refreshController = RefreshController();
+
+  @override
+  void initState() {
+    bloc.add(LoadNews());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.limeAccent,
-        title: Text('BERITA',
-        style: TextStyle(
-          color: Colors.blueGrey[600],
-          fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: ListView(
-      children: indexpage.map((indexpage) => _buildListItem(context, indexpage)).toList(),
-    ),
+    return MultiBlocListener(
+        listeners: [
+          BlocListener(
+              cubit: bloc,
+              listener: (context, state) {
+                if(state is NewsLoaded) {
+                  setState(() {
+                    refreshController.refreshCompleted();
+                    isLoading = false;
+                    data = state.data;
+                  });
+                } else if(state is NewsFailure) {
+                  Toast.show(state.error, context);
+                  setState(() {
+                    isLoading = false;
+                    refreshController.refreshCompleted();
+                  });
+                }
+              }
+          ),
+        ],
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.limeAccent,
+            title: Text('Berita', style: TextStyle(color: Colors.blueGrey[600], fontWeight: FontWeight.bold),),
+          ),
+          body: SmartRefresher(
+            controller: refreshController,
+            onRefresh: () => onRefresh(),
+            child: ListView.separated(
+              separatorBuilder: (context, index) => Divider(),
+              itemCount: isLoading ? 3 : data.length,
+              itemBuilder: (context, index) {
+                return isLoading ? shimmerData(context) : Box(
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => WebViewPage(news: data[index])
+                  )),
+                  padding: 16,
+                  color: Colors.white,
+                  child: TitleText(data[index].title, maxLines: 3),
+                );
+              },
+            ),
+          ),
+        )
     );
   }
-}
 
-Widget _buildListItem(BuildContext context, Tuple2 indexpage) {
-  return GestureDetector(
-      onTap: () {
-    Navigator.push(context, MaterialPageRoute(
-      builder: (indexpage) => Berita(),
-    ));
-  },
-    child: Container(
-    padding: const EdgeInsets.all(5),
-      child: Material(
-        color: Colors.white,
-        elevation: 14.0,
-        borderRadius: BorderRadius.circular(10.0),
-        shadowColor: Color(0x802196F3),
-        child: Padding(
-        padding: EdgeInsets.all(15.0),
-          child: Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Text(
-          indexpage.item1,
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Text(
-              indexpage.item2,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.blueGrey[600],
-              ),
+  Shimmer shimmerData(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300],
+      highlightColor: Colors.grey[100],
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Box(
+                width: MediaQuery.of(context).size.width,
+                height: 8,
+                borderRadius: 8
             ),
-           ],
-          ),
-    ),
-  ),
-    ),
+          ],
+        ),
+      ),
     );
+  }
+
+  onRefresh() {
+    bloc.add(LoadNews());
+    setState(() {
+      isLoading = true;
+    });
+  }
 }
