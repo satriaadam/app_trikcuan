@@ -133,6 +133,7 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
                     ),
                     SizedBox(height: 16),
                     RaisedButtonPrimary(
+                      isLoading: isLoadingBuy,
                       onPressed: isLoadingBuy ? null : () {
                         setState(() {
                           isLoadingBuy = true;
