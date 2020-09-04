@@ -3,9 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:trikcuan_app/core/bloc/account/account_bloc.dart';
+import 'package:trikcuan_app/core/bloc/account/account_event.dart';
+import 'package:trikcuan_app/core/bloc/account/account_state.dart';
 import 'package:trikcuan_app/core/bloc/dividen/dividen_bloc.dart';
 import 'package:trikcuan_app/core/bloc/dividen/dividen_event.dart';
 import 'package:trikcuan_app/core/bloc/dividen/dividen_state.dart';
+import 'package:trikcuan_app/core/model/account_model.dart';
 import 'package:trikcuan_app/core/model/dividen_model.dart';
 import 'package:trikcuan_app/utilities/app_consts.dart';
 import 'package:trikcuan_app/widget/box.dart';
@@ -33,39 +37,57 @@ class _DividenDetailState extends State<DividenDetail> {
   bool isOwn = false;
   bool isLoadingBuy = false;
 
+  final accountBloc = AccountBloc();
+  Account account;
+
   @override
   void initState() {
     bloc.add(CheckDividen(
       dataId: widget.dividen.id.toString()
     ));
+    accountBloc.add(GetAccount());
     super.initState();
   }
   
   @override
   Widget build(BuildContext context) {
-    return BlocListener(
-      cubit: bloc,
-      listener: (context, state) {
-        if(state is BuyDividenSuccess) {
-          setState(() {
-            isLoading = false;
-            isLoadingBuy = false;
-            isOwn = true;
-          });
-        } else if(state is DividenAvailable) {
-          setState(() {
-            isLoading = false;
-            isLoadingBuy = false;
-            isOwn = true;
-          });
-        } else if(state is DividenFailure) {
-          setState(() {
-            isLoading = false;
-            isLoadingBuy = false;
-            isOwn = false;
-          });
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener(
+          cubit: bloc,
+          listener: (context, state) {
+            if(state is BuyDividenSuccess) {
+              setState(() {
+                isLoading = false;
+                isLoadingBuy = false;
+                isOwn = true;
+              });
+            } else if(state is DividenAvailable) {
+              setState(() {
+                isLoading = false;
+                isLoadingBuy = false;
+                isOwn = true;
+              });
+            } else if(state is DividenFailure) {
+              setState(() {
+                isLoading = false;
+                isLoadingBuy = false;
+                isOwn = false;
+              });
+            }
+          }
+        ),
+        BlocListener(
+          cubit: accountBloc,
+          listener: (context, state) {
+            if(state is AccountSuccess) {
+              setState(() {
+                account = state.data;
+              });
+            }
+          }
+        )
+      ],
       child: Scaffold(
         appBar: AppBar(
           title: Text("DIVIDEN")
@@ -179,7 +201,7 @@ class _DividenDetailState extends State<DividenDetail> {
                     SizedBox(height: 16),
                     RaisedButtonPrimary(
                       isLoading: isLoadingBuy,
-                      onPressed: isLoadingBuy ? null : () {
+                      onPressed: isLoadingBuy || int.parse(account?.balance) < widget.dividen.price ? null : () {
                         setState(() {
                           isLoadingBuy = true;
                           bloc.add(BuyDividen(
@@ -189,7 +211,9 @@ class _DividenDetailState extends State<DividenDetail> {
                         });
                       },
                       text: "Beli ${rupiah(widget.dividen.price)}",
-                    )
+                    ),
+                    SizedBox(height: 16),
+                    int.parse(account?.balance) < widget.dividen.price ? TextCustom("Saldo Anda ${rupiah(account?.balance)} tidak cukup", color: Colors.red, textAlign: TextAlign.center) : Text("")
                   ],
                 ),
               ),

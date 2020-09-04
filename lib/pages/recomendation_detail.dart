@@ -3,9 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:trikcuan_app/core/bloc/account/account_bloc.dart';
+import 'package:trikcuan_app/core/bloc/account/account_event.dart';
+import 'package:trikcuan_app/core/bloc/account/account_state.dart';
 import 'package:trikcuan_app/core/bloc/recomendation/recomendation_bloc.dart';
 import 'package:trikcuan_app/core/bloc/recomendation/recomendation_event.dart';
 import 'package:trikcuan_app/core/bloc/recomendation/recomendation_state.dart';
+import 'package:trikcuan_app/core/model/account_model.dart';
 import 'package:trikcuan_app/core/model/recomendation_model.dart';
 import 'package:trikcuan_app/utilities/app_consts.dart';
 import 'package:trikcuan_app/widget/box.dart';
@@ -35,6 +39,9 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
   bool isOwn = false;
   bool isLoadingBuy = false;
 
+  final accountBloc = AccountBloc();
+  Account account;
+
   @override
   void initState() {
     bloc.add(CheckRecomendationData(
@@ -42,32 +49,47 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
       recomendation: widget.type,
       date: formatDate.format(DateTime.now())
     ));
+    accountBloc.add(GetAccount());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener(
-      cubit: bloc,
-      listener: (context, state) {
-        if(state is RecomendationDataAvailable) {
-          setState(() {
-            isLoading = false;
-            isOwn = true;
-          });
-        } else if(state is RecomendationTodayLoaded) {
-          setState(() {
-            isLoading = false;
-            isOwn = true;
-          });
-        } else if(state is RecomendationFailure) {
-          setState(() {
-            isLoading = false;
-            isLoadingBuy = false;
-            isOwn = false;
-          });
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener(
+          cubit: bloc,
+          listener: (context, state) {
+            if(state is RecomendationDataAvailable) {
+              setState(() {
+                isLoading = false;
+                isOwn = true;
+              });
+            } else if(state is RecomendationTodayLoaded) {
+              setState(() {
+                isLoading = false;
+                isOwn = true;
+              });
+            } else if(state is RecomendationFailure) {
+              setState(() {
+                isLoading = false;
+                isLoadingBuy = false;
+                isOwn = false;
+              });
+            }
+          }
+        ),
+        BlocListener(
+          cubit: accountBloc,
+          listener: (context, state) {
+            if(state is AccountSuccess) {
+              setState(() {
+                account = state.data;
+              });
+            }
+          }
+        )
+      ],
       child: Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
@@ -138,7 +160,7 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
                     SizedBox(height: 16),
                     RaisedButtonPrimary(
                       isLoading: isLoadingBuy,
-                      onPressed: isLoadingBuy ? null : () {
+                      onPressed: isLoadingBuy || int.parse(account?.balance) < widget.recomendation.hargaBeli ? null : () {
                         setState(() {
                           isLoadingBuy = true;
                           bloc.add(BuyRecomendation(
@@ -150,7 +172,9 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
                         });
                       },
                       text: "Beli ${rupiah(widget.recomendation.hargaBeli)}",
-                    )
+                    ),
+                    SizedBox(height: 16),
+                    int.parse(account?.balance) < widget.recomendation.hargaBeli ? TextCustom("Saldo Anda ${rupiah(account?.balance)} tidak cukup", color: Colors.red, textAlign: TextAlign.center) : Text("")
                   ],
                 ),
               ),
