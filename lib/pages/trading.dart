@@ -107,7 +107,10 @@ class _TradingState extends State<Trading> {
           itemBuilder: (context, index) {
             return isLoading ? shimmerData(context) : Box(
               onPressed: () => Navigator.push(context, MaterialPageRoute(
-                builder: (context) => RecomendationDetailpage(recomendation: data[index])
+                builder: (context) => RecomendationDetailpage(
+                  recomendation: data[index],
+                  type: "trading",
+                )
               )),
               padding: 16,
               color: Colors.white,
@@ -155,7 +158,10 @@ class _TradingState extends State<Trading> {
                 onPressed: int.parse(account?.balance) < int.parse(price?.price) ? null : (){
                   setState(() {
                     isLoading = true;
-                    bloc.add(BuyRecomendationToday(type: "trading"));
+                    bloc.add(BuyRecomendation(
+                      recomendation: "trading",
+                      type: "recomendation"
+                    ));
                   });
                 },
                 text: rupiah(price?.price)

@@ -107,7 +107,10 @@ class _SwingState extends State<Swing> {
           itemBuilder: (context, index) {
             return isLoading ? shimmerData(context) : Box(
               onPressed: () => Navigator.push(context, MaterialPageRoute(
-                builder: (context) => RecomendationDetailpage(recomendation: data[index])
+                builder: (context) => RecomendationDetailpage(
+                  recomendation: data[index],
+                  type: "swing",
+                )
               )),
               padding: 16,
               color: Colors.white,
@@ -155,7 +158,10 @@ class _SwingState extends State<Swing> {
                 onPressed: int.parse(account?.balance) < int.parse(price?.price) ? null : (){
                   setState(() {
                     isLoading = true;
-                    bloc.add(BuyRecomendationToday(type: "swing"));
+                    bloc.add(BuyRecomendation(
+                      recomendation: "swing",
+                      type: "recomendation"
+                    ));
                   });
                 },
                 text: rupiah(price?.price)

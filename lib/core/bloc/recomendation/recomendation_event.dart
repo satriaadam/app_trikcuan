@@ -23,13 +23,32 @@ class LoadRecomendation extends RecomendationEvent {
   List<Object> get props => [type];
 }
 
-class BuyRecomendationToday extends RecomendationEvent {
-  final String type;
+class CheckRecomendationData extends RecomendationEvent {
+  final String dataId;
+  final String recomendation;
+  final String date;
 
-  const BuyRecomendationToday({
-    @required this.type
+  const CheckRecomendationData({
+    @required this.dataId,
+    @required this.recomendation,
+    @required this.date,
   });
 
   @override
-  List<Object> get props => [type];
+  List<Object> get props => [dataId, recomendation, date];
+}
+
+class BuyRecomendation extends RecomendationEvent {
+  final String recomendation;
+  final String type;
+  final String dataId;
+
+  const BuyRecomendation({
+    @required this.recomendation,
+    @required this.type,
+    this.dataId,
+  });
+
+  @override
+  List<Object> get props => [recomendation, type, dataId];
 }

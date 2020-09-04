@@ -49,10 +49,14 @@ class RecomendationBloc extends Bloc<RecomendationEvent, RecomendationState> {
       }
     }
     
-    if (event is BuyRecomendationToday) {
+    if (event is BuyRecomendation) {
       yield RecomendationLoading();
       try {
-        final response = await api.buyRecomendationToday(event.type);
+        final response = await api.buyRecomendation(
+          recomendation: event.recomendation,
+          type: event.type,
+          dataId: event.dataId
+        );
         prefs.setString("recomendationToday", recomendationTodayModelToMap(response));
         yield RecomendationTodayLoaded(data: response);
       } catch (error) {
@@ -66,6 +70,21 @@ class RecomendationBloc extends Bloc<RecomendationEvent, RecomendationState> {
       try {
         final response = await api.getData(event.type);
         yield RecomendationTradingLoaded(data: response);
+      } catch (error) {
+        print("ERROR: $error");
+        yield RecomendationFailure(error: error.toString());
+      }
+    }
+    
+    if (event is CheckRecomendationData) {
+      yield RecomendationLoading();
+      try {
+        await api.checkRecomendationData(
+          dataId: event.dataId,
+          recomendation: event.recomendation,
+          date: event.date
+        );
+        yield RecomendationDataAvailable();
       } catch (error) {
         print("ERROR: $error");
         yield RecomendationFailure(error: error.toString());

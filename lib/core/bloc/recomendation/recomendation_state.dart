@@ -14,6 +14,8 @@ class RecomendationUninitialized extends RecomendationState {}
 
 class RecomendationLoading extends RecomendationState {}
 
+class RecomendationDataAvailable extends RecomendationState {}
+
 class RecomendationPriceLoaded extends RecomendationState {
   final List<RecomendationPriceModel> data;
 

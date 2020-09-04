@@ -6,6 +6,7 @@ String recomendationModelToMap(List<RecomendationModel> data) => json.encode(Lis
 
 class RecomendationModel {
     RecomendationModel({
+        this.id,
         this.kodeSaham,
         this.potensiKenaikan,
         this.fundamental,
@@ -13,8 +14,10 @@ class RecomendationModel {
         this.sentimen,
         this.beli,
         this.jual,
+        this.hargaBeli,
     });
 
+    int id;
     String kodeSaham;
     String potensiKenaikan;
     String fundamental;
@@ -22,8 +25,10 @@ class RecomendationModel {
     String sentimen;
     String beli;
     String jual;
+    int hargaBeli;
 
     factory RecomendationModel.fromMap(Map<String, dynamic> json) => RecomendationModel(
+        id: json["id"],
         kodeSaham: json["kode_saham"],
         potensiKenaikan: json["potensi_kenaikan"],
         fundamental: json["fundamental"],
@@ -31,9 +36,11 @@ class RecomendationModel {
         sentimen: json["sentimen"],
         beli: json["beli"],
         jual: json["jual"],
+        hargaBeli: json["harga_beli"],
     );
 
     Map<String, dynamic> toMap() => {
+        "id": id,
         "kode_saham": kodeSaham,
         "potensi_kenaikan": potensiKenaikan,
         "fundamental": fundamental,
@@ -41,5 +48,6 @@ class RecomendationModel {
         "sentimen": sentimen,
         "beli": beli,
         "jual": jual,
+        "harga_beli": hargaBeli,
     };
 }
