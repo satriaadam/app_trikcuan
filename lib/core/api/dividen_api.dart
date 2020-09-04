@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:trikcuan_app/core/api/main_api.dart';
 import 'package:trikcuan_app/core/model/dividen_model.dart';
 import 'package:trikcuan_app/core/model/dividen_price_model.dart';
-import 'package:trikcuan_app/core/model/dividen_today.dart';
 
 class DividenApi extends MainApi {
 
@@ -29,29 +28,34 @@ class DividenApi extends MainApi {
     }
   }
 
-  Future<List<DividenTodayModel>> geDividennToday() async {
+  Future<String> buyDividen({
+    String dataId, int price
+  }) async {
     try {
-      final response = await getRequest(
-          url: "$host/dividen/today",
-          useAuth: true
+      final response = await postRequest(
+        url: "$host/dividen/buy",
+        useAuth: true,
+        body: {
+          "data_id": dataId,
+          "price": price
+        }
       );
-      return dividenTodayModelFromMap(response);
+      return response;
     } catch (error) {
       throw Exception(error);
     }
   }
-
-  Future<List<DividenTodayModel>> buyDividenToday(String type) async {
+  
+  Future<String> checkDividen({String dataId}) async {
     try {
       final response = await postRequest(
-          url: "$host/dividen/buy",
-          useAuth: true,
-          body: {
-            "dividen": type,
-            "type": "dividen"
-          }
+        url: "$host/dividen/check",
+        useAuth: true,
+        body: {
+          "data_id": dataId
+        }
       );
-      return dividenTodayModelFromMap(response);
+      return response;
     } catch (error) {
       throw Exception(error);
     }

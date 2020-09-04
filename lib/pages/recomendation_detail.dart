@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indonesia/indonesia.dart';
+import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:trikcuan_app/core/bloc/recomendation/recomendation_bloc.dart';
 import 'package:trikcuan_app/core/bloc/recomendation/recomendation_event.dart';
@@ -27,6 +28,8 @@ class RecomendationDetailpage extends StatefulWidget {
 
 class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
 
+  DateFormat formatDate = DateFormat('yyyy-MM-dd');
+
   final bloc = RecomendationBloc();
   bool isLoading = true;
   bool isOwn = false;
@@ -37,7 +40,7 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
     bloc.add(CheckRecomendationData(
       dataId: widget.recomendation.id.toString(),
       recomendation: widget.type,
-      date: "2020-09-05"
+      date: formatDate.format(DateTime.now())
     ));
     super.initState();
   }

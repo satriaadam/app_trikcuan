@@ -6,6 +6,7 @@ String dividenModelToMap(List<DividenModel> data) => json.encode(List<dynamic>.f
 
 class DividenModel {
     DividenModel({
+        this.id,
         this.kodeSaham,
         this.potensi,
         this.cumdate,
@@ -16,6 +17,7 @@ class DividenModel {
         this.price,
     });
 
+    int id;
     String kodeSaham;
     String potensi;
     DateTime cumdate;
@@ -26,6 +28,7 @@ class DividenModel {
     int price;
 
     factory DividenModel.fromMap(Map<String, dynamic> json) => DividenModel(
+        id: json["id"],
         kodeSaham: json["kode_saham"],
         potensi: json["potensi"],
         cumdate: DateTime.parse(json["cumdate"]),
@@ -37,6 +40,7 @@ class DividenModel {
     );
 
     Map<String, dynamic> toMap() => {
+        "id": id,
         "kode_saham": kodeSaham,
         "potensi": potensi,
         "cumdate": cumdate.toIso8601String(),

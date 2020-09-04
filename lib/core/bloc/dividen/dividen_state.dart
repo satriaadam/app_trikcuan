@@ -12,6 +12,10 @@ class DividenUninitialized extends DividenState {}
 
 class DividenLoading extends DividenState {}
 
+class BuyDividenSuccess extends DividenState {}
+
+class DividenAvailable extends DividenState {}
+
 class DividensLoaded extends DividenState {
   final List<DividenModel> data;
 

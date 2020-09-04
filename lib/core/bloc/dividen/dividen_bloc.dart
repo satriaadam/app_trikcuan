@@ -24,6 +24,28 @@ class DividenBloc extends Bloc<DividenEvent, DividenState> {
         yield DividenFailure(error: error.toString());
       }
     }
+    
+    if (event is CheckDividen) {
+      yield DividenLoading();
+      try {
+        await api.checkDividen(dataId: event.dataId);
+        yield DividenAvailable();
+      } catch (error) {
+        print("ERROR: $error");
+        yield DividenFailure(error: error.toString());
+      }
+    }
+    
+    if (event is BuyDividen) {
+      yield DividenLoading();
+      try {
+        await api.buyDividen(dataId: event.dataId, price: event.price);
+        yield BuyDividenSuccess();
+      } catch (error) {
+        print("ERROR: $error");
+        yield DividenFailure(error: error.toString());
+      }
+    }
 
   }
 }
