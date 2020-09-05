@@ -48,8 +48,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               stops: [0.5, 0.7, 0.9],
               colors: [
                 Colors.white,
-                Colors.limeAccent[200],
-                Colors.limeAccent,
+                Colors.amberAccent,
+                Colors.amberAccent[700],
               ],
             ),
           ),

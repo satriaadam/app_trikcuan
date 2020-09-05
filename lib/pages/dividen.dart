@@ -55,14 +55,15 @@ class _DividenState extends State<Dividen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.limeAccent,
-          title: Text('DIVIDEN', style: TextStyle(color: Colors.blueGrey[600], fontWeight: FontWeight.bold),),
+          backgroundColor: Colors.amberAccent,
+          leading: Image.asset('assets/images/logombahgiso.png',width: MediaQuery.of(context).size.width*0.5),
+          title: Text('DIVIDEN', style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),),
         ),
         body: SmartRefresher(
           controller: refreshController,
           onRefresh: () => onRefresh(),
           child: ListView.separated(
-            separatorBuilder: (context, index) => Divider(), 
+            separatorBuilder: (context, index) => Divider(color: Colors.grey.shade300),
             itemCount: isLoading ? 3 : dividens.length,
             itemBuilder: (context, index) {
               return isLoading ? shimmerData(context) : Box(

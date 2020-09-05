@@ -48,6 +48,7 @@ class _TopupSaldoPageState extends State<TopupSaldoPage> {
       },
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.amberAccent,
           title: Text("Top Up Saldo")
         ),
         body: showConfirmationPayment ? Container(

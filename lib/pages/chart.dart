@@ -24,11 +24,12 @@ class _ChartState extends State<Chart> {
       length: _pages.length,
       child: Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.limeAccent,
-        title: Text('MARKET', style: TextStyle(color: Colors.blueGrey[600], fontWeight: FontWeight.bold),),
+        backgroundColor: Colors.amberAccent,
+        leading: Image.asset('assets/images/logombahgiso.png',width: MediaQuery.of(context).size.width*0.5),
+        title: Text('MARKET', style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),),
         bottom: TabBar(
-          indicatorColor: Colors.blueGrey[600],
-          labelColor: Colors.blueGrey[600],
+          indicatorColor: Colors.redAccent,
+          labelColor: Colors.black54,
           tabs: _pages
               .map<Tab>((Tuple2 page) => Tab(text: page.item1))
               .toList(),
