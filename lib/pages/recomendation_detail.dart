@@ -71,11 +71,11 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
       child: Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
-            color: Colors.blueGrey[600]
+            color: Colors.black54
           ),
           elevation: 1,
-          backgroundColor: Colors.limeAccent,
-          title: Text('REKOMENDASI', style: TextStyle(color: Colors.blueGrey[600], fontWeight: FontWeight.bold),),
+          backgroundColor: Colors.amberAccent,
+          title: Text('REKOMENDASI', style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),),
         ),
         body: ListView(
           padding: EdgeInsets.all(16),
