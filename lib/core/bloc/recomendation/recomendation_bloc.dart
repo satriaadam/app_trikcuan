@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trikcuan_app/core/api/recomendation_api.dart';
 import 'package:trikcuan_app/core/bloc/recomendation/recomendation_event.dart';
 import 'package:trikcuan_app/core/bloc/recomendation/recomendation_state.dart';
+import 'package:trikcuan_app/core/model/recomendation_model.dart';
 import 'package:trikcuan_app/core/model/recomendation_price_model.dart';
 import 'package:trikcuan_app/core/model/recomendation_today.dart';
 
@@ -69,7 +70,10 @@ class RecomendationBloc extends Bloc<RecomendationEvent, RecomendationState> {
     if (event is LoadRecomendation) {
       yield RecomendationLoading();
       try {
+        var pref = prefs.getString("recomendation_${event.type}");
+        if(pref != null) yield RecomendationTradingLoaded(data: recomendationModelFromMap(pref));
         final response = await api.getData(event.type);
+        prefs.setString("recomendation_${event.type}", recomendationModelToMap(response));
         yield RecomendationTradingLoaded(data: response);
       } catch (error) {
         print("ERROR: $error");
