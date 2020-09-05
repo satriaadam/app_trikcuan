@@ -102,7 +102,7 @@ class _TradingState extends State<Trading> {
         controller: refreshController,
         onRefresh: () => onRefresh(),
         child: ListView.separated(
-          separatorBuilder: (context, index) => Divider(), 
+          separatorBuilder: (context, index) => Divider(),
           itemCount: isLoading ? 3 : data.length,
           itemBuilder: (context, index) {
             return isLoading ? shimmerData(context) : Box(

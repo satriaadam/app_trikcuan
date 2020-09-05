@@ -56,8 +56,8 @@ class _BeritaState extends State<Berita> {
         ],
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.limeAccent,
-            title: Text('Berita', style: TextStyle(color: Colors.blueGrey[600], fontWeight: FontWeight.bold),),
+            backgroundColor: Colors.amberAccent,
+            title: Text('BERITA', style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),),
           ),
           body: SmartRefresher(
             controller: refreshController,

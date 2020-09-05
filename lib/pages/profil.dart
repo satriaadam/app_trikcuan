@@ -73,8 +73,9 @@ class _ProfilState extends State<Profil> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          backgroundColor: Colors.limeAccent,
-          title: Text('PROFIL', style: TextStyle(color: Colors.blueGrey[600], fontWeight: FontWeight.bold),),
+          backgroundColor: Colors.amberAccent,
+          leading: Image.asset('assets/images/logombahgiso.png',width: MediaQuery.of(context).size.width*0.5),
+          title: Text('PROFIL', style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),),
           elevation: 1
         ),
         body: ListView(
@@ -91,7 +92,8 @@ class _ProfilState extends State<Profil> {
                   SizedBox(height: 16),
                   Box(
                     borderRadius: 16,
-                    color: Colors.white,
+                    borderColor: Colors.black54,
+                    color: Colors.amberAccent,
                     boxShadow: [AppBoxShadow.type3],
                     child: Column(
                       children: [
@@ -105,7 +107,7 @@ class _ProfilState extends State<Profil> {
                                 child: Text(
                                   'Saldo',
                                   style: TextStyle(
-                                    color: Colors.blueGrey[600],
+                                    color: Colors.black54,
                                     fontFamily: 'Poppins',
                                     fontSize: 15.0
                                   ),
@@ -126,7 +128,7 @@ class _ProfilState extends State<Profil> {
                             ],
                           ),
                         ),
-                        Divider(),
+                        Divider(color: Colors.black54, thickness: 1,),
                         Box(
                           color: Colors.transparent,
                           padding: 16,
@@ -136,7 +138,7 @@ class _ProfilState extends State<Profil> {
                           child: Text(
                             'Klik Disini Untuk Top Up Saldo',
                             style: TextStyle(
-                              color: Colors.blueGrey[600],
+                              color: Colors.black54,
                               fontFamily: 'Poppins',
                               fontSize: 15.0
                             ),
@@ -149,7 +151,7 @@ class _ProfilState extends State<Profil> {
                   SizedBox(height: 24),
                   RaisedButtonCustom(
                     color: Colors.white,
-                    elevation: 1,
+                    elevation: 2,
                     onPressed: () => Navigator.push(context, MaterialPageRoute(
                       builder: (context) => DaftarKelas()
                     )),
@@ -162,7 +164,7 @@ class _ProfilState extends State<Profil> {
                       Expanded(
                         child: RaisedButtonCustom(
                           color: Colors.white,
-                          elevation: 1,
+                          elevation: 2,
                           onPressed: () => Navigator.push(context, MaterialPageRoute(
                             builder: (context) => DataPerusahaan()
                           )),
@@ -174,7 +176,7 @@ class _ProfilState extends State<Profil> {
                       Expanded(
                         child: RaisedButtonCustom(
                           color: Colors.white,
-                          elevation: 1,
+                          elevation: 2,
                           onPressed: () => Navigator.push(context, MaterialPageRoute(
                             builder: (context) => Corporate()
                           )),
@@ -186,9 +188,9 @@ class _ProfilState extends State<Profil> {
                   ),
                   SizedBox(height: 16),
                   RaisedButtonCustom(
-                    color: Colors.red,
+                    color: Colors.redAccent,
                     onPressed: () => bloc.add(Logout()),
-                    elevation: 1,
+                    elevation: 2,
                     textColor: Colors.white,
                     text: "Logout"
                   )

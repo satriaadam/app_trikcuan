@@ -24,11 +24,12 @@ class _RekomendasiState extends State<Rekomendasi> {
       length: _pages.length,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.limeAccent,
-          title: Text('REKOMENDASI', style: TextStyle(color: Colors.blueGrey[600], fontWeight: FontWeight.bold),),
+          backgroundColor: Colors.amberAccent,
+          leading: Image.asset('assets/images/logombahgiso.png',width: MediaQuery.of(context).size.width*0.5),
+          title: Text('REKOMENDASI', style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),),
           bottom: TabBar(
-            labelColor: Colors.blueGrey[600],
-            indicatorColor: Colors.blueGrey[600],
+            labelColor: Colors.black54,
+            indicatorColor: Colors.redAccent,
             tabs: _pages
                 .map<Tab>((Tuple2 page) => Tab(text: page.item1))
                 .toList(),

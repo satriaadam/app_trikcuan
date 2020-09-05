@@ -90,7 +90,12 @@ class _DividenDetailState extends State<DividenDetail> {
       ],
       child: Scaffold(
         appBar: AppBar(
-          title: Text("DIVIDEN")
+          iconTheme: IconThemeData(
+            color: Colors.black54
+          ),
+          title: Text("DIVIDEN", style: TextStyle(color: Colors.black54),),
+          backgroundColor: Colors.amberAccent,
+
         ),
         body: ListView(
           padding: EdgeInsets.all(16),

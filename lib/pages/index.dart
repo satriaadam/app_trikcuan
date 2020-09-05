@@ -60,7 +60,7 @@ class _IndexState extends State<Index> {
           controller: refreshController,
           onRefresh: () => onRefresh(),
           child: ListView.separated(
-            separatorBuilder: (context, index) => Divider(),
+            separatorBuilder: (context, index) => Divider(color: Colors.grey.shade300,),
             itemCount: isLoading ? 3 : data.length,
             itemBuilder: (context, index) {
               return isLoading ? shimmerData(context) : Box(
