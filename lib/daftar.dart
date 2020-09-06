@@ -58,7 +58,7 @@ class _DaftarState extends State<Daftar> {
                   Container(
                     padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
                     child: Text(
-                      'Daftar',
+                      'Registrasi',
                       style:
                       TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
                     ),

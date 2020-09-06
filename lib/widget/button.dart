@@ -37,6 +37,41 @@ class RaisedButtonPrimary extends StatelessWidget {
   }
 }
 
+class RaisedButtonSecondary extends StatelessWidget {
+  const RaisedButtonSecondary({
+    Key key,
+    this.text,
+    this.onPressed,
+    this.padding,
+    this.fontSize,
+    this.icon,
+    this.radius,
+    this.isLoading = false
+  }) : super(key: key);
+
+  final String text;
+  final VoidCallback onPressed;
+  final double padding;
+  final double fontSize;
+  final double radius;
+  final IconData icon;
+  final bool isLoading;
+
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButtonCustom(
+        onPressed: onPressed,
+        padding: padding,
+        fontSize: fontSize,
+        icon: icon,
+        text: text,
+        color: AppColor.secondary,
+        radius: radius,
+        isLoading: isLoading
+    );
+  }
+}
+
 class RaisedButtonAccent extends StatelessWidget {
   const RaisedButtonAccent({
     Key key,

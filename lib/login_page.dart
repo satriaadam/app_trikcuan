@@ -52,13 +52,14 @@ class _LoginPageState extends State<LoginPage> {
                   Container(
                     padding: EdgeInsets.fromLTRB(16.0, 150.0, 0.0, 0.0),
                     child: Text('Login', style: TextStyle(
-                      fontSize: 80.0,
-                      fontWeight: FontWeight.bold
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
                     )),
                   ),
                 ],
               ),
             ),
+            SizedBox(height: 5.0),
             Container(
               padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
               child: Column(
@@ -83,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         'Forgot Password',
                         style: TextStyle(
-                          color: Colors.green,
+                          color: Colors.black26,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Montserrat',
                           decoration: TextDecoration.underline
@@ -91,11 +92,11 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 40.0),
+                  SizedBox(height: 75.0),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     child: RaisedButtonPrimary(
-                      text: "Login",
+                      text: "LOGIN",
                       isLoading: isLoading,
                       radius: 50,
                       padding: 16,
@@ -108,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: OutlineButtonPrimary(
                       radius: 50,
                       padding: 16,
-                      text: "Daftar",
+                      text: "REGISTRASI",
                       onPressed: () => Navigator.push(context, MaterialPageRoute(
                         builder: (context) => Daftar()
                       )),

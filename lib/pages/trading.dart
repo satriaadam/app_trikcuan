@@ -153,7 +153,7 @@ class _TradingState extends State<Trading> {
             SizedBox(height: 24),
             Container(
               width: MediaQuery.of(context).size.width,
-              child: RaisedButtonPrimary(
+              child: RaisedButtonSecondary(
                 isLoading: isLoading,
                 onPressed: int.parse(account?.balance) < int.parse(price?.price) ? null : (){
                   setState(() {
