@@ -91,10 +91,10 @@ class _DividenDetailState extends State<DividenDetail> {
       child: Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
-            color: Colors.black54
+            color: Colors.white
           ),
-          title: Text("DIVIDEN", style: TextStyle(color: Colors.black54),),
-          backgroundColor: Colors.amberAccent,
+          title: Text("DIVIDEN", style: TextStyle(color: Colors.white),),
+          backgroundColor: Colors.lightBlue[900],
 
         ),
         body: ListView(
@@ -200,11 +200,11 @@ class _DividenDetailState extends State<DividenDetail> {
                   physics: ClampingScrollPhysics(),
                   children: [
                     Text(
-                      "Untuk mendapatkan informasi (Fundamental, Teknikal, Sentiman, dll) Anda harus menekan tombol di bawah ini terlebih dahulu", 
+                      "Untuk mendapatkan informasi (Fundamental, Teknikal, Sentimen, dll) Anda harus menekan tombol di bawah ini terlebih dahulu",
                       textAlign: TextAlign.center
                     ),
                     SizedBox(height: 16),
-                    RaisedButtonPrimary(
+                    RaisedButtonSecondary(
                       isLoading: isLoadingBuy,
                       onPressed: isLoadingBuy || int.parse(account?.balance) < int.parse(widget.dividen.price) ? null : () {
                         setState(() {

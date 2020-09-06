@@ -29,11 +29,11 @@ class _WebViewPageState extends State<WebViewPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: Colors.black54
+          color: Colors.white,
         ),
         elevation: 1,
-        backgroundColor: Colors.amberAccent,
-        title: Text('BERITA', style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.lightBlue[900],
+        title: Text('BERITA', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
       body: Column(
         children: <Widget>[

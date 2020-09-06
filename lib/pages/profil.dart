@@ -13,7 +13,6 @@ import 'package:trikcuan_app/pages/daftarkelas.dart';
 import 'package:trikcuan_app/pages/dataperusahaan.dart';
 import 'package:trikcuan_app/pages/topup_saldo.dart';
 import 'package:trikcuan_app/utilities/app_consts.dart';
-import 'package:trikcuan_app/utilities/styles.dart';
 import 'package:intl/intl.dart';
 import 'package:trikcuan_app/widget/box.dart';
 import 'package:trikcuan_app/widget/button.dart';
@@ -73,9 +72,9 @@ class _ProfilState extends State<Profil> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          backgroundColor: Colors.amberAccent,
-          leading: Image.asset('assets/images/logombahgiso.png',width: MediaQuery.of(context).size.width*0.5),
-          title: Text('PROFIL', style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),),
+          backgroundColor: Colors.lightBlue[900],
+         // leading: Image.asset('assets/images/logombahgiso.png',width: MediaQuery.of(context).size.width*0.5),
+          title: Text('PROFIL', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
           elevation: 1
         ),
         body: ListView(
@@ -86,14 +85,31 @@ class _ProfilState extends State<Profil> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Halo,\n${account?.name}",
-                    style: kTitleStyle,
+                    "Halo,",
+                    style: TextStyle(
+                      fontFamily: 'Monserrat',
+                      height: 1.5,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 28.0,
+                      color: Colors.black54
+                    ),
+                  ),
+                  SizedBox(height: 5.0),
+                  Text(
+                    "${account?.name}",
+                    style: TextStyle(
+                        fontFamily: 'Monserrat',
+                        height: 1.5,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22.0,
+                        color: Colors.black54
+                    ),
                   ),
                   SizedBox(height: 16),
                   Box(
                     borderRadius: 16,
-                    borderColor: Colors.black54,
-                    color: Colors.amberAccent,
+                    borderColor: Colors.lightBlue[900],
+                    color: Colors.white,
                     boxShadow: [AppBoxShadow.type3],
                     child: Column(
                       children: [
@@ -108,7 +124,7 @@ class _ProfilState extends State<Profil> {
                                   'Saldo',
                                   style: TextStyle(
                                     color: Colors.black54,
-                                    fontFamily: 'Poppins',
+                                    fontFamily: 'Monserrat',
                                     fontSize: 15.0
                                   ),
                                 ),
@@ -118,9 +134,9 @@ class _ProfilState extends State<Profil> {
                                 child: Text(
                                   rupiah(account?.balance),
                                   style: TextStyle(
-                                    color: Colors.blueGrey[900],
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w800,
+                                    color: Colors.black87,
+                                    fontFamily: 'Monserrat',
+                                    fontWeight: FontWeight.w700,
                                     fontSize: 28
                                   ),
                                 ),
@@ -128,7 +144,7 @@ class _ProfilState extends State<Profil> {
                             ],
                           ),
                         ),
-                        Divider(color: Colors.black54, thickness: 1,),
+                        Divider(color: Colors.lightBlue[900], thickness: 1,),
                         Box(
                           color: Colors.transparent,
                           padding: 16,
@@ -139,8 +155,8 @@ class _ProfilState extends State<Profil> {
                             'Klik Disini Untuk Top Up Saldo',
                             style: TextStyle(
                               color: Colors.black54,
-                              fontFamily: 'Poppins',
-                              fontSize: 15.0
+                              fontFamily: 'Monserrat',
+                              fontSize: 14.0
                             ),
                             textAlign: TextAlign.left,
                           ),
@@ -187,7 +203,7 @@ class _ProfilState extends State<Profil> {
                     ],
                   ),
                   SizedBox(height: 16),
-                  RaisedButtonCustom(
+                  RaisedButtonCustomSecondary(
                     color: Colors.redAccent,
                     onPressed: () => bloc.add(Logout()),
                     elevation: 2,

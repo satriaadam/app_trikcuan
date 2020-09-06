@@ -66,13 +66,13 @@ class _LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   TextFieldBorderBottom(
                     controller: usernameController,
-                    textHint: "USERNAME",
+                    textHint: "Username",
                     icon: Icons.person,
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 15.0),
                   TextFieldBorderBottom(
                     controller: passwordController,
-                    textHint: "PASSWORD",
+                    textHint: "Password",
                     isObsecure: true,
                     icon: Icons.lock,
                   ),
@@ -100,6 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                       isLoading: isLoading,
                       radius: 50,
                       padding: 16,
+                      fontSize: 16,
                       onPressed: () => !isLoading ? login() : null,
                     ),
                   ),
@@ -110,6 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                       radius: 50,
                       padding: 16,
                       text: "REGISTRASI",
+                      fontSize: 16,
                       onPressed: () => Navigator.push(context, MaterialPageRoute(
                         builder: (context) => Daftar()
                       )),

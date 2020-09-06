@@ -212,7 +212,7 @@ class TextFieldBorderBottom extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
-          height: 48,
+          height: 50,
           color: Colors.transparent,
           child: Padding(
             padding: const EdgeInsets.all(0),
@@ -230,9 +230,9 @@ class TextFieldBorderBottom extends StatelessWidget {
               obscureText: isObsecure,
               validator: validator,
               decoration: InputDecoration(
-                icon: icon != null ? Icon(icon, color: Colors.black87, size: 20) : null,
+                prefixIcon: icon != null ? Icon(icon, color: Colors.black87, size: 20) : null,
                 hintText: textHint,
-                border: InputBorder.none,
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                 hintStyle: TextStyle(color: Colors.black38),
                 contentPadding: EdgeInsets.all(0)
               ),

@@ -20,20 +20,35 @@ class _RekomendasiState extends State<Rekomendasi> {
 
   @override
   Widget build(BuildContext context) {
+    TabBar myTabBar = TabBar(
+      indicatorColor: Colors.red[800],
+      indicatorWeight: 3.0,
+      labelColor: Colors.white,
+      tabs: _pages
+          .map<Tab>((Tuple2 page) => Tab(text: page.item1))
+          .toList(),
+    );
+
     return DefaultTabController(
       length: _pages.length,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.amberAccent,
+          elevation: 5.0,
+          backgroundColor: Colors.lightBlue[900],
           leading: Image.asset('assets/images/logombahgiso.png',width: MediaQuery.of(context).size.width*0.5),
-          title: Text('REKOMENDASI', style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),),
-          bottom: TabBar(
-            labelColor: Colors.black54,
-            indicatorColor: Colors.redAccent,
-            tabs: _pages
-                .map<Tab>((Tuple2 page) => Tab(text: page.item1))
-                .toList(),
-          ),
+          title: Text('REKOMENDASI', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(myTabBar.preferredSize.height),
+            child: Container(color: Color(0xFF243E65), child: myTabBar,)
+          )
+
+        //  TabBar(
+        //    labelColor: Colors.black54,
+        //    indicatorColor: Colors.redAccent,
+        //    tabs: _pages
+        //        .map<Tab>((Tuple2 page) => Tab(text: page.item1))
+        //        .toList(),
+        //  ),
         ),
         body: TabBarView(
           children: _pages.map<Widget>((Tuple2 page) => page.item2).toList(),

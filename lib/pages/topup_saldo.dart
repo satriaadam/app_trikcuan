@@ -48,8 +48,13 @@ class _TopupSaldoPageState extends State<TopupSaldoPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.amberAccent,
-          title: Text("Top Up Saldo")
+          backgroundColor: Colors.lightBlue[900],
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
+          title: Text("Top Up Saldo", style: TextStyle(
+            color: Colors.white
+          ),)
         ),
         body: showConfirmationPayment ? Container(
           child: ListView(
@@ -139,7 +144,7 @@ class _TopupSaldoPageState extends State<TopupSaldoPage> {
         bottomNavigationBar: showConfirmationPayment ? Container(height: 0) : BottomAppBar(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: RaisedButtonPrimary(
+            child: RaisedButtonSecondary(
               isLoading: isLoading,
               onPressed: saldoSelected != null && !isLoading ? (){
                 final random = Random();

@@ -45,11 +45,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomRight,
-              stops: [0.5, 0.7, 0.9],
+              stops: [0.5, 0.7, 0.8],
               colors: [
                 Colors.white,
-                Colors.amberAccent,
-                Colors.amberAccent[700],
+                Colors.lightBlue[800],
+                Colors.lightBlue[900],
               ],
             ),
           ),
@@ -181,7 +181,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: FlatButton(
                       onPressed: () {
                         _pageController.nextPage(
-                          duration: Duration(milliseconds: 500),
+                          duration: Duration(milliseconds: 400),
                           curve: Curves.ease,
                         );
                       },
@@ -192,14 +192,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Text(
                             'Next',
                             style: TextStyle(
-                              color: Colors.black54,
+                              color: Colors.white70,
                               fontSize: 22.0,
                             ),
                           ),
                           SizedBox(width: 10.0),
                           Icon(
                             Icons.arrow_forward,
-                            color: Colors.black54,
+                            color: Colors.white70,
                             size: 30.0,
                           ),
                         ],
@@ -215,9 +215,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       bottomSheet: _currentPage == _numPages - 1
           ? Container(
-        height: 100.0,
+        height: 80.0,
         width: double.infinity,
-        color: Colors.blueAccent[400],
+        color: Colors.lightBlue[900],
         child: GestureDetector(
           onTap: () async { 
             SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -228,12 +228,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           },
           child: Center(
             child: Padding(
-              padding: EdgeInsets.only(bottom: 30.0),
+              padding: EdgeInsets.only(bottom: 40.0),
               child: Text(
                 'Mulai Sekarang',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 20.0,
+                  fontSize: 16.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
