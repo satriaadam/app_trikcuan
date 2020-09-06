@@ -29,7 +29,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       height: 8.0,
       width: isActive ? 24.0 : 16.0,
       decoration: BoxDecoration(
-        color: isActive ? Colors.white : Color(0xFF546E7A),
+        color: isActive ? Colors.white : Colors.black54,
         borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
     );
@@ -69,7 +69,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Text(
                       'Skip',
                       style: TextStyle(
-                        color: Colors.blueGrey[600],
+                        color: Colors.black54,
                         fontSize: 20.0,
                       ),
                     ),
@@ -102,12 +102,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 5.0),
                             Text(
-                              'Selamat di Aplikasi\nmbahgiso',
+                              'Selamat datang di Aplikasi MBAHGISO',
                               style: kTitleStyle,
                             ),
-                            SizedBox(height: 5.0),
+                            SizedBox(height: 9.0),
                             Text(
-                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                              'Aplikasi news dan rekomendasi saham ala Mbah Giso langsung di smartphone anda.',
                               style: kSubtitleStyle,
                             ),
                           ],
@@ -129,12 +129,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 5.0),
                             Text(
-                              'Live your life smarter\nwith us!',
+                              'Rekomendasi Saham Ala Mbah Giso',
                               style: kTitleStyle,
                             ),
-                            SizedBox(height: 5.0),
+                            SizedBox(height: 9.0),
                             Text(
-                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                              'Dapatkan rekomendasi saham Ala Mbah Giso secara langsung mulai dari saham untuk trading, swingtrade, dan investasi.',
                               style: kSubtitleStyle,
                             ),
                           ],
@@ -156,12 +156,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 5.0),
                             Text(
-                              'Get a new experience\nof imagination',
+                              'Rasakan Mudahnya Trading',
                               style: kTitleStyle,
                             ),
                             SizedBox(height: 5.0),
                             Text(
-                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                              'Dengan aplikasi Mbah Giso, rasakan mudahnya trading dengan strategi dan langkah khusus dari Mbah Giso.',
                               style: kSubtitleStyle,
                             ),
                           ],
@@ -192,14 +192,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Text(
                             'Next',
                             style: TextStyle(
-                              color: Colors.blueGrey[600],
+                              color: Colors.black54,
                               fontSize: 22.0,
                             ),
                           ),
                           SizedBox(width: 10.0),
                           Icon(
                             Icons.arrow_forward,
-                            color: Colors.blueGrey[600],
+                            color: Colors.black54,
                             size: 30.0,
                           ),
                         ],
@@ -217,7 +217,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ? Container(
         height: 100.0,
         width: double.infinity,
-        color: Colors.blueGrey[600],
+        color: Colors.blueAccent[400],
         child: GestureDetector(
           onTap: () async { 
             SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -230,7 +230,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Padding(
               padding: EdgeInsets.only(bottom: 30.0),
               child: Text(
-                'Get started',
+                'Mulai Sekarang',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20.0,

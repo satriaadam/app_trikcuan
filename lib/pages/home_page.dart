@@ -1,4 +1,3 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:trikcuan_app/pages/berita.dart';
 import 'package:trikcuan_app/pages/chart.dart';
@@ -23,20 +22,40 @@ class _HomePageState extends State<HomePage> {
         Berita(),
         Profil(),
       ].elementAt(_selectedIndex),
-      bottomNavigationBar: CurvedNavigationBar(
-        index: _selectedIndex,
-        items: <Widget>[
-          Icon(Icons.timeline, size: 35.0, color: Colors.black54,),
-          Icon(Icons.equalizer, size: 35.0, color: Colors.black54),
-          Icon(Icons.blur_on, size: 45.0, color: Colors.black54),
-          Icon(Icons.library_books, size: 35.0, color: Colors.black54),
-          Icon(Icons.person, size: 35.0, color: Colors.black54),
+      bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Colors.black26,
+        selectedItemColor: Colors.black54,
+        iconSize: 35.0,
+        showUnselectedLabels: true,
+        unselectedFontSize: 12.0,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.timeline),
+            title: Text('Market'),
+            backgroundColor: Colors.amberAccent,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.equalizer),
+            title: Text('Dividen'),
+            backgroundColor: Colors.amberAccent,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.blur_on),
+            title: Text('Rekomendasi'),
+            backgroundColor: Colors.amberAccent,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.library_books),
+            title: Text('Berita'),
+            backgroundColor: Colors.amberAccent,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            title: Text('Profil'),
+            backgroundColor: Colors.amberAccent,
+          ),
         ],
-        color: Colors.amberAccent,
-        buttonBackgroundColor: Colors.amberAccent,
-        backgroundColor: Colors.transparent,
-        animationCurve: Curves.easeInOut,
-        animationDuration: Duration(milliseconds: 300),
+        currentIndex: _selectedIndex,
         onTap: _OnBarItemTap,
           ),
       );
