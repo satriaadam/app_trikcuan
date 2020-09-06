@@ -26,7 +26,6 @@ class _HomePageState extends State<HomePage> {
         unselectedItemColor: Colors.black26,
         selectedItemColor: Colors.black54,
         iconSize: 35.0,
-        showUnselectedLabels: true,
         unselectedFontSize: 12.0,
         items: [
           BottomNavigationBarItem(

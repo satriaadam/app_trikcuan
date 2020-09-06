@@ -57,6 +57,7 @@ class _BeritaState extends State<Berita> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.amberAccent,
+            leading: Image.asset('assets/images/logombahgiso.png',width: MediaQuery.of(context).size.width*0.5),
             title: Text('BERITA', style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),),
           ),
           body: SmartRefresher(
