@@ -206,19 +206,19 @@ class _DividenDetailState extends State<DividenDetail> {
                     SizedBox(height: 16),
                     RaisedButtonPrimary(
                       isLoading: isLoadingBuy,
-                      onPressed: isLoadingBuy || int.parse(account?.balance) < widget.dividen.price ? null : () {
+                      onPressed: isLoadingBuy || int.parse(account?.balance) < int.parse(widget.dividen.price) ? null : () {
                         setState(() {
                           isLoadingBuy = true;
                           bloc.add(BuyDividen(
                             dataId: widget.dividen.id.toString(),
-                            price: widget.dividen.price
+                            price: int.parse(widget.dividen.price)
                           ));
                         });
                       },
-                      text: "Beli ${rupiah(widget.dividen.price)}",
+                      text: "Beli ${rupiah(int.parse(widget.dividen.price))}",
                     ),
                     SizedBox(height: 16),
-                    int.parse(account?.balance) < widget.dividen.price ? TextCustom("Saldo Anda ${rupiah(account?.balance)} tidak cukup", color: Colors.red, textAlign: TextAlign.center) : Text("")
+                    int.parse(account?.balance) < int.parse(widget.dividen.price) ? TextCustom("Saldo Anda ${rupiah(account?.balance)} tidak cukup", color: Colors.red, textAlign: TextAlign.center) : Text("")
                   ],
                 ),
               ),

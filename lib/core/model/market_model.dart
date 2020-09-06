@@ -7,68 +7,39 @@ String marketModelToMap(List<MarketModel> data) => json.encode(List<dynamic>.fro
 class MarketModel {
     MarketModel({
         this.id,
-        this.category,
         this.code,
         this.description,
         this.price,
         this.priceChange,
         this.percentageChange,
+        this.marketCategory,
     });
 
-    String id;
-    String category;
+    int id;
     String code;
     String description;
     String price;
     String priceChange;
     String percentageChange;
+    String marketCategory;
 
     factory MarketModel.fromMap(Map<String, dynamic> json) => MarketModel(
-        id: json["id"].toString(),
-        category: json["category"].toString(),
-        code: json["code"].toString(),
-        description: json["description"].toString(),
-        price: json["price"].toString(),
-        priceChange: json["price_change"].toString(),
-        percentageChange: json["percentage_change"].toString(),
+        id: json["id"],
+        code: json["code"],
+        description: json["description"],
+        price: json["price"],
+        priceChange: json["price_change"],
+        percentageChange: json["percentage_change"],
+        marketCategory: json["market_category"],
     );
 
     Map<String, dynamic> toMap() => {
         "id": id,
-        "category": categoryValues.reverse[category],
         "code": code,
         "description": description,
         "price": price,
         "price_change": priceChange,
         "percentage_change": percentageChange,
+        "market_category": marketCategory,
     };
-}
-
-enum Category { AMERICA, ASIA, EROPA }
-
-final categoryValues = EnumValues({
-    "America": Category.AMERICA,
-    "Asia": Category.ASIA,
-    "Eropa": Category.EROPA
-});
-
-enum PercentageChange { THE_031, PERCENTAGE_CHANGE_031 }
-
-final percentageChangeValues = EnumValues({
-    "-0.31%": PercentageChange.PERCENTAGE_CHANGE_031,
-    "+0.31%": PercentageChange.THE_031
-});
-
-class EnumValues<T> {
-    Map<String, T> map;
-    Map<T, String> reverseMap;
-
-    EnumValues(this.map);
-
-    Map<T, String> get reverse {
-        if (reverseMap == null) {
-            reverseMap = map.map((k, v) => new MapEntry(v, k));
-        }
-        return reverseMap;
-    }
 }

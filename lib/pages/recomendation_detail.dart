@@ -160,21 +160,21 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
                     SizedBox(height: 16),
                     RaisedButtonPrimary(
                       isLoading: isLoadingBuy,
-                      onPressed: isLoadingBuy || int.parse(account?.balance) < widget.recomendation.hargaBeli ? null : () {
+                      onPressed: isLoadingBuy || int.parse(account?.balance) < int.parse(widget.recomendation.hargaBeli) ? null : () {
                         setState(() {
                           isLoadingBuy = true;
                           bloc.add(BuyRecomendation(
                             recomendation: widget.type,
                             type: "recomendation-data",
                             dataId: widget.recomendation.id.toString(),
-                            price: widget.recomendation.hargaBeli
+                            price: int.parse(widget.recomendation.hargaBeli)
                           ));
                         });
                       },
-                      text: "Beli ${rupiah(widget.recomendation.hargaBeli)}",
+                      text: "Beli ${rupiah(int.parse(widget.recomendation.hargaBeli))}",
                     ),
                     SizedBox(height: 16),
-                    int.parse(account?.balance) < widget.recomendation.hargaBeli ? TextCustom("Saldo Anda ${rupiah(account?.balance)} tidak cukup", color: Colors.red, textAlign: TextAlign.center) : Text("")
+                    int.parse(account?.balance) < int.parse(widget.recomendation.hargaBeli) ? TextCustom("Saldo Anda ${rupiah(account?.balance)} tidak cukup", color: Colors.red, textAlign: TextAlign.center) : Text("")
                   ],
                 ),
               ),

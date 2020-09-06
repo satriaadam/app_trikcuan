@@ -25,7 +25,7 @@ class DividenModel {
     String keterangan;
     String beli;
     String jual;
-    int price;
+    String price;
 
     factory DividenModel.fromMap(Map<String, dynamic> json) => DividenModel(
         id: json["id"],
@@ -36,7 +36,7 @@ class DividenModel {
         keterangan: json["keterangan"],
         beli: json["beli"],
         jual: json["jual"],
-        price: json["price"],
+        price: json["price"].toString(),
     );
 
     Map<String, dynamic> toMap() => {

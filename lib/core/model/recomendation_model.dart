@@ -25,7 +25,7 @@ class RecomendationModel {
     String sentimen;
     String beli;
     String jual;
-    int hargaBeli;
+    String hargaBeli;
 
     factory RecomendationModel.fromMap(Map<String, dynamic> json) => RecomendationModel(
         id: json["id"],

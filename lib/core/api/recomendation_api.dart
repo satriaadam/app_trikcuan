@@ -21,9 +21,10 @@ class RecomendationApi extends MainApi {
   Future<List<RecomendationModel>> getData(String type) async {
     try {
       final response = await getRequest(
-        url: "http://script.google.com/macros/s/AKfycbxS4eCKGo--UbuEyXorXpxUZU9nh9l7zoDt5Dpyx1cqZ1zVRK4/exec?id=12LdzZxoBz0OIN9jnCQ3RVum8Ce_J1Fw088X8cDAlHDo&sheet=$type",
+        url: "$host/recomendation/$type",
+        useAuth: true
       );
-      return recomendationModelFromMap(jsonEncode(jsonDecode(response)['data']));
+      return recomendationModelFromMap(jsonEncode(jsonDecode(response)));
     } catch (error) {
       throw Exception(error);
     }
