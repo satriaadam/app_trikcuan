@@ -48,6 +48,7 @@ class _DaftarState extends State<Daftar> {
         }
       },
       child: Scaffold(
+        backgroundColor: Colors.grey.shade100,
         resizeToAvoidBottomPadding: false,
         body: ListView(
           padding: EdgeInsets.only(bottom: 80),

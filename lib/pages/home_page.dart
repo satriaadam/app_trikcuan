@@ -24,34 +24,48 @@ class _HomePageState extends State<HomePage> {
       ].elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: Colors.black54,
+        type: BottomNavigationBarType.fixed,
+        elevation: 5.0,
+        showUnselectedLabels: true,
         selectedItemColor: Colors.lightBlue[900],
         iconSize: 30.0,
+        backgroundColor: Colors.white,
         selectedFontSize: 12.0,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.timeline),
-            title: Text('Market'),
-            backgroundColor: Colors.white,
+            title: Text('Market', style:TextStyle(
+              fontSize: 10.0
+            ),),
+         //   backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.equalizer),
-            title: Text('Dividen'),
-            backgroundColor: Colors.white,
+            title: Text('Dividen', style: TextStyle(
+              fontSize: 10.0
+            ),),
+       //     backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.blur_on),
-            title: Text('Rekomendasi'),
-            backgroundColor: Colors.white,
+            title: Text('Rekomendasi', style: TextStyle(
+              fontSize: 10.0
+            ),),
+        //    backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.library_books),
-            title: Text('Berita'),
-            backgroundColor: Colors.white,
+            title: Text('Berita', style: TextStyle(
+              fontSize: 10.0
+            ),),
+        //    backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            title: Text('Profil'),
-            backgroundColor: Colors.white,
+            title: Text('Profil', style: TextStyle(
+              fontSize: 10.0
+            ),),
+       //     backgroundColor: Colors.white,
           ),
         ],
         currentIndex: _selectedIndex,
