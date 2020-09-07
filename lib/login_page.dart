@@ -84,22 +84,22 @@ class _LoginPageState extends State<LoginPage> {
                     isObsecure: true,
                     prefixIcon: Icons.lock,
                   ),
-                  SizedBox(height: 5.0),
-                  Container(
-                    alignment: Alignment(1.0, 0.0),
-                    padding: EdgeInsets.only(top: 15.0, left: 20.0),
-                    child: InkWell(
-                      child: Text(
-                        'Forgot Password',
-                        style: TextStyle(
-                          color: Colors.black38,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Montserrat',
-                          decoration: TextDecoration.underline
-                        ),
-                      ),
-                    ),
-                  ),
+                  // SizedBox(height: 5.0),
+                  // Container(
+                  //   alignment: Alignment(1.0, 0.0),
+                  //   padding: EdgeInsets.only(top: 15.0, left: 20.0),
+                  //   child: InkWell(
+                  //     child: Text(
+                  //       'Forgot Password',
+                  //       style: TextStyle(
+                  //         color: Colors.black38,
+                  //         fontWeight: FontWeight.bold,
+                  //         fontFamily: 'Montserrat',
+                  //         decoration: TextDecoration.underline
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(height: 75.0),
                   Container(
                     width: MediaQuery.of(context).size.width,

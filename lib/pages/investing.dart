@@ -102,7 +102,7 @@ class _InvestingState extends State<Investing> {
         controller: refreshController,
         onRefresh: () => onRefresh(),
         child: ListView.separated(
-          separatorBuilder: (context, index) => Divider(), 
+          separatorBuilder: (context, index) => Divider(),
           itemCount: isLoading ? 3 : data.length,
           itemBuilder: (context, index) {
             return isLoading ? shimmerData(context) : Box(
@@ -155,7 +155,7 @@ class _InvestingState extends State<Investing> {
               width: MediaQuery.of(context).size.width,
               child: RaisedButtonSecondary(
                 isLoading: isLoading,
-                onPressed: int.parse(account?.balance) < int.parse(price?.price) ? null : (){
+                onPressed: int.parse(account?.balance) < int.parse(price?.price ?? "0") ? null : (){
                   setState(() {
                     isLoading = true;
                     bloc.add(BuyRecomendation(
@@ -168,7 +168,7 @@ class _InvestingState extends State<Investing> {
               ),
             ),
             SizedBox(height: 16),
-            int.parse(account?.balance) < int.parse(price?.price) ? TextCustom("Saldo Anda ${rupiah(account?.balance)} tidak cukup", color: Colors.red) : Text("")
+            int.parse(account?.balance) < int.parse(price?.price ?? "0") ? TextCustom("Saldo Anda ${rupiah(account?.balance)} tidak cukup", color: Colors.red) : Text("")
           ],
         ),
       )
