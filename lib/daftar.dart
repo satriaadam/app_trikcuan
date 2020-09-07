@@ -57,16 +57,15 @@ class _DaftarState extends State<Daftar> {
               child: Stack(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.fromLTRB(20.0, 120.0, 0.0, 10.0),
-                    child: Text(
-                      'Registrasi',
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 30.0,
-                          color: Colors.grey.shade700,
-                         // letterSpacing: 1.2),
-                      ),
-                    ),
+                    padding: EdgeInsets.fromLTRB(20.0, 100.0, 0.0, 10.0),
+                  //  child: Text(
+                  //    'Registrasi',
+                  //    style: TextStyle(
+                  //        fontFamily: 'Poppins',
+                  //        fontSize: 30.0,
+                  //        color: Colors.grey.shade700,
+                  //    ),
+                  //  ),
                   ),
                 ]
               ),
