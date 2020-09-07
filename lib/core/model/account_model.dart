@@ -54,7 +54,6 @@ class RegisterAccount {
         this.username,
         this.email,
         this.phoneNumber,
-        this.city,
         this.password,
     });
 
@@ -62,7 +61,6 @@ class RegisterAccount {
     String username;
     String email;
     String phoneNumber;
-    String city;
     String password;
     
     Map<String, dynamic> toMap() => {
@@ -70,7 +68,6 @@ class RegisterAccount {
         "username": username,
         "email": email,
         "phone_number": phoneNumber,
-        "password": password,
-        "city": city
+        "password": password
     };
 }

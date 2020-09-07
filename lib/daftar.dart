@@ -24,7 +24,6 @@ class _DaftarState extends State<Daftar> {
   final emailController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final passwordController = TextEditingController();
-  final cityController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -100,12 +99,6 @@ class _DaftarState extends State<Daftar> {
                     textHint: "No Hp",
                     prefixIcon: Icons.phone,
                   ),
-                  SizedBox(height: 15.0),
-                  TextFieldBorderBottom(
-                    controller: cityController,
-                    textHint: "Kota",
-                    prefixIcon: Icons.location_city,
-                  ),
                   SizedBox(height: 20.0),
                   TextFieldBorderBottom(
                     controller: passwordController,
@@ -146,16 +139,29 @@ class _DaftarState extends State<Daftar> {
   }
 
   register() {
-    final data = RegisterAccount();
-    data.name = nameController.text;
-    data.username = usernameController.text;
-    data.email = emailController.text;
-    data.phoneNumber = phoneNumberController.text;
-    data.password = passwordController.text;
-    data.city = cityController.text;
-    bloc.add(Register(data: data));
-    setState(() {
-      isLoading = true;
-    });
+    if(nameController.text == null || nameController.text == "")
+      Toast.show("Nama harus diisi", context);
+    else if(usernameController.text == null || usernameController.text == "")
+      Toast.show("Username harus diisi", context);
+    else if(emailController.text == null || emailController.text == "")
+      Toast.show("Email harus diisi", context);
+    else if(phoneNumberController.text == null || phoneNumberController.text == "")
+      Toast.show("Nomor HP harus diisi", context);
+    else if(passwordController.text == null || passwordController.text == "")
+      Toast.show("Password harus diisi", context);
+    else if(passwordController.text.length < 6)
+      Toast.show("Password minimal 6 karakter", context);
+    else {
+      final data = RegisterAccount();
+      data.name = nameController.text;
+      data.username = usernameController.text;
+      data.email = emailController.text;
+      data.phoneNumber = phoneNumberController.text;
+      data.password = passwordController.text;
+      bloc.add(Register(data: data));
+      setState(() {
+        isLoading = true;
+      });
+    }
   }
 }
