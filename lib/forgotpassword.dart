@@ -18,6 +18,7 @@ class ForgotPassPage extends StatefulWidget {
 class _ForgotPassPageState extends State<ForgotPassPage> {
 
   bool isLoading = false;
+  final usernameController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final bloc = AuthBloc();
 
@@ -118,7 +119,7 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
   }
 
   detail() {
-    bloc.add((phone : phoneNumberController.phone));
+    bloc.add(Login(username: usernameController.text, password: phoneNumberController.text));
     setState(() {
       isLoading = true;
     });
