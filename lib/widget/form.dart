@@ -176,7 +176,7 @@ class TextFieldFullWidth extends StatelessWidget {
 class TextFieldBorderBottom extends StatelessWidget {
   const TextFieldBorderBottom({
     Key key,
-    this.icon,
+    this.prefixIcon,
     this.isObsecure = false,
     this.textHint,
     this.validatorText = "",
@@ -194,7 +194,7 @@ class TextFieldBorderBottom extends StatelessWidget {
 
   final TextEditingController controller;
   final String textHint, validatorText;
-  final IconData icon;
+  final IconData prefixIcon;
   final bool isObsecure;
   final bool enable;
   final bool autofocus;
@@ -232,7 +232,7 @@ class TextFieldBorderBottom extends StatelessWidget {
               decoration: InputDecoration(
                 fillColor: Colors.grey.shade200,
                 filled: true,
-                prefixIcon: icon != null ? Icon(icon, color: Colors.black87, size: 20) : null,
+                prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: Colors.black87, size: 20) : null,
                 hintText: textHint,
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                 hintStyle: TextStyle(color: Colors.black38),

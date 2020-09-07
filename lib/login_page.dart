@@ -75,14 +75,14 @@ class _LoginPageState extends State<LoginPage> {
                   TextFieldBorderBottom(
                     controller: usernameController,
                     textHint: "Username",
-                    icon: Icons.person,
+                    prefixIcon: Icons.person,
                   ),
                   SizedBox(height: 15.0),
                   TextFieldBorderBottom(
                     controller: passwordController,
                     textHint: "Password",
                     isObsecure: true,
-                    icon: Icons.lock,
+                    prefixIcon: Icons.lock,
                   ),
                   SizedBox(height: 5.0),
                   Container(
