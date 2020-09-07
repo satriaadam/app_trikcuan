@@ -45,10 +45,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomRight,
-              stops: [0.5, 0.7, 0.8],
+              stops: [0.5, 0.7],
               colors: [
                 Colors.white,
-                Colors.lightBlue[800],
                 Colors.lightBlue[900],
               ],
             ),
@@ -215,7 +214,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       bottomSheet: _currentPage == _numPages - 1
           ? Container(
-        height: 80.0,
+        height: 60.0,
         width: double.infinity,
         color: Colors.lightBlue[900],
         child: GestureDetector(
@@ -228,7 +227,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           },
           child: Center(
             child: Padding(
-              padding: EdgeInsets.only(bottom: 40.0),
+              padding: EdgeInsets.only(bottom: 30.0),
               child: Text(
                 'Mulai Sekarang',
                 style: TextStyle(
