@@ -226,11 +226,11 @@ class TextFieldBorderBottom extends StatelessWidget {
               cursorColor: Colors.black54,
               enabled: enable,
               autofocus: autofocus,
-              style: TextStyle(color: enable ? Colors.black87 : Colors.grey, fontWeight: fontWeight ?? FontWeight.w600),
+              style: TextStyle(color: enable ? Colors.black87 : Colors.grey, fontWeight: fontWeight ?? FontWeight.w500, fontSize: 14.0),
               obscureText: isObsecure,
               validator: validator,
               decoration: InputDecoration(
-                fillColor: Colors.grey.shade100,
+                fillColor: Colors.grey.shade200,
                 filled: true,
                 prefixIcon: icon != null ? Icon(icon, color: Colors.black87, size: 20) : null,
                 hintText: textHint,

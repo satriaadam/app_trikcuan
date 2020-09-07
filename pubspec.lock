@@ -113,13 +113,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.3"
-  curved_navigation_bar:
-    dependency: "direct main"
-    description:
-      name: curved_navigation_bar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.3"
   dio:
     dependency: "direct main"
     description:
@@ -226,13 +219,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.4"
-  neuomorphic_container:
-    dependency: "direct main"
-    description:
-      name: neuomorphic_container
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.3"
   path:
     dependency: transitive
     description:

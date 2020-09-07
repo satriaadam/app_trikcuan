@@ -56,18 +56,22 @@ class _DaftarState extends State<Daftar> {
               child: Stack(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(20.0, 120.0, 0.0, 10.0),
                     child: Text(
                       'Registrasi',
-                      style:
-                      TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 30.0,
+                          color: Colors.grey.shade700,
+                         // letterSpacing: 1.2),
+                      ),
                     ),
                   ),
                 ]
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
+              padding: EdgeInsets.only(top: 15.0, left: 20.0, right: 20.0),
               child: Column(
                 children: <Widget>[
                   TextFieldBorderBottom(
@@ -116,18 +120,18 @@ class _DaftarState extends State<Daftar> {
                       isLoading: isLoading,
                       radius: 50,
                       padding: 16,
-                      fontSize: 16,
+                      fontSize: 14,
                       onPressed: () => !isLoading ? register() : null,
                     ),
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 10.0),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     child: OutlineButtonPrimary(
                       radius: 50,
                       padding: 16,
                       text: "KEMBALI",
-                      fontSize: 16,
+                      fontSize: 14,
                       onPressed: () => Navigator.pop(context),
                     ),
                   ),

@@ -22,9 +22,7 @@ environment:
 
 dependencies:
   intl: ^0.16.1
-  neuomorphic_container: ^2.0.3
   tuple: ^1.0.3
-  curved_navigation_bar: ^0.3.3
   flutter_bloc: ^6.0.1
   equatable: ^1.1.1
   shared_preferences: ^0.5.6+3
@@ -67,6 +65,8 @@ flutter:
      - assets/images/undraw_finance_0bdk.png
      - assets/images/undraw_Mobile_life_re_jtih.png
      - assets/images/undraw_under_construction_46pa.png
+     - assets/images/logoopanjangmbahgiso.jpeg
+     - assets/images/logotopi.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

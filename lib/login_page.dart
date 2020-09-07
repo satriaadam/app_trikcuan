@@ -43,6 +43,7 @@ class _LoginPageState extends State<LoginPage> {
       },
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
+        backgroundColor: Colors.grey.shade100,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -50,18 +51,25 @@ class _LoginPageState extends State<LoginPage> {
               child: Stack(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.fromLTRB(16.0, 150.0, 0.0, 0.0),
-                    child: Text('Login', style: TextStyle(
-                      fontSize: 40.0,
-                      fontWeight: FontWeight.bold,
-                    )),
+                    padding: EdgeInsets.fromLTRB(110.0, 160.0, 110.0, 5.0),
+                    child: Image.asset('assets/images/logoopanjangmbahgiso.jpeg',width: MediaQuery.of(context).size.width*0.5),
                   ),
+                 // Container(
+                 //   padding: EdgeInsets.fromLTRB(20.0, 180.0, 0.0, 0.0),
+                 //   child: Text('Login', style: TextStyle(
+                 //     color: Colors.grey.shade700,
+                 //     fontSize: 35.0,
+                   //   letterSpacing: 1.2,
+                   //   fontWeight: FontWeight.bold,
+                 //     fontFamily: 'Poppins',
+                 //   )),
+                 // ),
                 ],
               ),
             ),
             SizedBox(height: 5.0),
             Container(
-              padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
+              padding: EdgeInsets.only(top: 15.0, left: 20.0, right: 20.0),
               child: Column(
                 children: <Widget>[
                   TextFieldBorderBottom(
@@ -96,22 +104,22 @@ class _LoginPageState extends State<LoginPage> {
                   Container(
                     width: MediaQuery.of(context).size.width,
                     child: RaisedButtonPrimary(
-                      text: "LOGIN",
+                      text: "Login",
                       isLoading: isLoading,
                       radius: 50,
                       padding: 16,
-                      fontSize: 16,
+                      fontSize: 14,
                       onPressed: () => !isLoading ? login() : null,
                     ),
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 15.0),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     child: OutlineButtonPrimary(
                       radius: 50,
                       padding: 16,
-                      text: "REGISTRASI",
-                      fontSize: 16,
+                      text: "Registrasi",
+                      fontSize: 14,
                       onPressed: () => Navigator.push(context, MaterialPageRoute(
                         builder: (context) => Daftar()
                       )),
