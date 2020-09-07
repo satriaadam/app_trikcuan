@@ -35,7 +35,7 @@ class _ChartState extends State<Chart> {
       appBar: AppBar(
         shadowColor: Colors.grey,
         backgroundColor: Colors.lightBlue[900],
-        leading: Image.asset('assets/images/logombahgiso.png',width: MediaQuery.of(context).size.width*0.5),
+      //  leading: Image.asset('assets/images/logombahgiso.png',width: MediaQuery.of(context).size.width*0.5),
         title: Text('MARKET', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
         bottom:
         PreferredSize(

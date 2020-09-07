@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         'Forgot Password',
                         style: TextStyle(
-                          color: Colors.black26,
+                          color: Colors.black38,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Montserrat',
                           decoration: TextDecoration.underline

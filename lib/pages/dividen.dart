@@ -56,7 +56,7 @@ class _DividenState extends State<Dividen> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.lightBlue[900],
-          leading: Image.asset('assets/images/logombahgiso.png',width: MediaQuery.of(context).size.width*0.5),
+        //  leading: Image.asset('assets/images/logombahgiso.png',width: MediaQuery.of(context).size.width*0.5),
           title: Text('DIVIDEN', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
         ),
         body: SmartRefresher(

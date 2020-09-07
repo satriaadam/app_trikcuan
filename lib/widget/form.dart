@@ -230,6 +230,8 @@ class TextFieldBorderBottom extends StatelessWidget {
               obscureText: isObsecure,
               validator: validator,
               decoration: InputDecoration(
+                fillColor: Colors.grey.shade100,
+                filled: true,
                 prefixIcon: icon != null ? Icon(icon, color: Colors.black87, size: 20) : null,
                 hintText: textHint,
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),

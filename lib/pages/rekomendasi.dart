@@ -35,7 +35,7 @@ class _RekomendasiState extends State<Rekomendasi> {
         appBar: AppBar(
           elevation: 5.0,
           backgroundColor: Colors.lightBlue[900],
-          leading: Image.asset('assets/images/logombahgiso.png',width: MediaQuery.of(context).size.width*0.5),
+         // leading: Image.asset('assets/images/logombahgiso.png',width: MediaQuery.of(context).size.width*0.5),
           title: Text('REKOMENDASI', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(myTabBar.preferredSize.height),
