@@ -14,6 +14,7 @@ class Account {
         this.city,
         this.balance,
         this.accessToken,
+        this.contactPerson,
     });
 
     int id;
@@ -24,6 +25,7 @@ class Account {
     String city;
     String balance;
     String accessToken;
+    String contactPerson;
 
     factory Account.fromMap(Map<String, dynamic> json) => Account(
         id: json["id"],
@@ -34,6 +36,7 @@ class Account {
         city: json["city"],
         balance: json["balance"],
         accessToken: json["access_token"] ?? "",
+        contactPerson: json["contact_person"] ?? "",
     );
 
     Map<String, dynamic> toMap() => {
@@ -45,6 +48,7 @@ class Account {
         "city": city,
         "balance": balance,
         "access_token": accessToken,
+        "contact_person": contactPerson,
     };
 }
 
