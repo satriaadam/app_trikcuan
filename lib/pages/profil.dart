@@ -8,14 +8,13 @@ import 'package:trikcuan_app/core/bloc/auth/auth_bloc.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_event.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_state.dart';
 import 'package:trikcuan_app/core/model/account_model.dart';
-import 'package:trikcuan_app/pages/daftarkelas.dart';
-import 'package:trikcuan_app/pages/konsultasisaham.dart';
 import 'package:trikcuan_app/pages/topup_saldo.dart';
 import 'package:trikcuan_app/utilities/app_consts.dart';
 import 'package:intl/intl.dart';
 import 'package:trikcuan_app/widget/box.dart';
 import 'package:trikcuan_app/widget/button.dart';
 import 'package:trikcuan_app/login_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Profil extends StatefulWidget {
   @override
@@ -167,9 +166,7 @@ class _ProfilState extends State<Profil> {
                   RaisedButtonCustom(
                     color: Colors.white,
                     elevation: 2,
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => DaftarKelas()
-                    )),
+                    onPressed: () => launchURL("https://api.whatsapp.com/send?phone=${account?.contactPerson}"),
                     textColor: Colors.black54,
                     text: "Daftar Kelas Trik Cuan"
                   ),
@@ -177,11 +174,9 @@ class _ProfilState extends State<Profil> {
                   RaisedButtonCustom(
                       color: Colors.white,
                       elevation: 2,
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => KonsultasiSaham()
-                      )),
+                      onPressed: () => launchURL("https://api.whatsapp.com/send?phone=${account?.contactPerson}"),
                       textColor: Colors.black54,
-                      text: "Konsultasi Saham"
+                      text: "Konsultasi Saham Mbah Giso"
                   ),
                 //  Row(
                 //    children: [
@@ -225,5 +220,13 @@ class _ProfilState extends State<Profil> {
         ),
       ),
     );
+  }
+
+  launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
