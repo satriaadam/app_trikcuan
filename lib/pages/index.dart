@@ -81,7 +81,7 @@ class _IndexState extends State<Index> {
                             fontSize: 20,
                           ),
                           TextCustom(
-                            data[index].description + data[index].description,
+                            data[index].description,
                             maxLines: 3,
                           ),
                         ],

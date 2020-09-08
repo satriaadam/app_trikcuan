@@ -81,7 +81,7 @@ class _KomoditasState extends State<Komoditas> {
                             fontSize: 20,
                           ),
                           TextCustom(
-                            data[index].description + data[index].description,
+                            data[index].description,
                             maxLines: 3,
                           ),
                         ],
@@ -131,7 +131,7 @@ class _KomoditasState extends State<Komoditas> {
   }
 
   onRefresh() {
-    bloc.add(LoadMarket(type: "index"));
+    bloc.add(LoadMarket(type: "komoditas"));
     setState(() {
       isLoading = true;
     });

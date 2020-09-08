@@ -212,7 +212,7 @@ class _ProfilState extends State<Profil> {
                 //  ),
                   SizedBox(height: 16),
                   RaisedButtonCustomSecondary(
-                    color: Colors.redAccent,
+                    color: Color(0xFFa64421),
                     onPressed: () => bloc.add(Logout()),
                     elevation: 2,
                     textColor: Colors.white,
