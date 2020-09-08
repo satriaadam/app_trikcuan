@@ -48,7 +48,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               stops: [0.5, 0.7],
               colors: [
                 Colors.white,
-                Colors.lightBlue[900],
+                Color(0xFF295c97),
               ],
             ),
           ),
@@ -191,14 +191,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Text(
                             'Next',
                             style: TextStyle(
-                              color: Colors.white70,
+                              color: Colors.white,
                               fontSize: 22.0,
                             ),
                           ),
                           SizedBox(width: 10.0),
                           Icon(
                             Icons.arrow_forward,
-                            color: Colors.white70,
+                            color: Colors.white,
                             size: 30.0,
                           ),
                         ],
@@ -216,7 +216,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ? Container(
         height: 60.0,
         width: double.infinity,
-        color: Colors.lightBlue[900],
+        color: Color(0xFF295c97),
         child: GestureDetector(
           onTap: () async { 
             SharedPreferences prefs = await SharedPreferences.getInstance();

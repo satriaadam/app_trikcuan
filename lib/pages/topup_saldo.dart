@@ -48,7 +48,7 @@ class _TopupSaldoPageState extends State<TopupSaldoPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.lightBlue[900],
+          backgroundColor: Color(0xFF295c97),
           iconTheme: IconThemeData(
             color: Colors.white,
           ),

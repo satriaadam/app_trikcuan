@@ -55,16 +55,6 @@ class _LoginPageState extends State<LoginPage> {
                     padding: EdgeInsets.fromLTRB(110.0, 150.0, 110.0, 5.0),
                     child: Image.asset('assets/images/logoopanjangmbahgiso.jpeg',width: MediaQuery.of(context).size.width*0.5),
                   ),
-                 // Container(
-                 //   padding: EdgeInsets.fromLTRB(20.0, 180.0, 0.0, 0.0),
-                 //   child: Text('Login', style: TextStyle(
-                 //     color: Colors.grey.shade700,
-                 //     fontSize: 35.0,
-                   //   letterSpacing: 1.2,
-                   //   fontWeight: FontWeight.bold,
-                 //     fontFamily: 'Poppins',
-                 //   )),
-                 // ),
                 ],
               ),
             ),

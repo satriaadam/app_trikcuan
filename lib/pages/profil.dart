@@ -72,8 +72,8 @@ class _ProfilState extends State<Profil> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          backgroundColor: Colors.lightBlue[900],
-         // leading: Image.asset('assets/images/logombahgiso.png',width: MediaQuery.of(context).size.width*0.5),
+          backgroundColor: Color(0xFF295C97),
+          leading: Icon(Icons.arrow_back_ios, color: Color(0xFF295C97)),
           title: Text('PROFIL', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
           elevation: 1
         ),
@@ -87,9 +87,9 @@ class _ProfilState extends State<Profil> {
                   Text(
                     "Halo,",
                     style: TextStyle(
-                      fontFamily: 'Monserrat',
+                      fontFamily: 'CM Sans Serif',
                       height: 1.5,
-                      fontWeight: FontWeight.bold,
+                     // fontWeight: FontWeight.bold,
                       fontSize: 28.0,
                       color: Colors.black54
                     ),
@@ -98,9 +98,9 @@ class _ProfilState extends State<Profil> {
                   Text(
                     "${account?.name}",
                     style: TextStyle(
-                        fontFamily: 'Monserrat',
+                        fontFamily: 'CM Sans Serif',
                         height: 1.5,
-                        fontWeight: FontWeight.bold,
+                       // fontWeight: FontWeight.bold,
                         fontSize: 22.0,
                         color: Colors.black54
                     ),
@@ -108,7 +108,7 @@ class _ProfilState extends State<Profil> {
                   SizedBox(height: 16),
                   Box(
                     borderRadius: 16,
-                    borderColor: Colors.lightBlue[900],
+                    borderColor: Color(0xFF295c97),
                     color: Colors.white,
                     boxShadow: [AppBoxShadow.type3],
                     child: Column(
@@ -144,7 +144,7 @@ class _ProfilState extends State<Profil> {
                             ],
                           ),
                         ),
-                        Divider(color: Colors.lightBlue[900], thickness: 1,),
+                        Divider(color: Color(0xFF295c97), thickness: 1,),
                         Box(
                           color: Colors.transparent,
                           padding: 16,

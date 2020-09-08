@@ -21,9 +21,9 @@ class _RekomendasiState extends State<Rekomendasi> {
   @override
   Widget build(BuildContext context) {
     TabBar myTabBar = TabBar(
-      indicatorColor: Colors.red[800],
+      indicatorColor: Color(0xFFf2786b),
       indicatorWeight: 3.0,
-      labelColor: Colors.white,
+      unselectedLabelColor: Color(0xFFFEFFFE),
       tabs: _pages
           .map<Tab>((Tuple2 page) => Tab(text: page.item1))
           .toList(),
@@ -34,12 +34,12 @@ class _RekomendasiState extends State<Rekomendasi> {
       child: Scaffold(
         appBar: AppBar(
           elevation: 5.0,
-          backgroundColor: Colors.lightBlue[900],
-         // leading: Image.asset('assets/images/logombahgiso.png',width: MediaQuery.of(context).size.width*0.5),
+          backgroundColor: Color(0xFF295c97),
+            leading: Icon(Icons.arrow_back_ios, color: Color(0xFF295C97)),
           title: Text('REKOMENDASI', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(myTabBar.preferredSize.height),
-            child: Container(color: Color(0xFF243E65), child: myTabBar,)
+            child: Container(color: Color(0xFF1f4c7e), child: myTabBar,)
           )
 
         //  TabBar(

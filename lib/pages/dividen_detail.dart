@@ -94,7 +94,7 @@ class _DividenDetailState extends State<DividenDetail> {
             color: Colors.white
           ),
           title: Text("DIVIDEN", style: TextStyle(color: Colors.white),),
-          backgroundColor: Colors.lightBlue[900],
+          backgroundColor: Color(0xFF295c97),
 
         ),
         body: ListView(
