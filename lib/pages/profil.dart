@@ -8,7 +8,6 @@ import 'package:trikcuan_app/core/bloc/auth/auth_bloc.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_event.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_state.dart';
 import 'package:trikcuan_app/core/model/account_model.dart';
-import 'package:trikcuan_app/pages/daftarkelas.dart';
 import 'package:trikcuan_app/pages/topup_saldo.dart';
 import 'package:trikcuan_app/utilities/app_consts.dart';
 import 'package:intl/intl.dart';
@@ -167,9 +166,7 @@ class _ProfilState extends State<Profil> {
                   RaisedButtonCustom(
                     color: Colors.white,
                     elevation: 2,
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => DaftarKelas()
-                    )),
+                    onPressed: () => launchURL("https://api.whatsapp.com/send?phone=${account?.contactPerson}"),
                     textColor: Colors.black54,
                     text: "Daftar Kelas Trik Cuan"
                   ),
