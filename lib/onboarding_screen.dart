@@ -44,7 +44,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
-              end: Alignment.bottomRight,
+              end: Alignment.bottomCenter,
               stops: [0.5, 0.7],
               colors: [
                 Colors.white,
@@ -104,7 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               'Selamat datang di Aplikasi MBAHGISO',
                               style: kTitleStyle,
                             ),
-                            SizedBox(height: 9.0),
+                            SizedBox(height: 12.0),
                             Text(
                               'Aplikasi news dan rekomendasi saham ala Mbah Giso langsung di smartphone anda.',
                               style: kSubtitleStyle,
@@ -131,7 +131,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               'Rekomendasi Saham Ala Mbah Giso',
                               style: kTitleStyle,
                             ),
-                            SizedBox(height: 9.0),
+                            SizedBox(height: 12.0),
                             Text(
                               'Dapatkan rekomendasi saham Ala Mbah Giso secara langsung mulai dari saham untuk trading, swingtrade, dan investasi.',
                               style: kSubtitleStyle,
@@ -158,7 +158,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               'Rasakan Mudahnya Trading',
                               style: kTitleStyle,
                             ),
-                            SizedBox(height: 5.0),
+                            SizedBox(height: 12.0),
                             Text(
                               'Dengan aplikasi Mbah Giso, rasakan mudahnya trading dengan strategi dan langkah khusus dari Mbah Giso.',
                               style: kSubtitleStyle,

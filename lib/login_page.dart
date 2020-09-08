@@ -84,12 +84,12 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   child: Container(
                     alignment: Alignment(1.0, 0.0),
-                    padding: EdgeInsets.only(top: 10.0, right: 0.0),
+                    padding: EdgeInsets.only(top: 0.0, right: 0.0),
                     child:Text(
                         'Forgot password?',
                         style: TextStyle(
                           color: Colors.black45,
-                          fontWeight: FontWeight.bold,
+                    //      fontWeight: FontWeight.bold,
                           fontFamily: 'Montserrat',
                     //      decoration: TextDecoration.underline
                         ),

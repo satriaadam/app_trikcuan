@@ -133,7 +133,7 @@ class _TopupSaldoPageState extends State<TopupSaldoPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TitleText(rupiah(listSaldo[index])),
-                      Icon(Icons.check_circle, color: saldoSelected == listSaldo[index] ? Colors.green : Colors.transparent)
+                      Icon(Icons.check_circle, color: saldoSelected == listSaldo[index] ? Color(0xFF44cf65) : Colors.transparent)
                     ],
                   )
                 )
