@@ -56,8 +56,8 @@ class _BeritaState extends State<Berita> {
         ],
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Color(0xFF295C97),
-            leading: Icon(Icons.arrow_back_ios, color: Color(0xFF295C97)),
+            backgroundColor: Color(0xFF009eeb),
+            leading: Icon(Icons.arrow_back_ios, color: Color(0xFF009eeb)),
             title: Text('BERITA', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
           ),
           body: SmartRefresher(

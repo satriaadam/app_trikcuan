@@ -21,7 +21,7 @@ class _ChartState extends State<Chart> {
   @override
   Widget build(BuildContext context) {
     TabBar myTabBar = TabBar(
-      indicatorColor: Color(0xFF00527c),
+      indicatorColor: Color(0xFF009eec),
       indicatorWeight: 3.0,
       labelColor: Colors.white,
       tabs: _pages
@@ -34,13 +34,15 @@ class _ChartState extends State<Chart> {
       child: Scaffold(
       appBar: AppBar(
         shadowColor: Colors.grey,
-        backgroundColor: Color(0xFF0679B2),
-        leading: Icon(Icons.arrow_back_ios, color: Color(0xFF0679B2)),
+        backgroundColor: Color(0xFF009eeb),
+        centerTitle: true,
+        bottomOpacity: 0.8,
+        leading: Icon(Icons.arrow_back_ios, color: Color(0xFF009eeb)),
         title: Text('MARKET', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
         bottom:
         PreferredSize(
           preferredSize: Size.fromHeight(myTabBar.preferredSize.height),
-          child: Container(color: Color(0xFF33AF39), child: myTabBar)),
+          child: Container(color: Color(0xFF48d25f), child: myTabBar)),
         ),
        // TabBar(
        //   indicatorColor: Colors.redAccent,

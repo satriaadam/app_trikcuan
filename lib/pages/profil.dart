@@ -71,8 +71,8 @@ class _ProfilState extends State<Profil> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          backgroundColor: Color(0xFF295C97),
-          leading: Icon(Icons.arrow_back_ios, color: Color(0xFF295C97)),
+          backgroundColor: Color(0xFF009eeb),
+          leading: Icon(Icons.arrow_back_ios, color: Color(0xFF009eeb)),
           title: Text('PROFIL', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
           elevation: 1
         ),
@@ -107,7 +107,7 @@ class _ProfilState extends State<Profil> {
                   SizedBox(height: 16),
                   Box(
                     borderRadius: 16,
-                    borderColor: Color(0xFF295c97),
+                    borderColor: Color(0xFF009eeb),
                     color: Colors.white,
                     boxShadow: [AppBoxShadow.type3],
                     child: Column(
@@ -143,7 +143,7 @@ class _ProfilState extends State<Profil> {
                             ],
                           ),
                         ),
-                        Divider(color: Color(0xFF295c97), thickness: 1,),
+                        Divider(color: Color(0xFF009eeb), thickness: 1,),
                         Box(
                           color: Colors.transparent,
                           padding: 16,
@@ -212,7 +212,7 @@ class _ProfilState extends State<Profil> {
                 //  ),
                   SizedBox(height: 16),
                   RaisedButtonCustomSecondary(
-                    color: Color(0xFFa64421),
+                    color: Color(0xFFf05d59),
                     onPressed: () => bloc.add(Logout()),
                     elevation: 2,
                     textColor: Colors.white,
