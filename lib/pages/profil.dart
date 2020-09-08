@@ -8,9 +8,8 @@ import 'package:trikcuan_app/core/bloc/auth/auth_bloc.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_event.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_state.dart';
 import 'package:trikcuan_app/core/model/account_model.dart';
-import 'package:trikcuan_app/pages/corporate.dart';
 import 'package:trikcuan_app/pages/daftarkelas.dart';
-import 'package:trikcuan_app/pages/dataperusahaan.dart';
+import 'package:trikcuan_app/pages/konsultasisaham.dart';
 import 'package:trikcuan_app/pages/topup_saldo.dart';
 import 'package:trikcuan_app/utilities/app_consts.dart';
 import 'package:intl/intl.dart';
@@ -90,7 +89,7 @@ class _ProfilState extends State<Profil> {
                       fontFamily: 'CM Sans Serif',
                       height: 1.5,
                      // fontWeight: FontWeight.bold,
-                      fontSize: 28.0,
+                      fontSize: 18.0,
                       color: Colors.black54
                     ),
                   ),
@@ -174,34 +173,43 @@ class _ProfilState extends State<Profil> {
                     textColor: Colors.black54,
                     text: "Daftar Kelas Trik Cuan"
                   ),
-                  SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: RaisedButtonCustom(
-                          color: Colors.white,
-                          elevation: 2,
-                          onPressed: () => Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => DataPerusahaan()
-                          )),
-                          textColor: Colors.black54,
-                          text: "Data Perusahaan"
-                        ),
-                      ),
-                      SizedBox(width: 16),
-                      Expanded(
-                        child: RaisedButtonCustom(
-                          color: Colors.white,
-                          elevation: 2,
-                          onPressed: () => Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => Corporate()
-                          )),
-                          textColor: Colors.black54,
-                          text: "Corporate Action"
-                        ),
-                      ),
-                    ],
+                  SizedBox(height: 8),
+                  RaisedButtonCustom(
+                      color: Colors.white,
+                      elevation: 2,
+                      onPressed: () => Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => KonsultasiSaham()
+                      )),
+                      textColor: Colors.black54,
+                      text: "Konsultasi Saham"
                   ),
+                //  Row(
+                //    children: [
+                //      Expanded(
+                //        child: RaisedButtonCustom(
+                //          color: Colors.white,
+                //          elevation: 2,
+                //          onPressed: () => Navigator.push(context, MaterialPageRoute(
+                //            builder: (context) => DataPerusahaan()
+                //          )),
+                //          textColor: Colors.black54,
+                //          text: "Data Perusahaan"
+                //        ),
+                //      ),
+                //      SizedBox(width: 16),
+                //      Expanded(
+                //        child: RaisedButtonCustom(
+                //          color: Colors.white,
+                //          elevation: 2,
+                //          onPressed: () => Navigator.push(context, MaterialPageRoute(
+                //            builder: (context) => Corporate()
+                //          )),
+                //          textColor: Colors.black54,
+                //          text: "Corporate Action"
+                //        ),
+                //      ),
+                //    ],
+                //  ),
                   SizedBox(height: 16),
                   RaisedButtonCustomSecondary(
                     color: Colors.redAccent,
