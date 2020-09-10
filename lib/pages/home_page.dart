@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.equalizer),
-            title: Text('Dividen', style: TextStyle(
+            title: Text('Saham LQ 45', style: TextStyle(
               fontSize: 10.0
             ),),
        //     backgroundColor: Colors.white,
