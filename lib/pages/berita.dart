@@ -11,14 +11,14 @@ import 'package:trikcuan_app/pages/webview_page.dart';
 import 'package:trikcuan_app/widget/box.dart';
 import 'package:trikcuan_app/widget/text.dart';
 
-class Berita extends StatefulWidget {
-  const Berita({Key key}) : super(key: key);
+class NewsPage extends StatefulWidget {
+  const NewsPage({Key key}) : super(key: key);
 
   @override
-  _BeritaState createState() => _BeritaState();
+  _NewsPageState createState() => _NewsPageState();
 }
 
-class _BeritaState extends State<Berita> {
+class _NewsPageState extends State<NewsPage> {
 
   List<NewsModel> data = <NewsModel>[];
   final bloc = NewsBloc();
@@ -73,7 +73,23 @@ class _BeritaState extends State<Berita> {
                   )),
                   padding: 16,
                   color: Colors.white,
-                  child: TitleText(data[index].title, maxLines: 3),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: Image.network(data[index].linkImage, width: 80, height: 80, fit: BoxFit.cover)
+                      ),
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: TextCustom(
+                          data[index].title, 
+                          maxLines: 3,
+                          fontSize: 16,
+                        )
+                      ),
+                    ],
+                  ),
                 );
               },
             ),

@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
         Chart(),
         Dividen(),
         Rekomendasi(),
-        Berita(),
+        NewsPage(),
         Profil(),
       ].elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(

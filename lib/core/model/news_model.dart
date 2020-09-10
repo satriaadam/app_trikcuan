@@ -8,22 +8,26 @@ class NewsModel {
     NewsModel({
         this.id,
         this.title,
+        this.linkImage,
         this.link,
     });
 
     int id;
     String title;
+    String linkImage;
     String link;
 
     factory NewsModel.fromMap(Map<String, dynamic> json) => NewsModel(
         id: json["id"],
         title: json["title"],
+        linkImage: json["link_image"],
         link: json["link"],
     );
 
     Map<String, dynamic> toMap() => {
         "id": id,
         "title": title,
+        "link_image": linkImage,
         "link": link,
     };
 }
