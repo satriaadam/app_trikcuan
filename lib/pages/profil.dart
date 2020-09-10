@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indonesia/indonesia.dart';
+import 'package:toast/toast.dart';
 import 'package:trikcuan_app/core/bloc/account/account_bloc.dart';
 import 'package:trikcuan_app/core/bloc/account/account_event.dart';
 import 'package:trikcuan_app/core/bloc/account/account_state.dart';
@@ -71,7 +72,18 @@ class _ProfilState extends State<Profil> {
                 account = state.data;
                 isLoadingConsultation = false;
               });
-              launchURL("https://api.whatsapp.com/send?phone=${account?.contactPerson}");
+              var desc = "Semangat pagi Mbah Giso, saya\n\n";
+              desc += "nama: ${account.name}\n";
+              desc += "username: ${account.username}\n\n";
+              desc += "Mau bertanya\n\n";
+              desc += "<PERTANYAAN_ANDA_DISINI>";
+              launchURL("https://api.whatsapp.com/send?phone=${account?.contactPerson}&text=$desc");
+            }
+            else if(state is AccountFailure) {
+              Toast.show(state.error, context);
+              setState(() {
+                isLoadingConsultation = false;
+              });
             }
           },
         )
@@ -175,7 +187,9 @@ class _ProfilState extends State<Profil> {
                   RaisedButtonCustom(
                     color: Colors.white,
                     elevation: 2,
-                    onPressed: () => launchURL("https://api.whatsapp.com/send?phone=${account?.contactPerson}"),
+                    onPressed: () {
+                      launchURL("https://api.whatsapp.com/send?phone=${account?.contactPerson}");
+                    },
                     textColor: Colors.black54,
                     text: "Daftar Kelas Trik Cuan"
                   ),
@@ -186,26 +200,36 @@ class _ProfilState extends State<Profil> {
                         color: Colors.white,
                         elevation: 2,
                         isLoading: isLoadingConsultation,
-                        onPressed: () => account.consultation ? launchURL("https://api.whatsapp.com/send?phone=${account?.contactPerson}")
-                        : dialogConfirmation(
-                          context: context,
-                          message: int.parse(account?.balance) < account?.consultationPrice ? "Saldo Anda tidak cukup. Untuk konsultasi dikenakan potongan saldo sebesar Rp 100.000" : "Untuk konsultasi dikenakan potongan saldo sebesar ${rupiah(account?.consultationPrice)}, apakah Anda setuju?",
-                          textCancel: "Batal",
-                          textConfirm: int.parse(account?.balance) < account?.consultationPrice ? "Isi Saldo" : "OK",
-                          callback: () {
-                            Navigator.pop(context);
-                            if(int.parse(account?.balance) < account?.consultationPrice) {
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => TopupSaldoPage()
-                              ));
-                            } else {
-                              accountBloc.add(BuyConsultation());
-                              setState(() {
-                                isLoadingConsultation = true;
-                              });
-                            }
+                        onPressed: () {
+                          if(account.consultation) {
+                            var desc = "Semangat pagi Mbah Giso, saya\n\n";
+                            desc += "nama: ${account.name}\n";
+                            desc += "username: ${account.username}\n\n";
+                            desc += "Mau bertanya\n\n";
+                            desc += "<PERTANYAAN_ANDA_DISINI>";
+                            launchURL("https://api.whatsapp.com/send?phone=${account?.contactPerson}&text=$desc");
+                          } else {
+                            dialogConfirmation(
+                              context: context,
+                              message: int.parse(account?.balance) < account?.consultationPrice ? "Saldo Anda tidak cukup. Untuk konsultasi dikenakan potongan saldo sebesar Rp 100.000" : "Untuk konsultasi dikenakan potongan saldo sebesar ${rupiah(account?.consultationPrice)}, apakah Anda setuju?",
+                              textCancel: "Batal",
+                              textConfirm: int.parse(account?.balance) < account?.consultationPrice ? "Isi Saldo" : "OK",
+                              callback: () {
+                                Navigator.pop(context);
+                                if(int.parse(account?.balance) < account?.consultationPrice) {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => TopupSaldoPage()
+                                  ));
+                                } else {
+                                  accountBloc.add(BuyConsultation());
+                                  setState(() {
+                                    isLoadingConsultation = true;
+                                  });
+                                }
+                              }
+                            );
                           }
-                        ),
+                        },
                         textColor: Colors.black54,
                         text: "Konsultasi Saham Mbah Giso"
                     ),
