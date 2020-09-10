@@ -78,11 +78,12 @@ class _KomoditasState extends State<Komoditas> {
                           TextCustom(
                             data[index].code,
                             fontWeight: FontWeight.w600,
-                            fontSize: 20,
+                            fontSize: 16,
                           ),
                           TextCustom(
                             data[index].description,
                             maxLines: 3,
+                            fontSize: 12,
                           ),
                         ],
                       ),
@@ -94,7 +95,7 @@ class _KomoditasState extends State<Komoditas> {
                         TextCustom(
                           data[index].price,
                           fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          fontSize: 16,
                           color: int.parse(data[index].priceChange) > 0 ? Colors.green : Colors.red,
                         ),
                         LabelText(
