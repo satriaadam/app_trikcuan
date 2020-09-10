@@ -14,6 +14,7 @@ import 'package:trikcuan_app/core/model/recomendation_model.dart';
 import 'package:trikcuan_app/utilities/app_consts.dart';
 import 'package:trikcuan_app/widget/box.dart';
 import 'package:trikcuan_app/widget/button.dart';
+import 'package:trikcuan_app/widget/dialog.dart';
 import 'package:trikcuan_app/widget/text.dart';
 
 class RecomendationDetailpage extends StatefulWidget {
@@ -160,17 +161,25 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
                     SizedBox(height: 16),
                     RaisedButtonSecondary(
                       isLoading: isLoadingBuy,
-                      onPressed: isLoadingBuy || int.parse(account?.balance) < int.parse(widget.recomendation.hargaBeli) ? null : () {
-                        setState(() {
-                          isLoadingBuy = true;
-                          bloc.add(BuyRecomendation(
-                            recomendation: widget.type,
-                            type: "recomendation-data",
-                            dataId: widget.recomendation.id.toString(),
-                            price: int.parse(widget.recomendation.hargaBeli)
-                          ));
-                        });
-                      },
+                      onPressed: isLoadingBuy || int.parse(account?.balance) < int.parse(widget.recomendation.hargaBeli) ? null 
+                      : () => dialogConfirmation(
+                        context: context,
+                        message: "Untuk melihat detail informasi ini saldo Anda akan dipotong sebesar ${rupiah(int.parse(widget.recomendation.hargaBeli))}",
+                        textCancel: "Batal",
+                        textConfirm: "OK",
+                        callback: () {
+                          Navigator.pop(context);
+                          setState(() {
+                            isLoadingBuy = true;
+                            bloc.add(BuyRecomendation(
+                              recomendation: widget.type,
+                              type: "recomendation-data",
+                              dataId: widget.recomendation.id.toString(),
+                              price: int.parse(widget.recomendation.hargaBeli)
+                            ));
+                          });
+                        }
+                      ),
                       text: "Beli ${rupiah(int.parse(widget.recomendation.hargaBeli))}",
                     ),
                     int.parse(account?.balance) < int.parse(widget.recomendation.hargaBeli) ? Padding(

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:toast/toast.dart';
-import 'package:trikcuan_app/core/bloc/dividen/dividen_bloc.dart';
-import 'package:trikcuan_app/core/bloc/dividen/dividen_event.dart';
-import 'package:trikcuan_app/core/bloc/dividen/dividen_state.dart';
-import 'package:trikcuan_app/core/model/dividen_model.dart';
-import 'package:trikcuan_app/pages/dividen_detail.dart';
+import 'package:trikcuan_app/core/bloc/recomendation/recomendation_bloc.dart';
+import 'package:trikcuan_app/core/bloc/recomendation/recomendation_event.dart';
+import 'package:trikcuan_app/core/bloc/recomendation/recomendation_state.dart';
+import 'package:trikcuan_app/core/model/recomendation_model.dart';
+import 'package:trikcuan_app/core/model/recomendation_price_model.dart';
+import 'package:trikcuan_app/pages/recomendation_detail.dart';
 import 'package:trikcuan_app/widget/box.dart';
 import 'package:trikcuan_app/widget/text.dart';
 
 class Dividen extends StatefulWidget {
-  Dividen({Key key}) : super(key: key);
+  const Dividen({Key key}) : super(key: key);
 
   @override
   _DividenState createState() => _DividenState();
@@ -21,38 +21,42 @@ class Dividen extends StatefulWidget {
 
 class _DividenState extends State<Dividen> {
 
-  List<DividenModel> dividens = <DividenModel>[];
-  final bloc = DividenBloc();
+  List<RecomendationModel> data = <RecomendationModel>[];
+  final bloc = RecomendationBloc();
   bool isLoading = true;
+  bool showRecomendation = true;
+  RecomendationPriceModel price;
   final RefreshController refreshController = RefreshController();
-
-  DateFormat formatDate = DateFormat('yyyy-MM-dd');
-
+  
   @override
   void initState() {
-    bloc.add(LoadDividen());
+    bloc.add(LoadRecomendation(type: "dividen"));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener(
-      cubit: bloc,
-      listener: (context, state) {
-        if(state is DividensLoaded) {
-          setState(() {
-            refreshController.refreshCompleted();
-            isLoading = false;
-            dividens = state.data;
-          });
-        } else if(state is DividenFailure) {
-          Toast.show(state.error, context);
-          setState(() {
-            refreshController.refreshCompleted();
-            isLoading = false;
-          });
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener(
+          cubit: bloc,
+          listener: (context, state) {
+            if(state is RecomendationTradingLoaded) {
+              setState(() {
+                refreshController.refreshCompleted();
+                isLoading = false;
+                data = state.data;
+              });
+            } else if(state is RecomendationFailure) {
+              Toast.show(state.error, context);
+              setState(() {
+                isLoading = false;
+                refreshController.refreshCompleted();
+              });
+            }
+          }
+        )
+      ],
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xFF009eeb),
@@ -63,91 +67,45 @@ class _DividenState extends State<Dividen> {
           controller: refreshController,
           onRefresh: () => onRefresh(),
           child: ListView.separated(
-            separatorBuilder: (context, index) => Divider(color: Colors.grey.shade300),
-            itemCount: isLoading ? 3 : dividens.length,
+            separatorBuilder: (context, index) => Divider(),
+            itemCount: isLoading ? 3 : data.length,
             itemBuilder: (context, index) {
               return isLoading ? shimmerData(context) : Box(
                 onPressed: () => Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => DividenDetail(dividen: dividens[index])
+                  builder: (context) => RecomendationDetailpage(
+                    recomendation: data[index],
+                    type: "trading",
+                  )
                 )),
                 padding: 16,
                 color: Colors.white,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
+                    TextCustom(
+                      data[index].kodeSaham,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: TextCustom(
-                            dividens[index].kodeSaham,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20,
-                          ),
+                        SmallText("Potensi"),
+                        TextCustom(
+                          data[index].potensiKenaikan,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20,
                         ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              LabelText(
-                                "Potensi",
-                              ),
-                              TextCustom(
-                                dividens[index].potensi,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ],
-                          ),
-                        )
                       ],
                     ),
-                    SizedBox(height: 16),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              LabelText(
-                                "Cumdate",
-                              ),
-                              TextCustom(
-                                formatDate.format(dividens[index].cumdate),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              LabelText(
-                                "Ex Date",
-                              ),
-                              TextCustom(
-                                formatDate.format(dividens[index].exdate),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )
                   ],
                 ),
               );
             }, 
           ),
-        ),
-      ),
+        )
+      )
     );
-  }
-
-  onRefresh() {
-    bloc.add(LoadDividen());
-    setState(() {
-      isLoading = true;
-    });
   }
 
   Shimmer shimmerData(BuildContext context) {
@@ -167,5 +125,12 @@ class _DividenState extends State<Dividen> {
         ),
       ),
     );
+  }
+
+  onRefresh() {
+    bloc.add(LoadRecomendation(type: "trading"));
+    setState(() {
+      isLoading = true;
+    });
   }
 }
