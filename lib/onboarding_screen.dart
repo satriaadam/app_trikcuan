@@ -106,7 +106,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 12.0),
                             Text(
-                              'Aplikasi news dan rekomendasi saham ala Mbah Giso langsung di smartphone anda.',
+                              'Aplikasi rekomendasi dan konsultasi saham ala mbah giso langsung di smartphone anda.',
                               style: kSubtitleStyle,
                             ),
                           ],
@@ -133,7 +133,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 12.0),
                             Text(
-                              'Dapatkan rekomendasi saham Ala Mbah Giso secara langsung mulai dari saham untuk trading, swingtrade, dan investasi.',
+                              'Dapatkan rekomendasi harga saham harian untuk fast trade, swing trade, dan investasi.',
                               style: kSubtitleStyle,
                             ),
                           ],
@@ -160,7 +160,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 12.0),
                             Text(
-                              'Dengan aplikasi Mbah Giso, rasakan mudahnya trading dengan strategi dan langkah khusus dari Mbah Giso.',
+                              'Rasakan mudahnya cuan di bisnis saham dengan strategi trading ala mbah giso.',
                               style: kSubtitleStyle,
                             ),
                           ],
