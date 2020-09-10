@@ -46,6 +46,20 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         yield AccountFailure(error: error.toString());
       }
     }
+    
+    if (event is BuyConsultation) {
+      yield AccountLoading();
+      try {
+        final response = await api.buyConsultation();
+        if(response != null) {
+          prefs.setString("account", jsonEncode(response.toMap()));
+          yield BuyConsultationSuccess(data: response);
+        }
+      } catch (error) {
+        print("ERROR: $error");
+        yield AccountFailure(error: error.toString());
+      }
+    }
 
     // if (event is UpdateEmail) {
     //   yield AccountLoading();

@@ -11,32 +11,35 @@ class Account {
         this.username,
         this.email,
         this.phoneNumber,
-        this.city,
         this.balance,
-        this.accessToken,
+        this.consultationPrice,
         this.contactPerson,
+        this.accessToken,
+        this.consultation,
     });
 
     int id;
     String name;
     String username;
-    String email;
+    dynamic email;
     String phoneNumber;
-    String city;
     String balance;
-    String accessToken;
+    int consultationPrice;
     String contactPerson;
+    String accessToken;
+    bool consultation;
 
     factory Account.fromMap(Map<String, dynamic> json) => Account(
         id: json["id"],
         name: json["name"],
         username: json["username"],
-        email: json["email"] ?? "",
+        email: json["email"],
         phoneNumber: json["phone_number"],
-        city: json["city"],
         balance: json["balance"],
-        accessToken: json["access_token"] ?? "",
-        contactPerson: json["contact_person"] ?? "",
+        consultationPrice: json["consultation_price"],
+        contactPerson: json["contact_person"],
+        accessToken: json["access_token"],
+        consultation: json["consultation"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -45,10 +48,11 @@ class Account {
         "username": username,
         "email": email,
         "phone_number": phoneNumber,
-        "city": city,
         "balance": balance,
-        "access_token": accessToken,
+        "consultation_price": consultationPrice,
         "contact_person": contactPerson,
+        "access_token": accessToken,
+        "consultation": consultation,
     };
 }
 

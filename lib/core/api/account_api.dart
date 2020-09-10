@@ -16,6 +16,19 @@ class AccountApi extends MainApi {
       throw Exception(error);
     }
   }
+  
+  Future<Account> buyConsultation() async {
+    try {
+      final response = await getRequest(
+        url: "$host/consultation/buy",
+        useAuth: true
+      );
+      print(response);
+      return accountFromMap(response);
+    } catch (error) {
+      throw Exception(error);
+    }
+  }
 
   Future<TopupModel> topup(int saldo) async {
     try {

@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:trikcuan_app/widget/box.dart';
 import 'package:trikcuan_app/widget/button.dart';
 import 'package:trikcuan_app/login_page.dart';
+import 'package:trikcuan_app/widget/dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Profil extends StatefulWidget {
@@ -29,6 +30,7 @@ class _ProfilState extends State<Profil> {
   final accountBloc = AccountBloc();
 
   Account account;
+  bool isLoadingConsultation = false;
 
   @override
   void initState() {
@@ -63,6 +65,13 @@ class _ProfilState extends State<Profil> {
               setState(() {
                 account = state.data;
               });
+            }
+            else if(state is BuyConsultationSuccess) {
+              setState(() {
+                account = state.data;
+                isLoadingConsultation = false;
+              });
+              launchURL("https://api.whatsapp.com/send?phone=${account?.contactPerson}");
             }
           },
         )
@@ -171,40 +180,36 @@ class _ProfilState extends State<Profil> {
                     text: "Daftar Kelas Trik Cuan"
                   ),
                   SizedBox(height: 8),
-                  RaisedButtonCustom(
-                      color: Colors.white,
-                      elevation: 2,
-                      onPressed: () => launchURL("https://api.whatsapp.com/send?phone=${account?.contactPerson}"),
-                      textColor: Colors.black54,
-                      text: "Konsultasi Saham Mbah Giso"
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: RaisedButtonCustom(
+                        color: Colors.white,
+                        elevation: 2,
+                        isLoading: isLoadingConsultation,
+                        onPressed: () => account.consultation ? launchURL("https://api.whatsapp.com/send?phone=${account?.contactPerson}")
+                        : dialogConfirmation(
+                          context: context,
+                          message: int.parse(account?.balance) < account?.consultationPrice ? "Saldo Anda tidak cukup. Untuk konsultasi dikenakan potongan saldo sebesar Rp 100.000" : "Untuk konsultasi dikenakan potongan saldo sebesar ${rupiah(account?.consultationPrice)}, apakah Anda setuju?",
+                          textCancel: "Batal",
+                          textConfirm: int.parse(account?.balance) < account?.consultationPrice ? "Isi Saldo" : "OK",
+                          callback: () {
+                            Navigator.pop(context);
+                            if(int.parse(account?.balance) < account?.consultationPrice) {
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => TopupSaldoPage()
+                              ));
+                            } else {
+                              accountBloc.add(BuyConsultation());
+                              setState(() {
+                                isLoadingConsultation = true;
+                              });
+                            }
+                          }
+                        ),
+                        textColor: Colors.black54,
+                        text: "Konsultasi Saham Mbah Giso"
+                    ),
                   ),
-                //  Row(
-                //    children: [
-                //      Expanded(
-                //        child: RaisedButtonCustom(
-                //          color: Colors.white,
-                //          elevation: 2,
-                //          onPressed: () => Navigator.push(context, MaterialPageRoute(
-                //            builder: (context) => DataPerusahaan()
-                //          )),
-                //          textColor: Colors.black54,
-                //          text: "Data Perusahaan"
-                //        ),
-                //      ),
-                //      SizedBox(width: 16),
-                //      Expanded(
-                //        child: RaisedButtonCustom(
-                //          color: Colors.white,
-                //          elevation: 2,
-                //          onPressed: () => Navigator.push(context, MaterialPageRoute(
-                //            builder: (context) => Corporate()
-                //          )),
-                //          textColor: Colors.black54,
-                //          text: "Corporate Action"
-                //        ),
-                //      ),
-                //    ],
-                //  ),
                   SizedBox(height: 16),
                   RaisedButtonCustomSecondary(
                     color: Color(0xFFf05d59),

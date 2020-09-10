@@ -11,6 +11,8 @@ abstract class AccountEvent extends Equatable {
 
 class GetAccount extends AccountEvent {}
 
+class BuyConsultation extends AccountEvent {}
+
 class UpdateEmail extends AccountEvent {
   final String email;
 

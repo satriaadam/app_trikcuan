@@ -13,6 +13,15 @@ class AccountUninitialized extends AccountState {}
 
 class AccountLoading extends AccountState {}
 
+class BuyConsultationSuccess extends AccountState {
+  final Account data;
+
+  const BuyConsultationSuccess({@required this.data});
+
+  @override
+  List<Object> get props => [data];
+}
+
 class AccountSuccess extends AccountState {
   final Account data;
 
