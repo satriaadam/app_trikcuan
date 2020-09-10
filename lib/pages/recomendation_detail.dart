@@ -173,8 +173,10 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
                       },
                       text: "Beli ${rupiah(int.parse(widget.recomendation.hargaBeli))}",
                     ),
-                    SizedBox(height: 16),
-                    int.parse(account?.balance) < int.parse(widget.recomendation.hargaBeli) ? TextCustom("Saldo Anda ${rupiah(account?.balance)} tidak cukup", color: Colors.red, textAlign: TextAlign.center) : Text("")
+                    int.parse(account?.balance) < int.parse(widget.recomendation.hargaBeli) ? Padding(
+                      padding: EdgeInsets.only(top: 16),
+                      child: TextCustom("Saldo Anda tidak mencukupi", color: Colors.red, textAlign: TextAlign.center),
+                    ) : Text("")
                   ],
                 ),
               ),

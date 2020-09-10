@@ -218,7 +218,7 @@ class _DividenDetailState extends State<DividenDetail> {
                       text: "Beli ${rupiah(int.parse(widget.dividen.price))}",
                     ),
                     SizedBox(height: 16),
-                    int.parse(account?.balance) < int.parse(widget.dividen.price) ? TextCustom("Saldo Anda ${rupiah(account?.balance)} tidak cukup", color: Colors.red, textAlign: TextAlign.center) : Text("")
+                    int.parse(account?.balance) < int.parse(widget.dividen.price) ? TextCustom("Saldo Anda tidak mencukupi", color: Colors.red, textAlign: TextAlign.center) : Text("")
                   ],
                 ),
               ),
