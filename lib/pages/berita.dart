@@ -79,7 +79,7 @@ class _NewsPageState extends State<NewsPage> {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(4),
-                        child: Image.network(data[index].linkImage, width: 80, height: 80, fit: BoxFit.cover)
+                        child: Image.network(data[index].linkImage, width: 80, height: 60, fit: BoxFit.cover)
                       ),
                       SizedBox(width: 16),
                       Expanded(
