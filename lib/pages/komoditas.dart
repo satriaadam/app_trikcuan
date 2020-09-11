@@ -98,8 +98,10 @@ class _KomoditasState extends State<Komoditas> {
                           fontSize: 16,
                           color: int.parse(data[index].priceChange) > 0 ? Colors.green : Colors.red,
                         ),
-                        LabelText(
+                        TextCustom(
                           "${data[index].priceChange} (${data[index].percentageChange})",
+                          color: int.parse(data[index].priceChange) > 0 ? Colors.green : Colors.red,
+                          fontSize: 12,
                         ),
                       ],
                     ),
