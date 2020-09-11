@@ -116,7 +116,7 @@ class _DividenDetailState extends State<DividenDetail> {
                         child: TextCustom(
                           widget.dividen.kodeSaham,
                           fontWeight: FontWeight.w600,
-                          fontSize: 20,
+                          fontSize: 16,
                         ),
                       ),
                       Expanded(
@@ -129,6 +129,7 @@ class _DividenDetailState extends State<DividenDetail> {
                             TextCustom(
                               widget.dividen.potensi,
                               fontWeight: FontWeight.w600,
+                              fontSize: 16,
                             ),
                           ],
                         ),
