@@ -20,6 +20,7 @@ class _DaftarKelasState extends State<DaftarKelas> {
         title: Text('Daftar Kelas', style: TextStyle(
           color: Colors.blueGrey[600],
         ),),
+        centerTitle: true,
         elevation: 0.0,
         backgroundColor: Colors.transparent,
       ),
