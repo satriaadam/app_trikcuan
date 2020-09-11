@@ -99,6 +99,7 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
           elevation: 1,
           backgroundColor: Color(0xFF009eeb),
           title: Text('REKOMENDASI', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+          centerTitle: true,
         ),
         body: ListView(
           padding: EdgeInsets.all(16),

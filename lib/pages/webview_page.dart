@@ -34,6 +34,7 @@ class _WebViewPageState extends State<WebViewPage> {
         elevation: 1,
         backgroundColor: Color(0xFF009eeb),
         title: Text('BERITA', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        centerTitle: true,
       ),
       body: Column(
         children: <Widget>[

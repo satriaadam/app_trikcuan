@@ -94,6 +94,7 @@ class _ProfilState extends State<Profil> {
           backgroundColor: Color(0xFF009eeb),
           leading: Icon(Icons.arrow_back_ios, color: Color(0xFF009eeb)),
           title: Text('PROFIL', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+          centerTitle: true,
           elevation: 1
         ),
         body: ListView(

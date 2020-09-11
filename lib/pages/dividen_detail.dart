@@ -94,6 +94,7 @@ class _DividenDetailState extends State<DividenDetail> {
             color: Colors.white
           ),
           title: Text("DIVIDEN", style: TextStyle(color: Colors.white),),
+          centerTitle: true,
           backgroundColor: Color(0xFF009eeb),
 
         ),
@@ -116,7 +117,7 @@ class _DividenDetailState extends State<DividenDetail> {
                         child: TextCustom(
                           widget.dividen.kodeSaham,
                           fontWeight: FontWeight.w600,
-                          fontSize: 20,
+                          fontSize: 16,
                         ),
                       ),
                       Expanded(
@@ -129,6 +130,7 @@ class _DividenDetailState extends State<DividenDetail> {
                             TextCustom(
                               widget.dividen.potensi,
                               fontWeight: FontWeight.w600,
+                              fontSize: 16,
                             ),
                           ],
                         ),

@@ -54,7 +54,8 @@ class _TopupSaldoPageState extends State<TopupSaldoPage> {
           ),
           title: Text("Top Up Saldo", style: TextStyle(
             color: Colors.white
-          ),)
+          ),),
+            centerTitle: true,
         ),
         body: showConfirmationPayment ? Container(
           child: ListView(

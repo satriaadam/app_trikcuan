@@ -39,6 +39,7 @@ class _RekomendasiState extends State<Rekomendasi> {
           backgroundColor: Color(0xFF009eeb),
             leading: Icon(Icons.arrow_back_ios, color: Color(0xFF009eeb)),
           title: Text('REKOMENDASI', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+          centerTitle: true,
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(myTabBar.preferredSize.height),
             child: Container(color: Color(0xFF48d25f), child: myTabBar,)
