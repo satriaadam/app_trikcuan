@@ -82,13 +82,13 @@ class _TradingState extends State<Trading> {
                     fontSize: 16,
                   ),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SmallText("Potensi"),
+                      TextCustom("Potensi", fontSize: 14,),
                       TextCustom(
                         data[index].potensiKenaikan,
                         fontWeight: FontWeight.w600,
-                        fontSize: 16,
+                        fontSize: 12,
                       ),
                     ],
                   ),

@@ -82,13 +82,13 @@ class _SwingState extends State<Swing> {
                     fontSize: 16,
                   ),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SmallText("Potensi"),
+                      TextCustom("Potensi", fontSize: 14,),
                       TextCustom(
                         data[index].potensiKenaikan,
                         fontWeight: FontWeight.w600,
-                        fontSize: 16,
+                        fontSize: 12,
                       ),
                     ],
                   ),
