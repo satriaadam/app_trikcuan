@@ -60,7 +60,6 @@ class _NewsPageState extends State<NewsPage> {
             backgroundColor: Color(0xFF009eeb),
             leading: Icon(Icons.arrow_back_ios, color: Color(0xFF009eeb)),
             title: Text('BERITA', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-            centerTitle: true,
           ),
           body: SmartRefresher(
             controller: refreshController,
