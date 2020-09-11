@@ -94,6 +94,7 @@ class _DividenDetailState extends State<DividenDetail> {
             color: Colors.white
           ),
           title: Text("DIVIDEN", style: TextStyle(color: Colors.white),),
+          centerTitle: true,
           backgroundColor: Color(0xFF009eeb),
 
         ),

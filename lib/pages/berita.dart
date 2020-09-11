@@ -87,6 +87,7 @@ class _NewsPageState extends State<NewsPage> {
                           data[index].title, 
                           maxLines: 3,
                           fontSize: 16,
+                          fontWeight: FontWeight.w600,
                         )
                       ),
                     ],

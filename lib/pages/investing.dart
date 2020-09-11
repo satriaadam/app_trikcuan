@@ -79,7 +79,7 @@ class _InvestingState extends State<Investing> {
                   TextCustom(
                     data[index].kodeSaham,
                     fontWeight: FontWeight.w600,
-                    fontSize: 20,
+                    fontSize: 16,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +88,7 @@ class _InvestingState extends State<Investing> {
                       TextCustom(
                         data[index].potensiKenaikan,
                         fontWeight: FontWeight.w600,
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ],
                   ),
