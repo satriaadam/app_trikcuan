@@ -21,7 +21,7 @@ class TopupSaldoPage extends StatefulWidget {
 
 class _TopupSaldoPageState extends State<TopupSaldoPage> {
 
-  List<int> listSaldo = [10000, 20000, 50000, 100000, 200000];
+  List<int> listSaldo = [50000, 100000, 200000, 500000, 1000000];
   int saldoSelected;
   bool showConfirmationPayment = false;
   bool isLoading = false;

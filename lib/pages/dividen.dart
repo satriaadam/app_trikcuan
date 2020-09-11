@@ -60,6 +60,7 @@ class _DividenState extends State<Dividen> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xFF009eeb),
+          centerTitle: true,
           leading: Icon(Icons.arrow_back_ios, color: Color(0xFF009eeb)),
           title: Text('SAHAM LQ 45', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
         ),

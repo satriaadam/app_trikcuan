@@ -34,6 +34,7 @@ class _RekomendasiState extends State<Rekomendasi> {
       child: Scaffold(
         appBar: AppBar(
           elevation: 5.0,
+          centerTitle: true,
           bottomOpacity: 0.8,
           backgroundColor: Color(0xFF009eeb),
             leading: Icon(Icons.arrow_back_ios, color: Color(0xFF009eeb)),

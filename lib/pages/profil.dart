@@ -211,7 +211,7 @@ class _ProfilState extends State<Profil> {
                           } else {
                             dialogConfirmation(
                               context: context,
-                              message: int.parse(account?.balance) < account?.consultationPrice ? "Saldo Anda tidak cukup. Untuk konsultasi dikenakan potongan saldo sebesar Rp 100.000" : "Untuk konsultasi dikenakan potongan saldo sebesar ${rupiah(account?.consultationPrice)}, apakah Anda setuju?",
+                              message: int.parse(account?.balance) < account?.consultationPrice ? "Saldo Anda tidak mencukupi. Untuk mengakses fitur ini dikenakan potongan sebesar ${rupiah(account?.consultationPrice)}" : "Untuk mengakses fitur ini dikenakan potongan sebesar ${rupiah(account?.consultationPrice)}, apakah Anda setuju?",
                               textCancel: "Batal",
                               textConfirm: int.parse(account?.balance) < account?.consultationPrice ? "Isi Saldo" : "OK",
                               callback: () {
