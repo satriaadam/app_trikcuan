@@ -125,6 +125,16 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
               physics: ClampingScrollPhysics(),
               children: [
                 SizedBox(height: 32),
+                widget.recomendation.prospekPerusahaan != null ? ListView(
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  children: [
+                    SubtitleText("Prospek Perusahaan"),
+                    SizedBox(height: 8),
+                    Text(widget.recomendation.prospekPerusahaan),
+                    SizedBox(height: 24),
+                  ],
+                ) : Container(),
                 SubtitleText("Fundamental"),
                 SizedBox(height: 8),
                 Text(widget.recomendation.fundamental),

@@ -10,6 +10,7 @@ class RecomendationModel {
         this.kodeSaham,
         this.potensiKenaikan,
         this.fundamental,
+        this.prospekPerusahaan,
         this.teknikal,
         this.sentimen,
         this.beli,
@@ -21,6 +22,7 @@ class RecomendationModel {
     String kodeSaham;
     String potensiKenaikan;
     String fundamental;
+    String prospekPerusahaan;
     String teknikal;
     String sentimen;
     String beli;
@@ -32,6 +34,7 @@ class RecomendationModel {
         kodeSaham: json["kode_saham"],
         potensiKenaikan: json["potensi_kenaikan"],
         fundamental: json["fundamental"],
+        prospekPerusahaan: json["prospek_perusahaan"],
         teknikal: json["teknikal"],
         sentimen: json["sentimen"],
         beli: json["beli"],
@@ -44,6 +47,7 @@ class RecomendationModel {
         "kode_saham": kodeSaham,
         "potensi_kenaikan": potensiKenaikan,
         "fundamental": fundamental,
+        "prospek_perusahaan": prospekPerusahaan,
         "teknikal": teknikal,
         "sentimen": sentimen,
         "beli": beli,
