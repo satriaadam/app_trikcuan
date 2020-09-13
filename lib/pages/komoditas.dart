@@ -64,9 +64,7 @@ class _KomoditasState extends State<Komoditas> {
             itemCount: isLoading ? 3 : data.length,
             itemBuilder: (context, index) {
               return isLoading ? shimmerData(context) : Box(
-                onPressed: () {},//=> Navigator.push(context, MaterialPageRoute(
-         //           builder: (context) => MarketDetailpage(market: data[index]))),
-                padding: 16,
+                padding: 8,
                 color: Colors.white,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
