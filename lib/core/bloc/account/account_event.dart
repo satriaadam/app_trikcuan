@@ -13,6 +13,8 @@ class GetAccount extends AccountEvent {}
 
 class BuyConsultation extends AccountEvent {}
 
+class BuyLiveTrading extends AccountEvent {}
+
 class UpdateEmail extends AccountEvent {
   final String email;
 

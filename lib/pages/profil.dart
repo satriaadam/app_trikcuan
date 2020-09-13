@@ -32,6 +32,7 @@ class _ProfilState extends State<Profil> {
 
   Account account;
   bool isLoadingConsultation = false;
+  bool isLoadingLiveTrading = false;
 
   @override
   void initState() {
@@ -72,17 +73,20 @@ class _ProfilState extends State<Profil> {
                 account = state.data;
                 isLoadingConsultation = false;
               });
-              var desc = "Semangat pagi Mbah Giso, saya\n\n";
-              desc += "nama: ${account.name}\n";
-              desc += "username: ${account.username}\n\n";
-              desc += "Mau bertanya\n\n";
-              desc += "<PERTANYAAN_ANDA_DISINI>";
-              launchURL("https://api.whatsapp.com/send?phone=${account?.contactPerson}&text=$desc");
+              whatsappConsultation();
+            }
+            else if(state is BuyLiveTradingSuccess) {
+              setState(() {
+                account = state.data;
+                isLoadingLiveTrading= false;
+              });
+              whatsappLiveTrading();
             }
             else if(state is AccountFailure) {
               Toast.show(state.error, context);
               setState(() {
                 isLoadingConsultation = false;
+                isLoadingLiveTrading = false;
               });
             }
           },
@@ -203,12 +207,7 @@ class _ProfilState extends State<Profil> {
                         isLoading: isLoadingConsultation,
                         onPressed: () {
                           if(account.consultation) {
-                            var desc = "Semangat pagi Mbah Giso, saya\n\n";
-                            desc += "nama: ${account.name}\n";
-                            desc += "username: ${account.username}\n\n";
-                            desc += "Mau bertanya\n\n";
-                            desc += "<PERTANYAAN_ANDA_DISINI>";
-                            launchURL("https://api.whatsapp.com/send?phone=${account?.contactPerson}&text=$desc");
+                            whatsappConsultation();
                           } else {
                             dialogConfirmation(
                               context: context,
@@ -235,6 +234,44 @@ class _ProfilState extends State<Profil> {
                         text: "Konsultasi Saham Mbah Giso"
                     ),
                   ),
+                  SizedBox(height: 8),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: RaisedButtonCustom(
+                        color: Colors.white,
+                        elevation: 2,
+                        isLoading: isLoadingLiveTrading,
+                        onPressed: () {
+                          print("LIVE");
+                          if(account?.liveTrading ?? false) {
+                            whatsappLiveTrading();
+                          } else {
+                            print("CONG");
+                            dialogConfirmation(
+                              context: context,
+                              message: int.parse(account?.balance) < account?.liveTradingPrice ? "Saldo Anda tidak mencukupi. Untuk mengakses fitur ini dikenakan potongan sebesar ${rupiah(account?.liveTradingPrice)}" : "Untuk mengakses fitur ini dikenakan potongan sebesar ${rupiah(account?.liveTradingPrice)}, apakah Anda setuju?",
+                              textCancel: "Batal",
+                              textConfirm: int.parse(account?.balance) < account?.liveTradingPrice ? "Isi Saldo" : "OK",
+                              callback: () {
+                                Navigator.pop(context);
+                                if(int.parse(account?.balance) < account?.liveTradingPrice) {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => TopupSaldoPage()
+                                  ));
+                                } else {
+                                  accountBloc.add(BuyLiveTrading());
+                                  setState(() {
+                                    isLoadingLiveTrading = true;
+                                  });
+                                }
+                              }
+                            );
+                          }
+                        },
+                        textColor: Colors.black54,
+                        text: "Live Trading"
+                    ),
+                  ),
                   SizedBox(height: 16),
                   RaisedButtonCustomSecondary(
                     color: Color(0xFFf05d59),
@@ -258,5 +295,41 @@ class _ProfilState extends State<Profil> {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  whatsappConsultation() {
+    var desc = "Semangat pagi Mbah Giso, saya\n\n";
+    desc += "nama: ${account.name}\n";
+    desc += "username: ${account.username}\n\n";
+    desc += "Mau bertanya\n\n";
+    desc += "<PERTANYAAN_ANDA_DISINI>";
+    var url = Uri(
+      scheme: "https",
+      host: "api.whatsapp.com",
+      path: "send",
+      queryParameters: {
+        "phone": account?.consultationCp,
+        "text": desc
+      }
+    );
+    launchURL(url.toString());
+  }
+  
+  whatsappLiveTrading() {
+    var desc = "Semangat pagi Mbah Giso, saya\n\n";
+    desc += "nama: ${account.name}\n";
+    desc += "username: ${account.username}\n\n";
+    desc += "Mau Live Trading\n\n";
+    desc += "<PERTANYAAN_ANDA_DISINI>";
+    var url = Uri(
+      scheme: "https",
+      host: "api.whatsapp.com",
+      path: "send",
+      queryParameters: {
+        "phone": account?.liveTradingCp,
+        "text": desc
+      }
+    );
+    launchURL(url.toString());
   }
 }

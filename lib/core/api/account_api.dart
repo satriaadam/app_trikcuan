@@ -29,6 +29,19 @@ class AccountApi extends MainApi {
       throw Exception(error);
     }
   }
+  
+  Future<Account> buyLiveTrading() async {
+    try {
+      final response = await getRequest(
+        url: "$host/livetrading/buy",
+        useAuth: true
+      );
+      print(response);
+      return accountFromMap(response);
+    } catch (error) {
+      throw Exception(error);
+    }
+  }
 
   Future<TopupModel> topup(int saldo) async {
     try {

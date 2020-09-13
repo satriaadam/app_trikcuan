@@ -22,6 +22,15 @@ class BuyConsultationSuccess extends AccountState {
   List<Object> get props => [data];
 }
 
+class BuyLiveTradingSuccess extends AccountState {
+  final Account data;
+
+  const BuyLiveTradingSuccess({@required this.data});
+
+  @override
+  List<Object> get props => [data];
+}
+
 class AccountSuccess extends AccountState {
   final Account data;
 
