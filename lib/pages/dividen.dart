@@ -78,7 +78,7 @@ class _DividenState extends State<Dividen> {
                     type: "trading",
                   )
                 )),
-                padding: 16,
+                padding: 8,
                 color: Colors.white,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

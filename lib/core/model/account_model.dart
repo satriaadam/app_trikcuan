@@ -20,6 +20,8 @@ class Account {
         this.liveTrading,
         this.liveTradingPrice,
         this.liveTradingCp,
+        this.catatanIndex,
+        this.catatanKomoditas
     });
 
     int id;
@@ -36,6 +38,8 @@ class Account {
     bool liveTrading;
     int liveTradingPrice;
     String liveTradingCp;
+    String catatanIndex;
+    String catatanKomoditas;
 
     factory Account.fromMap(Map<String, dynamic> json) => Account(
         id: json["id"],
@@ -52,6 +56,8 @@ class Account {
         liveTrading: json["live_trading"],
         liveTradingPrice: json["live_trading_price"],
         liveTradingCp: json["live_trading_cp"],
+        catatanIndex: json["catatan_index"],
+        catatanKomoditas: json["catatan_komoditas"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -69,6 +75,8 @@ class Account {
         "live_trading": liveTrading,
         "live_trading_price": liveTradingPrice,
         "live_trading_cp": liveTradingCp,
+        "catatan_index": catatanIndex,
+        "catatan_komoditas": catatanKomoditas,
     };
 }
 

@@ -71,7 +71,7 @@ class _SwingState extends State<Swing> {
                   type: "trading",
                 )
               )),
-              padding: 16,
+              padding: 8,
               color: Colors.white,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
