@@ -18,18 +18,18 @@ class MarketModel {
     int id;
     String code;
     String description;
-    String price;
-    String priceChange;
-    String percentageChange;
+    double price;
+    double priceChange;
+    double percentageChange;
     String marketCategory;
 
     factory MarketModel.fromMap(Map<String, dynamic> json) => MarketModel(
         id: json["id"],
         code: json["code"],
         description: json["description"],
-        price: json["price"],
-        priceChange: json["price_change"],
-        percentageChange: json["percentage_change"],
+        price: double.parse(json["price"].toString()),
+        priceChange: double.parse(json["price_change"].toString()),
+        percentageChange: double.parse(json["percentage_change"].toString()),
         marketCategory: json["market_category"],
     );
 
@@ -37,9 +37,9 @@ class MarketModel {
         "id": id,
         "code": code,
         "description": description,
-        "price": price,
-        "price_change": priceChange,
-        "percentage_change": percentageChange,
+        "price": price.toString(),
+        "price_change": priceChange.toString(),
+        "percentage_change": percentageChange.toString(),
         "market_category": marketCategory,
     };
 }

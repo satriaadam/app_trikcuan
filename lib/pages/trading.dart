@@ -71,28 +71,12 @@ class _TradingState extends State<Trading> {
                   type: "trading",
                 )
               )),
-              padding: 8,
+              padding: 16,
               color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextCustom(
-                    data[index].kodeSaham,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      TextCustom("Potensi", fontSize: 14,),
-                      TextCustom(
-                        data[index].potensiKenaikan,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
-                      ),
-                    ],
-                  ),
-                ],
+              child: TextCustom(
+                data[index].kodeSaham,
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
               ),
             );
           }, 

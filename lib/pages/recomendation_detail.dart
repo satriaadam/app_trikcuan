@@ -110,11 +110,17 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
               padding: 16,
               boxShadow: [AppBoxShadow.type3],
               borderRadius: 8,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TitleText(widget.recomendation.kodeSaham),
-                  BoldText("Potensi: ${widget.recomendation.potensiKenaikan}"),
+                  SizedBox(height: 16),
+                  Divider(),
+                  SizedBox(height: 16),
+                  TextCustom(
+                    "POTENSI: \n${widget.recomendation.potensiKenaikan}",
+                    maxLines: 10,
+                  ),
                 ],
               ),
             ),
@@ -158,7 +164,7 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
                     SizedBox(height: 16),
                     RaisedButtonSecondary(
                       isLoading: isLoadingBuy,
-                      onPressed: isLoadingBuy || int.parse(account?.balance) < int.parse(widget.recomendation.hargaBeli) ? null 
+                      onPressed: isLoadingBuy || int.parse(account?.balance ?? "0") < int.parse(widget.recomendation?.hargaBeli ?? "0") ? null 
                       : () => dialogConfirmation(
                         context: context,
                         message: "Untuk mengakses fitur ini saldo Anda akan dipotong sebesar ${rupiah(int.parse(widget.recomendation.hargaBeli))}",
@@ -177,9 +183,9 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
                           });
                         }
                       ),
-                      text: "Beli ${rupiah(int.parse(widget.recomendation.hargaBeli))}",
+                      text: "Beli ${rupiah(int.parse(widget.recomendation?.hargaBeli ?? '0'))}",
                     ),
-                    int.parse(account?.balance) < int.parse(widget.recomendation.hargaBeli) ? Padding(
+                    int.parse(account?.balance) < int.parse(widget.recomendation?.hargaBeli ?? "0") ? Padding(
                       padding: EdgeInsets.only(top: 16),
                       child: TextCustom("Saldo Anda tidak mencukupi, silahkan Top Up saldo Anda", color: Colors.red, textAlign: TextAlign.center),
                     ) : Text("")

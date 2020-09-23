@@ -33,7 +33,7 @@ class _RekomendasiState extends State<Rekomendasi> {
       length: _pages.length,
       child: Scaffold(
         appBar: AppBar(
-          elevation: 5.0,
+          elevation: 0,
           centerTitle: true,
           bottomOpacity: 0.8,
           backgroundColor: Color(0xFF009eeb),
@@ -43,14 +43,6 @@ class _RekomendasiState extends State<Rekomendasi> {
             preferredSize: Size.fromHeight(myTabBar.preferredSize.height),
             child: Container(color: Color(0xFF48d25f), child: myTabBar,)
           )
-
-        //  TabBar(
-        //    labelColor: Colors.black54,
-        //    indicatorColor: Colors.redAccent,
-        //    tabs: _pages
-        //        .map<Tab>((Tuple2 page) => Tab(text: page.item1))
-        //        .toList(),
-        //  ),
         ),
         body: TabBarView(
           children: _pages.map<Widget>((Tuple2 page) => page.item2).toList(),

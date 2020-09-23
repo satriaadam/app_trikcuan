@@ -113,14 +113,14 @@ class _KomoditasState extends State<Komoditas> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           TextCustom(
-                            data[index].price,
+                            data[index].price.toStringAsFixed(2),
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
-                            color: int.parse(data[index].priceChange) > 0 ? Colors.green : Colors.red,
+                            color: data[index].priceChange > 0 ? Colors.green : Colors.red,
                           ),
                           TextCustom(
-                            "${data[index].priceChange} (${data[index].percentageChange})",
-                            color: int.parse(data[index].priceChange) > 0 ? Colors.green : Colors.red,
+                            "${data[index].priceChange.toStringAsFixed(2)} (${data[index].percentageChange.toStringAsFixed(2)}%)",
+                            color: data[index].priceChange > 0 ? Colors.green : Colors.red,
                             fontSize: 12,
                           ),
                         ],
