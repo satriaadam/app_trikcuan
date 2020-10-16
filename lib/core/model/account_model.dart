@@ -27,7 +27,7 @@ class Account {
     int id;
     String name;
     String username;
-    dynamic email;
+    String email;
     String phoneNumber;
     String balance;
     String contactPerson;
@@ -43,21 +43,21 @@ class Account {
 
     factory Account.fromMap(Map<String, dynamic> json) => Account(
         id: json["id"],
-        name: json["name"],
-        username: json["username"],
-        email: json["email"],
-        phoneNumber: json["phone_number"],
-        balance: json["balance"],
-        contactPerson: json["contact_person"],
-        accessToken: json["access_token"],
+        name: json["name"].toString(),
+        username: json["username"].toString(),
+        email: json["email"].toString(),
+        phoneNumber: json["phone_number"].toString(),
+        balance: json["balance"].toString(),
+        contactPerson: json["contact_person"].toString(),
+        accessToken: json["access_token"].toString(),
         consultation: json["consultation"],
         consultationPrice: json["consultation_price"],
-        consultationCp: json["consultation_cp"],
+        consultationCp: json["consultation_cp"].toString(),
         liveTrading: json["live_trading"],
         liveTradingPrice: json["live_trading_price"],
-        liveTradingCp: json["live_trading_cp"],
-        catatanIndex: json["catatan_index"],
-        catatanKomoditas: json["catatan_komoditas"],
+        liveTradingCp: json["live_trading_cp"].toString(),
+        catatanIndex: json["catatan_index"].toString(),
+        catatanKomoditas: json["catatan_komoditas"].toString(),
     );
 
     Map<String, dynamic> toMap() => {
