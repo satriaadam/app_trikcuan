@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trikcuan_app/pages/berita.dart';
 import 'package:trikcuan_app/pages/chart.dart';
-import 'package:trikcuan_app/pages/dividen.dart';
+import 'package:trikcuan_app/pages/lq45.dart';
 import 'package:trikcuan_app/pages/profil.dart';
 import 'package:trikcuan_app/pages/rekomendasi.dart';
 
@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: [
         Chart(),
-        Dividen(),
+        LQ45Page(),
         Rekomendasi(),
         NewsPage(),
         Profil(),

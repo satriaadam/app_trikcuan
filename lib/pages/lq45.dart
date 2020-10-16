@@ -12,14 +12,14 @@ import 'package:trikcuan_app/pages/recomendation_detail.dart';
 import 'package:trikcuan_app/widget/box.dart';
 import 'package:trikcuan_app/widget/text.dart';
 
-class Dividen extends StatefulWidget {
-  const Dividen({Key key}) : super(key: key);
+class LQ45Page extends StatefulWidget {
+  const LQ45Page({Key key}) : super(key: key);
 
   @override
-  _DividenState createState() => _DividenState();
+  _LQ45PageState createState() => _LQ45PageState();
 }
 
-class _DividenState extends State<Dividen> {
+class _LQ45PageState extends State<LQ45Page> {
 
   List<RecomendationModel> data = <RecomendationModel>[];
   final bloc = RecomendationBloc();

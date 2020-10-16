@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
 
 class MainApi {
-  String host = 'http://api.mbahgiso.com';
+  String host = 'http://localhost/mbahgiso-api/public';
   Dio dio = Dio();
   String get getHost => host;
 
