@@ -167,7 +167,7 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
                       onPressed: isLoadingBuy || int.parse(account?.balance ?? "0") < int.parse(widget.recomendation?.hargaBeli ?? "0") ? null 
                       : () => dialogConfirmation(
                         context: context,
-                        message: "Untuk mengakses fitur ini saldo Anda akan dipotong sebesar ${rupiah(int.parse(widget.recomendation.hargaBeli))}",
+                        message: "Untuk mengakses fitur ini saldo Anda akan dipotong sebesar ${rupiah(int.parse(widget?.recomendation?.hargaBeli ?? 0))}",
                         textCancel: "Batal",
                         textConfirm: "OK",
                         callback: () {
@@ -178,7 +178,7 @@ class _RecomendationDetailpageState extends State<RecomendationDetailpage> {
                               recomendation: widget.type,
                               type: "recomendation-data",
                               dataId: widget.recomendation.id.toString(),
-                              price: int.parse(widget.recomendation.hargaBeli)
+                              price: int.parse(widget.recomendation?.hargaBeli ?? "0")
                             ));
                           });
                         }
