@@ -75,7 +75,7 @@ class _DividenState extends State<Dividen> {
                 onPressed: () => Navigator.push(context, MaterialPageRoute(
                   builder: (context) => RecomendationDetailpage(
                     recomendation: data[index],
-                    type: "trading",
+                    type: "dividen",
                   )
                 )),
                 padding: 16,
@@ -113,7 +113,7 @@ class _DividenState extends State<Dividen> {
   }
 
   onRefresh() {
-    bloc.add(LoadRecomendation(type: "trading"));
+    bloc.add(LoadRecomendation(type: "dividen"));
     setState(() {
       isLoading = true;
     });
