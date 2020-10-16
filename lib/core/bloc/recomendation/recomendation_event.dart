@@ -10,8 +10,6 @@ abstract class RecomendationEvent extends Equatable {
 
 class LoadRecomendationPrice extends RecomendationEvent {}
 
-class LoadRecomendationToday extends RecomendationEvent {}
-
 class LoadRecomendation extends RecomendationEvent {
   final String type;
 

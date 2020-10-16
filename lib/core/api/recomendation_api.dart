@@ -30,18 +30,6 @@ class RecomendationApi extends MainApi {
     }
   }
   
-  Future<List<RecomendationTodayModel>> getRecomendationToday() async {
-    try {
-      final response = await getRequest(
-        url: "$host/recomendation/today",
-        useAuth: true
-      );
-      return recomendationTodayModelFromMap(response);
-    } catch (error) {
-      throw Exception(error);
-    }
-  }
-  
   Future<List<RecomendationTodayModel>> buyRecomendation({
     String recomendation, String type, String dataId, int price
   }) async {

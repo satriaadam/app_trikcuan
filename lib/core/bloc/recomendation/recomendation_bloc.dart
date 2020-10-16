@@ -38,18 +38,6 @@ class RecomendationBloc extends Bloc<RecomendationEvent, RecomendationState> {
       }
     }
     
-    if (event is LoadRecomendationToday) {
-      yield RecomendationLoading();
-      try {
-        final response = await api.getRecomendationToday();
-        prefs.setString("recomendationToday", recomendationTodayModelToMap(response));
-        yield RecomendationTodayLoaded(data: response);
-      } catch (error) {
-        print("ERROR: $error");
-        yield RecomendationFailure(error: error.toString());
-      }
-    }
-    
     if (event is BuyRecomendation) {
       yield RecomendationLoading();
       try {
