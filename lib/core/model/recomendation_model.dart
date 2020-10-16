@@ -27,13 +27,13 @@ class RecomendationModel {
 
     factory RecomendationModel.fromMap(Map<String, dynamic> json) => RecomendationModel(
         id: json["id"],
-        kodeSaham: json["kode_saham"] ?? "",
-        potensiKenaikan: json["potensi_kenaikan"] ?? "",
-        prospekPerusahaan: json["prospek_perusahaan"] ?? "",
-        fundamental: json["fundamental"] ?? "",
-        teknikal: json["teknikal"] ?? "",
-        jualBeli: json["jual_beli"] ?? "",
-        hargaBeli: json["harga_beli"] ?? "0",
+        kodeSaham: json["kode_saham"]?.toString() ?? "",
+        potensiKenaikan: json["potensi_kenaikan"]?.toString() ?? "",
+        prospekPerusahaan: json["prospek_perusahaan"]?.toString() ?? "",
+        fundamental: json["fundamental"]?.toString() ?? "",
+        teknikal: json["teknikal"]?.toString() ?? "",
+        jualBeli: json["jual_beli"]?.toString() ?? "0",
+        hargaBeli: json["harga_beli"]?.toString() ?? "0",
     );
 
     Map<String, dynamic> toMap() => {
