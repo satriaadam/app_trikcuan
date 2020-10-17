@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trikcuan_app/core/api/auth_api.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_event.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_state.dart';
+import 'package:trikcuan_app/core/model/account_model.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final api = AuthApi();
@@ -22,7 +23,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final isAuthenticated = prefs.getBool("isAuthenticated") ?? false;
       await Future.delayed(Duration(seconds: 3));
       if (isAuthenticated) {
-        yield AuthAuthenticated();
+        String json = prefs.getString("account");
+        var account = accountFromMap(json);
+        print("account.roleId");
+        print(account.roleId);
+        yield AuthAuthenticated(data: account);
       } else {
         yield AuthUnauthenticated();
       }

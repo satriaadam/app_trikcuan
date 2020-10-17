@@ -6,6 +6,7 @@ import 'package:trikcuan_app/core/bloc/auth/auth_event.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_state.dart';
 import 'package:trikcuan_app/login_page.dart';
 import 'package:trikcuan_app/onboarding_screen.dart';
+import 'package:trikcuan_app/pages/admin/admin_page.dart';
 import 'package:trikcuan_app/pages/home_page.dart';
 import 'package:trikcuan_app/utilities/bloc_delegate.dart';
 
@@ -24,21 +25,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.light,
         appBarTheme: AppBarTheme(
-          color: Colors.limeAccent,
+          color: Color(0xFF009eeb),
           elevation: 1,
           textTheme: TextTheme(
             headline6: TextStyle(
-              color: Colors.blueGrey[600],
+              color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.w700
             )
           ),
           iconTheme: IconThemeData(
-            color: Colors.blueGrey[600]
+            color: Colors.white
           )
         ),
         dividerTheme: DividerThemeData(
-          color: Colors.grey[200],
+          color: Colors.grey[300],
           thickness: 1,
           space: 0,
           indent: 0
@@ -84,7 +85,7 @@ class _SplashScreenState extends State<SplashScreen> {
           else if(state is AuthAuthenticated) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => state.data.roleId == "2" ? HomePage() : AdminPage()),
             );
           } 
         },

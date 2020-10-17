@@ -73,33 +73,33 @@ class _DaftarState extends State<Daftar> {
               padding: EdgeInsets.only(top: 15.0, left: 20.0, right: 20.0),
               child: Column(
                 children: <Widget>[
-                  TextFieldBorderBottom(
+                  TextFieldBox(
                     controller: nameController,
                     textHint: "Nama",
                     prefixIcon: Icons.person,
                   ),
                   SizedBox(height: 15.0),
-                  TextFieldBorderBottom(
+                  TextFieldBox(
                     controller: usernameController,
                     textHint: "Username",
                     prefixIcon: Icons.account_circle,
                   ),
                   SizedBox(height: 15.0),
-                  TextFieldBorderBottom(
+                  TextFieldBox(
                     controller: emailController,
                     textHint: "Email",
                     inputType: TextInputType.emailAddress,
                     prefixIcon: Icons.mail,
                   ),
                   SizedBox(height: 15.0),
-                  TextFieldBorderBottom(
+                  TextFieldBox(
                     controller: phoneNumberController,
                     inputType: TextInputType.phone,
                     textHint: "No Hp",
                     prefixIcon: Icons.phone,
                   ),
                   SizedBox(height: 20.0),
-                  TextFieldBorderBottom(
+                  TextFieldBox(
                     controller: passwordController,
                     textHint: "Password",
                     isObsecure: true,

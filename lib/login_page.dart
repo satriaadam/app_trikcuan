@@ -5,6 +5,7 @@ import 'package:trikcuan_app/core/bloc/auth/auth_bloc.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_event.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_state.dart';
 import 'package:trikcuan_app/forgotpassword.dart';
+import 'package:trikcuan_app/pages/admin/admin_page.dart';
 import 'package:trikcuan_app/widget/button.dart';
 import 'package:trikcuan_app/widget/form.dart';
 
@@ -30,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
       listener: (context, state) {
         if(state is AuthLoginSuccess) {
           Navigator.pushReplacement(context, MaterialPageRoute(
-            builder: (context) => HomePage()
+            builder: (context) => state.data.roleId == "2" ? HomePage() : AdminPage()
           ));
           setState(() {
             isLoading = false;
@@ -63,13 +64,13 @@ class _LoginPageState extends State<LoginPage> {
               padding: EdgeInsets.only(top: 15.0, left: 20.0, right: 20.0),
               child: Column(
                 children: <Widget>[
-                  TextFieldBorderBottom(
+                  TextFieldBox(
                     controller: usernameController,
                     textHint: "Username",
                     prefixIcon: Icons.person,
                   ),
                   SizedBox(height: 15.0),
-                  TextFieldBorderBottom(
+                  TextFieldBox(
                     controller: passwordController,
                     textHint: "Password",
                     isObsecure: true,

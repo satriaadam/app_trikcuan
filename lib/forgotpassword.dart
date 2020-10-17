@@ -92,7 +92,7 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
               padding: EdgeInsets.only(top: 15.0, left: 20.0, right: 20.0),
               child: Column(
                 children: <Widget>[
-                  TextFieldBorderBottom(
+                  TextFieldBox(
                     controller: phoneNumberController,
                     textHint: "Phone Number",
                     prefixIcon: Icons.phone,

@@ -4,6 +4,10 @@ List<RecomendationModel> recomendationModelFromMap(String str) => List<Recomenda
 
 String recomendationModelToMap(List<RecomendationModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toMap())));
 
+RecomendationModel recomendationDetailFromMap(String str) => RecomendationModel.fromMap(json.decode(str));
+
+String recomendationDetailToMap(RecomendationModel data) => json.encode(data.toMap());
+
 class RecomendationModel {
     RecomendationModel({
         this.id,
@@ -13,6 +17,7 @@ class RecomendationModel {
         this.prospekPerusahaan,
         this.teknikal,
         this.jualBeli,
+        this.date,
         this.hargaBeli,
     });
 
@@ -23,6 +28,7 @@ class RecomendationModel {
     String fundamental;
     String teknikal;
     String jualBeli;
+    String date;
     String hargaBeli;
 
     factory RecomendationModel.fromMap(Map<String, dynamic> json) => RecomendationModel(
@@ -33,6 +39,7 @@ class RecomendationModel {
         fundamental: json["fundamental"]?.toString() ?? "",
         teknikal: json["teknikal"]?.toString() ?? "",
         jualBeli: json["jual_beli"]?.toString() ?? "0",
+        date: json["date"],
         hargaBeli: json["harga_beli"]?.toString() ?? "0",
     );
 
@@ -44,6 +51,43 @@ class RecomendationModel {
         "fundamental": fundamental,
         "teknikal": teknikal,
         "jual_beli": jualBeli,
+        "date": date,
         "harga_beli": hargaBeli,
+    };
+}
+
+class RecomendationPost {
+    RecomendationPost({
+        this.kategori,
+        this.kodeSaham,
+        this.potensiKenaikan,
+        this.fundamental,
+        this.prospekPerusahaan,
+        this.teknikal,
+        this.jualBeli,
+        this.hargaBeli,
+        this.date,
+    });
+
+    String kategori;
+    String kodeSaham;
+    String potensiKenaikan;
+    String prospekPerusahaan;
+    String fundamental;
+    String teknikal;
+    String jualBeli;
+    String hargaBeli;
+    String date;
+
+    Map<String, dynamic> toMap() => {
+        "kategori": kategori,
+        "kode_saham": kodeSaham,
+        "potensi_kenaikan": potensiKenaikan,
+        "prospek_perusahaan": prospekPerusahaan,
+        "fundamental": fundamental,
+        "teknikal": teknikal,
+        "jual_beli": jualBeli,
+        "harga_beli": hargaBeli,
+        "date": date,
     };
 }
