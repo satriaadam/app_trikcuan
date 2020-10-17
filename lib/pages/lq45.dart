@@ -30,7 +30,7 @@ class _LQ45PageState extends State<LQ45Page> {
   
   @override
   void initState() {
-    bloc.add(LoadRecomendation(type: "dividen"));
+    bloc.add(LoadRecomendation(type: "lq45"));
     super.initState();
   }
 
@@ -75,7 +75,7 @@ class _LQ45PageState extends State<LQ45Page> {
                 onPressed: () => Navigator.push(context, MaterialPageRoute(
                   builder: (context) => RecomendationDetailpage(
                     recomendation: data[index],
-                    type: "dividen",
+                    type: "lq45",
                   )
                 )),
                 padding: 16,
@@ -113,7 +113,7 @@ class _LQ45PageState extends State<LQ45Page> {
   }
 
   onRefresh() {
-    bloc.add(LoadRecomendation(type: "dividen"));
+    bloc.add(LoadRecomendation(type: "lq45"));
     setState(() {
       isLoading = true;
     });
