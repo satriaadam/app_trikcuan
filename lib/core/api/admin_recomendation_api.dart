@@ -48,5 +48,17 @@ class AdminRecomendationApi extends MainApi {
       throw Exception(error);
     }
   }
+  
+  Future<bool> deleteData({int id}) async {
+    try {
+      await getRequest(
+        url: "$host/admin/recomendation/delete/$id",
+        useAuth: true
+      );
+      return true;
+    } catch (error) {
+      throw Exception(error);
+    }
+  }
 
 }

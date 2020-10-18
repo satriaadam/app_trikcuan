@@ -46,6 +46,17 @@ class AdminRecomendationBloc extends Bloc<AdminRecomendationEvent, AdminRecomend
         yield RecomendationFailure(error: error.toString());
       }
     }
+    
+    if (event is DeleteRecomendation) {
+      yield RecomendationLoading();
+      try {
+        await api.deleteData(id: event.id);
+        yield RecomendationDeleted(id: event.id);
+      } catch (error) {
+        print("ERROR: $error");
+        yield RecomendationFailure(error: error.toString());
+      }
+    }
 
   }
 }

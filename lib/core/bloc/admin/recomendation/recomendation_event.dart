@@ -44,3 +44,14 @@ class EditRecomendation extends AdminRecomendationEvent {
   @override
   List<Object> get props => [id, data];
 }
+
+class DeleteRecomendation extends AdminRecomendationEvent {
+  final int id;
+
+  const DeleteRecomendation({
+    this.id,
+  });
+
+  @override
+  List<Object> get props => [id];
+}

@@ -39,6 +39,15 @@ class RecomendationUpdated extends AdminRecomendationState {
   List<Object> get props => [data];
 }
 
+class RecomendationDeleted extends AdminRecomendationState {
+  final int id;
+
+  const RecomendationDeleted({@required this.id});
+
+  @override
+  List<Object> get props => [id];
+}
+
 class RecomendationFailure extends AdminRecomendationState {
   final String error;
 

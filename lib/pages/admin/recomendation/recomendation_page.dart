@@ -8,6 +8,8 @@ import 'package:trikcuan_app/core/model/recomendation_model.dart';
 import 'package:trikcuan_app/pages/admin/recomendation/recomendation_form.dart';
 import 'package:trikcuan_app/widget/box.dart';
 import 'package:trikcuan_app/widget/button.dart';
+import 'package:trikcuan_app/widget/dialog.dart';
+import 'package:trikcuan_app/widget/loading.dart';
 
 class AdminRecomendationPage extends StatefulWidget {
   @override
@@ -19,6 +21,9 @@ class _AdminRecomendationPageState extends State<AdminRecomendationPage> {
   final bloc = AdminRecomendationBloc();
   List<RecomendationModel> data = [];
   RefreshController refreshController = RefreshController();
+
+  int deleteIndex;
+  bool deleteLoading = false;
 
   @override
   void initState() {
@@ -37,6 +42,17 @@ class _AdminRecomendationPageState extends State<AdminRecomendationPage> {
               refreshController.refreshCompleted();
               setState(() {
                 data = state.data;
+              });
+            } else if(state is RecomendationDeleted) {
+              setState(() {
+                deleteIndex = null;
+                deleteLoading = false;
+                data.removeWhere((item) => item.id == state.id);
+              });
+            } else if(state is RecomendationFailure) {
+              setState(() {
+                deleteIndex = null;
+                deleteLoading = false;
               });
             }
           },
@@ -58,7 +74,7 @@ class _AdminRecomendationPageState extends State<AdminRecomendationPage> {
               ),
               Divider(),
               Expanded(
-                child: ListView.separated(
+                child: data.length > 0 ? ListView.separated(
                   shrinkWrap: true,
                   physics: ClampingScrollPhysics(),
                   itemCount: data.length,
@@ -67,10 +83,25 @@ class _AdminRecomendationPageState extends State<AdminRecomendationPage> {
                     return Box(
                       onPressed: () => openForm(data[index]),
                       padding: 16,
-                      child: Text(data[index].kodeSaham)
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(data[index].kodeSaham),
+                          deleteLoading && index == deleteIndex ? LoadingForButton() : GestureDetector(
+                            child: Icon(Icons.close), 
+                            onTap: () => dialogConfirmation(
+                              context: context,
+                              message: "Ingin menghapus rekomendasi ini?",
+                              textConfirm: "Ya",
+                              textCancel: "Tidak",
+                              callback: () => delete(index)
+                            )
+                          ),
+                        ],
+                      )
                     );
                   }
-                ),
+                ) : Center(child: Text("Belum ada rekomendasi hari ini")),
               ),
               Box(
                 padding: 8,
@@ -107,5 +138,14 @@ class _AdminRecomendationPageState extends State<AdminRecomendationPage> {
 
   onRefresh() {
     bloc.add(LoadRecomendation());   
+  }
+
+  delete(int index) {
+    Navigator.pop(context);
+    bloc.add(DeleteRecomendation(id: data[index].id));
+    setState(() {
+      deleteIndex = index;
+      deleteLoading = true;
+    });
   }
 }
