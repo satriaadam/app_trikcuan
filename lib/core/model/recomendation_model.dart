@@ -12,6 +12,7 @@ class RecomendationModel {
     RecomendationModel({
         this.id,
         this.kodeSaham,
+        this.kategori,
         this.potensiKenaikan,
         this.fundamental,
         this.prospekPerusahaan,
@@ -23,6 +24,7 @@ class RecomendationModel {
 
     int id;
     String kodeSaham;
+    String kategori;
     String potensiKenaikan;
     String prospekPerusahaan;
     String fundamental;
@@ -34,6 +36,7 @@ class RecomendationModel {
     factory RecomendationModel.fromMap(Map<String, dynamic> json) => RecomendationModel(
         id: json["id"],
         kodeSaham: json["kode_saham"]?.toString() ?? "",
+        kategori: json["kategori"]?.toString() ?? "",
         potensiKenaikan: json["potensi_kenaikan"]?.toString() ?? "",
         prospekPerusahaan: json["prospek_perusahaan"]?.toString() ?? "",
         fundamental: json["fundamental"]?.toString() ?? "",
@@ -46,6 +49,7 @@ class RecomendationModel {
     Map<String, dynamic> toMap() => {
         "id": id,
         "kode_saham": kodeSaham,
+        "kategori": kategori,
         "potensi_kenaikan": potensiKenaikan,
         "prospek_perusahaan": prospekPerusahaan,
         "fundamental": fundamental,

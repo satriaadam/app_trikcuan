@@ -53,7 +53,6 @@ class _RecomendationFormState extends State<RecomendationForm> {
   void initState() {
     super.initState();
     if(widget.recomendation != null) {
-      print(widget.recomendation.toMap());
       kodeSahamController.text = widget.recomendation.kodeSaham;
       potensiKenaikanController.text = widget.recomendation.potensiKenaikan;
       prospekPerusahaanController.text = widget.recomendation.prospekPerusahaan;
@@ -62,6 +61,10 @@ class _RecomendationFormState extends State<RecomendationForm> {
       jualBeliController.text = widget.recomendation.jualBeli;
       hargaController.text = widget.recomendation.hargaBeli;
       selectedDate = DateTime.parse(widget.recomendation.date);
+      category = categories.firstWhere(
+        (element) => element.value == widget.recomendation.kategori, 
+        orElse: () => categories[0]
+      );
     }
   }
 

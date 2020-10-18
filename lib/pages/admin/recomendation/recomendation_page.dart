@@ -10,6 +10,7 @@ import 'package:trikcuan_app/widget/box.dart';
 import 'package:trikcuan_app/widget/button.dart';
 import 'package:trikcuan_app/widget/dialog.dart';
 import 'package:trikcuan_app/widget/loading.dart';
+import 'package:trikcuan_app/widget/text.dart';
 
 class AdminRecomendationPage extends StatefulWidget {
   @override
@@ -86,7 +87,13 @@ class _AdminRecomendationPageState extends State<AdminRecomendationPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(data[index].kodeSaham),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(data[index].kodeSaham),
+                              LabelText(data[index].kategori.toUpperCase()),
+                            ],
+                          ),
                           deleteLoading && index == deleteIndex ? LoadingForButton() : GestureDetector(
                             child: Icon(Icons.close), 
                             onTap: () => dialogConfirmation(
