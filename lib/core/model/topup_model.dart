@@ -23,7 +23,7 @@ class TopupModel {
     });
 
     int id;
-    int balance;
+    String balance;
     String name;
     String phoneNumber;
     String status;
@@ -35,10 +35,10 @@ class TopupModel {
 
     factory TopupModel.fromMap(Map<String, dynamic> json) => TopupModel(
         id: json["id"],
-        balance: json["balance"],
-        name: json["name"],
-        phoneNumber: json["phone_number"],
-        status: json["status"],
+        balance: json["balance"].toString(),
+        name: json["name"].toString(),
+        phoneNumber: json["phone_number"].toString(),
+        status: json["status"].toString(),
         expiredDate: json["expired_date"] != null ? DateTime.parse(json["expired_date"]) : null,
         approvedDate: json["approved_date"] != null ? DateTime.parse(json["approved_date"]) : null,
         transferTo: json["transfer_to"],
