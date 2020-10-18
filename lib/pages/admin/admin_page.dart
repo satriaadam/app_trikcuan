@@ -6,6 +6,9 @@ import 'package:trikcuan_app/core/bloc/auth/auth_state.dart';
 import 'package:trikcuan_app/core/model/account_model.dart';
 import 'package:trikcuan_app/login_page.dart';
 import 'package:trikcuan_app/pages/admin/recomendation/recomendation_page.dart';
+import 'package:trikcuan_app/pages/admin/topup/topup_page.dart';
+import 'package:trikcuan_app/widget/box.dart';
+import 'package:trikcuan_app/widget/button.dart';
 
 class AdminPage extends StatefulWidget {
   @override
@@ -47,24 +50,40 @@ class _AdminPageState extends State<AdminPage> {
         appBar: AppBar(
           title: Text("Rekomendasi")
         ),
-        body: ListView(
+        body: Column(
           children: [
-            Divider(),
-            ListTile(
-              onTap: () => Navigator.push(context, MaterialPageRoute(
-                builder: (context) => AdminRecomendationPage()
-              )),
-              title: Text("Rekomendasi")
+            Expanded(
+              child: ListView(
+                children: [
+                  Divider(),
+                  ListTile(
+                    onTap: () => Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => AdminRecomendationPage()
+                    )),
+                    title: Text("Rekomendasi")
+                  ),
+                  Divider(),
+                  ListTile(
+                    onTap: () => Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => TopupPage()
+                    )),
+                    title: Text("Top Up")
+                  ),
+                  Divider()
+                ]
+              ),
             ),
-            Divider(),
-            SizedBox(height: 32),
-            Divider(),
-            ListTile(
-              onTap: () => bloc.add(Logout()),
-              title: Text("Logout")
-            ),
-            Divider(),
-          ]
+            Box(
+              padding: 8,
+              child: SafeArea(
+                child: RaisedButtonCustom(
+                  color: Colors.red,
+                  onPressed: () => bloc.add(Logout()),
+                  text: "Logout"
+                )
+              ),
+            )
+          ],
         ),
       ),
     );
