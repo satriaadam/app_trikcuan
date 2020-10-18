@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:toast/toast.dart';
 import 'package:trikcuan_app/core/bloc/admin/balance/balance_bloc.dart';
 import 'package:trikcuan_app/core/bloc/admin/balance/balance_event.dart';
 import 'package:trikcuan_app/core/bloc/admin/balance/balance_state.dart';
@@ -61,6 +62,7 @@ class _TopupPageState extends State<TopupPage> {
         }
         else if(state is TopupVerified) {
           data.removeWhere((element) => element.id == state.data.id);
+          Toast.show("TOPUP BERHASIL DITERIMA", context, duration: 3);
           setState(() {
             verifyIndex = null;
             verifyLoading = false;
