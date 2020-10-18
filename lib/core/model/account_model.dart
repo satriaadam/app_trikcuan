@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:trikcuan_app/core/model/topup_model.dart';
+
 Account accountFromMap(String str) => Account.fromMap(json.decode(str));
 
 String accountToMap(Account data) => json.encode(data.toMap());
@@ -13,6 +15,7 @@ class Account {
         this.email,
         this.phoneNumber,
         this.balance,
+        this.balanceTopup,
         this.contactPerson,
         this.accessToken,
         this.consultation,
@@ -32,6 +35,7 @@ class Account {
     String email;
     String phoneNumber;
     String balance;
+    List<TopupModel> balanceTopup;
     String contactPerson;
     String accessToken;
     bool consultation;
@@ -51,6 +55,7 @@ class Account {
         email: json["email"]?.toString(),
         phoneNumber: json["phone_number"]?.toString(),
         balance: json["balance"]?.toString(),
+        balanceTopup: json["balance_topup"] != null ? List<TopupModel>.from(json["balance_topup"].map((x) => TopupModel.fromMap(x))) : [],
         contactPerson: json["contact_person"]?.toString(),
         accessToken: json["access_token"]?.toString(),
         consultation: json["consultation"],
@@ -71,6 +76,7 @@ class Account {
         "email": email,
         "phone_number": phoneNumber,
         "balance": balance,
+        "balance_topup": List<dynamic>.from(balanceTopup.map((x) => x.toMap())),
         "contact_person": contactPerson,
         "access_token": accessToken,
         "consultation": consultation,
