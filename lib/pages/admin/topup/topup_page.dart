@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indonesia/indonesia.dart';
@@ -22,6 +24,7 @@ class _TopupPageState extends State<TopupPage> {
 
   final bloc = BalanceTopupBloc();
   List<TopupModel> data = [];
+  List<TopupModel> dataFiltered = [];
   bool  isStarting = true,
         isLoadMore = false,
         hasReachedMax = false;
@@ -31,6 +34,9 @@ class _TopupPageState extends State<TopupPage> {
 
   int verifyIndex;
   bool verifyLoading = false;
+
+  final _searchController = TextEditingController();
+  Timer searchOnStoppedTyping;
 
   @override
   void initState() {
@@ -58,10 +64,11 @@ class _TopupPageState extends State<TopupPage> {
             isLoadMore = false;
             hasReachedMax = state.hasReachedMax;
             data = state.data;
+            dataFiltered = data.where((element) => element.name.toString().toLowerCase().contains(_searchController.text.toLowerCase()) || element.balance.toString().toLowerCase().contains(_searchController.text.toLowerCase())).toList();
           });
         }
         else if(state is TopupVerified) {
-          data.removeWhere((element) => element.id == state.data.id);
+          dataFiltered.removeWhere((element) => element.id == state.data.id);
           Toast.show("TOPUP BERHASIL DITERIMA", context, duration: 3);
           setState(() {
             verifyIndex = null;
@@ -83,45 +90,71 @@ class _TopupPageState extends State<TopupPage> {
         appBar: AppBar(
           title: Text("UNPAID TOPUP")
         ),
-        body: SmartRefresher(
-          controller: _refreshController,
-          onRefresh: refresh,
-          child: ListView(
-            controller: _scrollController,
-            children: [
-              !isStarting ? (
-                data.length > 0 ? ListView.separated(
+        body: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white
+              ),
+              child: TextFormField(
+                controller: _searchController,
+                cursorColor: Colors.black54,
+                style: TextStyle(color: Colors.black87),
+                onChanged: _onChangeHandler,
+                decoration: InputDecoration(
+                  hintText: "Cari disini...",
+                  border: InputBorder.none,
+                  hintStyle: TextStyle(color: Colors.black38),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16)
+                ),
+              ),
+            ),
+            Divider(),
+            Expanded(
+              child: SmartRefresher(
+                controller: _refreshController,
+                onRefresh: refresh,
+                child: ListView(
+                  controller: _scrollController,
                   shrinkWrap: true,
                   physics: ClampingScrollPhysics(),
-                  separatorBuilder: (context, index) => Divider(),
-                  itemCount: data.length,
-                  itemBuilder: (context, index) => TopupItem(
-                    isLoading: verifyIndex == index && verifyLoading,
-                    data: data[index],
-                    onTap: () => dialogConfirmation(
-                      context: context,
-                      textConfirm: "Terima",
-                      message: "Apakah anda ingin menyetujui Top Up saldo ini?",
-                      callback: () {
-                        setState(() {
-                          verifyIndex = index;
-                          verifyLoading = true;
-                        });
-                        bloc.add(VerifyTopup(id: data[index].id));
-                        Navigator.pop(context);
-                      }
-                    ),
-                  )
-                ) : Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 64),
-                    child: Text("Tidak ada Topup")
-                  ),
-                )
-              ) : Box(padding: 16, child: LoadingForButton()),
-              isLoadMore ? Box(padding: 16, child: LoadingForButton()) : Container()
-            ],
-          ),
+                  children: [
+                    !isStarting ? (
+                      dataFiltered.length > 0 ? ListView.separated(
+                        shrinkWrap: true,
+                        physics: ClampingScrollPhysics(),
+                        separatorBuilder: (context, index) => Divider(),
+                        itemCount: dataFiltered.length,
+                        itemBuilder: (context, index) => TopupItem(
+                          isLoading: verifyIndex == index && verifyLoading,
+                          data: dataFiltered[index],
+                          onTap: () => dialogConfirmation(
+                            context: context,
+                            textConfirm: "Terima",
+                            message: "Apakah anda ingin menyetujui Top Up saldo ini?",
+                            callback: () {
+                              setState(() {
+                                verifyIndex = index;
+                                verifyLoading = true;
+                              });
+                              bloc.add(VerifyTopup(id: dataFiltered[index].id));
+                              Navigator.pop(context);
+                            }
+                          ),
+                        )
+                      ) : Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 64),
+                          child: Text("Tidak ada Topup")
+                        ),
+                      )
+                    ) : Box(padding: 16, child: LoadingForButton()),
+                    isLoadMore ? Box(padding: 16, child: LoadingForButton()) : Container()
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -138,6 +171,12 @@ class _TopupPageState extends State<TopupPage> {
         isLoadMore = true;
       });
     }
+  }
+
+  _onChangeHandler(value) {
+    setState(() {
+      dataFiltered = data.where((element) => element.name.toString().toLowerCase().contains(value.toLowerCase()) || element.balance.toString().toLowerCase().contains(value.toLowerCase())).toList();
+    });
   }
 }
 
