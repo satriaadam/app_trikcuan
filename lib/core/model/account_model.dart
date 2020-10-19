@@ -6,6 +6,10 @@ Account accountFromMap(String str) => Account.fromMap(json.decode(str));
 
 String accountToMap(Account data) => json.encode(data.toMap());
 
+List<Account> accountsFromMap(String str) => List<Account>.from(json.decode(str).map((x) => Account.fromMap(x)));
+
+String accountsToMap(List<Account> data) => json.encode(List<dynamic>.from(data.map((x) => x.toMap())));
+
 class Account {
     Account({
         this.id,

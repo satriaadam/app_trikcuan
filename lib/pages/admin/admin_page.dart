@@ -7,6 +7,7 @@ import 'package:trikcuan_app/core/model/account_model.dart';
 import 'package:trikcuan_app/login_page.dart';
 import 'package:trikcuan_app/pages/admin/recomendation/recomendation_page.dart';
 import 'package:trikcuan_app/pages/admin/topup/topup_page.dart';
+import 'package:trikcuan_app/pages/admin/user/user_page.dart';
 import 'package:trikcuan_app/widget/box.dart';
 import 'package:trikcuan_app/widget/button.dart';
 
@@ -68,6 +69,13 @@ class _AdminPageState extends State<AdminPage> {
                       builder: (context) => TopupPage()
                     )),
                     title: Text("Top Up")
+                  ),
+                  Divider(),
+                  ListTile(
+                    onTap: () => Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => MemberListPage()
+                    )),
+                    title: Text("Member")
                   ),
                   Divider()
                 ]

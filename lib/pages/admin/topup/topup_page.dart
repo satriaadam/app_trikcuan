@@ -112,9 +112,11 @@ class _TopupPageState extends State<TopupPage> {
                       }
                     ),
                   )
-                ) : Padding(
-                  padding: EdgeInsets.only(top: 64),
-                  child: Text("Tidak ada Topup")
+                ) : Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 64),
+                    child: Text("Tidak ada Topup")
+                  ),
                 )
               ) : Box(padding: 16, child: LoadingForButton()),
               isLoadMore ? Box(padding: 16, child: LoadingForButton()) : Container()
@@ -143,8 +145,8 @@ class TopupItem extends StatelessWidget {
   const TopupItem({
     Key key,
     @required this.data,
-    @required this.onTap,
-    @required this.isLoading
+    this.onTap,
+    this.isLoading = false
   }) : super(key: key);
 
   final TopupModel data;
