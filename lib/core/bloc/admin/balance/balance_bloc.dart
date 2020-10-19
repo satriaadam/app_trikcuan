@@ -7,7 +7,7 @@ import 'package:trikcuan_app/core/bloc/admin/balance/balance_state.dart';
 class BalanceTopupBloc extends Bloc<BalanceTopupEvent, BalanceTopupState> {
   final api = BalanceTopUpApi();
   int page = 1;
-  int limit = 10;
+  int limit = 30;
 
   BalanceTopupBloc() : super(BalanceTopUpUninitialized());
 

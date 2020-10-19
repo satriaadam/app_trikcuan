@@ -36,36 +36,31 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.timeline),
             title: Text('Market', style:TextStyle(
               fontSize: 10.0
-            ),),
-         //   backgroundColor: Colors.white,
+            )),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.equalizer),
             title: Text('Saham LQ 45', style: TextStyle(
               fontSize: 10.0
-            ),),
-       //     backgroundColor: Colors.white,
+            )),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.blur_on),
             title: Text('Rekomendasi', style: TextStyle(
               fontSize: 10.0
-            ),),
-        //    backgroundColor: Colors.white,
+            )),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.library_books),
             title: Text('Berita', style: TextStyle(
               fontSize: 10.0
-            ),),
-        //    backgroundColor: Colors.white,
+            )),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             title: Text('Profil', style: TextStyle(
               fontSize: 10.0
-            ),),
-       //     backgroundColor: Colors.white,
+            )),
           ),
         ],
         currentIndex: _selectedIndex,

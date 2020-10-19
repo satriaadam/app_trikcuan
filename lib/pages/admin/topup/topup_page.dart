@@ -114,7 +114,7 @@ class _TopupPageState extends State<TopupPage> {
                   )
                 ) : Padding(
                   padding: EdgeInsets.only(top: 64),
-                  child: Text("Tidak ada Lead masuk")
+                  child: Text("Tidak ada Topup")
                 )
               ) : Box(padding: 16, child: LoadingForButton()),
               isLoadMore ? Box(padding: 16, child: LoadingForButton()) : Container()
