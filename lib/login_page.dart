@@ -4,6 +4,8 @@ import 'package:toast/toast.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_bloc.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_event.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_state.dart';
+import 'package:trikcuan_app/forgotpassword.dart';
+import 'package:trikcuan_app/pages/admin/admin_page.dart';
 import 'package:trikcuan_app/widget/button.dart';
 import 'package:trikcuan_app/widget/form.dart';
 
@@ -29,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
       listener: (context, state) {
         if(state is AuthLoginSuccess) {
           Navigator.pushReplacement(context, MaterialPageRoute(
-            builder: (context) => HomePage()
+            builder: (context) => state.data.roleId == "2" ? HomePage() : AdminPage()
           ));
           setState(() {
             isLoading = false;
@@ -43,6 +45,7 @@ class _LoginPageState extends State<LoginPage> {
       },
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
+        backgroundColor: Colors.grey.shade100,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -50,48 +53,51 @@ class _LoginPageState extends State<LoginPage> {
               child: Stack(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.fromLTRB(16.0, 150.0, 0.0, 0.0),
-                    child: Text('Login', style: TextStyle(
-                      fontSize: 80.0,
-                      fontWeight: FontWeight.bold
-                    )),
+                    padding: EdgeInsets.fromLTRB(110.0, 150.0, 110.0, 5.0),
+                    child: Image.asset('assets/images/logoopanjangmbahgiso.jpeg',width: MediaQuery.of(context).size.width*0.5),
                   ),
                 ],
               ),
             ),
+            SizedBox(height: 5.0),
             Container(
-              padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
+              padding: EdgeInsets.only(top: 15.0, left: 20.0, right: 20.0),
               child: Column(
                 children: <Widget>[
-                  TextFieldBorderBottom(
+                  TextFieldBox(
                     controller: usernameController,
-                    textHint: "USERNAME",
-                    icon: Icons.person,
+                    textHint: "Username",
+                    prefixIcon: Icons.person,
                   ),
-                  SizedBox(height: 20.0),
-                  TextFieldBorderBottom(
+                  SizedBox(height: 15.0),
+                  TextFieldBox(
                     controller: passwordController,
-                    textHint: "PASSWORD",
+                    textHint: "Password",
                     isObsecure: true,
-                    icon: Icons.lock,
+                    prefixIcon: Icons.lock,
                   ),
                   SizedBox(height: 5.0),
-                  Container(
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(context, MaterialPageRoute(
+                        builder: (context) => ForgotPassPage()
+                      ));
+                    },
+                  child: Container(
                     alignment: Alignment(1.0, 0.0),
-                    padding: EdgeInsets.only(top: 15.0, left: 20.0),
-                    child: InkWell(
-                      child: Text(
-                        'Forgot Password',
+                    padding: EdgeInsets.only(top: 0.0, right: 0.0),
+                    child:Text(
+                        'Forgot password?',
                         style: TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold,
+                          color: Colors.black45,
+                    //      fontWeight: FontWeight.bold,
                           fontFamily: 'Montserrat',
-                          decoration: TextDecoration.underline
+                    //      decoration: TextDecoration.underline
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 40.0),
+                  SizedBox(height: 90.0),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     child: RaisedButtonPrimary(
@@ -99,16 +105,18 @@ class _LoginPageState extends State<LoginPage> {
                       isLoading: isLoading,
                       radius: 50,
                       padding: 16,
+                      fontSize: 14,
                       onPressed: () => !isLoading ? login() : null,
                     ),
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 15.0),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     child: OutlineButtonPrimary(
                       radius: 50,
                       padding: 16,
-                      text: "Daftar",
+                      text: "Registrasi",
+                      fontSize: 14,
                       onPressed: () => Navigator.push(context, MaterialPageRoute(
                         builder: (context) => Daftar()
                       )),

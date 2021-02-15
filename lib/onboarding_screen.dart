@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trikcuan_app/utilities/styles.dart';
-import 'package:trikcuan_app/login_screen.dart';
+import 'package:trikcuan_app/login_page.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -29,7 +29,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       height: 8.0,
       width: isActive ? 24.0 : 16.0,
       decoration: BoxDecoration(
-        color: isActive ? Colors.white : Color(0xFF546E7A),
+        color: isActive ? Colors.white : Colors.black54,
         borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
     );
@@ -44,12 +44,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
-              end: Alignment.bottomRight,
-              stops: [0.5, 0.7, 0.9],
+              end: Alignment.bottomCenter,
+              stops: [0.5, 0.7],
               colors: [
                 Colors.white,
-                Colors.limeAccent[200],
-                Colors.limeAccent,
+                Color(0xFF009eeb),
               ],
             ),
           ),
@@ -62,14 +61,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   alignment: Alignment.centerRight,
                   child: FlatButton(
                     onPressed: () {
-                      Navigator.push(context, new MaterialPageRoute(
+                      Navigator.pushReplacement(context, new MaterialPageRoute(
                           builder: (context)=> LoginPage()),
                       );
                     },
                     child: Text(
                       'Skip',
                       style: TextStyle(
-                        color: Colors.blueGrey[600],
+                        color: Colors.black54,
                         fontSize: 20.0,
                       ),
                     ),
@@ -102,12 +101,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 5.0),
                             Text(
-                              'Selamat di Aplikasi\nmbahgiso',
+                              'Selamat datang di Aplikasi MBAHGISO',
                               style: kTitleStyle,
                             ),
-                            SizedBox(height: 5.0),
+                            SizedBox(height: 12.0),
                             Text(
-                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                              'Aplikasi rekomendasi dan konsultasi saham ala mbah giso langsung di smartphone anda.',
                               style: kSubtitleStyle,
                             ),
                           ],
@@ -129,12 +128,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 5.0),
                             Text(
-                              'Live your life smarter\nwith us!',
+                              'Rekomendasi Saham Ala Mbah Giso',
                               style: kTitleStyle,
                             ),
-                            SizedBox(height: 5.0),
+                            SizedBox(height: 12.0),
                             Text(
-                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                              'Dapatkan rekomendasi harga saham harian untuk fast trade, swing trade, dan investasi.',
                               style: kSubtitleStyle,
                             ),
                           ],
@@ -156,12 +155,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 5.0),
                             Text(
-                              'Get a new experience\nof imagination',
+                              'Rasakan Mudahnya Trading',
                               style: kTitleStyle,
                             ),
-                            SizedBox(height: 5.0),
+                            SizedBox(height: 12.0),
                             Text(
-                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                              'Rasakan mudahnya cuan di bisnis saham dengan strategi trading ala mbah giso.',
                               style: kSubtitleStyle,
                             ),
                           ],
@@ -181,7 +180,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: FlatButton(
                       onPressed: () {
                         _pageController.nextPage(
-                          duration: Duration(milliseconds: 500),
+                          duration: Duration(milliseconds: 400),
                           curve: Curves.ease,
                         );
                       },
@@ -192,14 +191,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Text(
                             'Next',
                             style: TextStyle(
-                              color: Colors.blueGrey[600],
+                              color: Colors.white,
                               fontSize: 22.0,
                             ),
                           ),
                           SizedBox(width: 10.0),
                           Icon(
                             Icons.arrow_forward,
-                            color: Colors.blueGrey[600],
+                            color: Colors.white,
                             size: 30.0,
                           ),
                         ],
@@ -215,14 +214,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       bottomSheet: _currentPage == _numPages - 1
           ? Container(
-        height: 100.0,
+        height: 60.0,
         width: double.infinity,
-        color: Colors.blueGrey[600],
+        color: Color(0xFF009eeb),
         child: GestureDetector(
           onTap: () async { 
             SharedPreferences prefs = await SharedPreferences.getInstance();
             prefs.setBool("skipStartup", true);
-            Navigator.push(context, new MaterialPageRoute(
+            Navigator.pushReplacement(context, new MaterialPageRoute(
             builder: (context) => LoginPage())
             );
           },
@@ -230,10 +229,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Padding(
               padding: EdgeInsets.only(bottom: 30.0),
               child: Text(
-                'Get started',
+                'Mulai Sekarang',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 20.0,
+                  fontSize: 16.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),

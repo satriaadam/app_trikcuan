@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:trikcuan_app/login_screen.dart';
-import 'package:trikcuan_app/pages/corporate.dart';
-import 'package:trikcuan_app/pages/daftarkelas.dart';
-import 'package:trikcuan_app/pages/dataperusahaan.dart';
-import 'package:trikcuan_app/utilities/currency.dart';
-import 'package:trikcuan_app/utilities/styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indonesia/indonesia.dart';
+import 'package:toast/toast.dart';
+import 'package:trikcuan_app/core/bloc/account/account_bloc.dart';
+import 'package:trikcuan_app/core/bloc/account/account_event.dart';
+import 'package:trikcuan_app/core/bloc/account/account_state.dart';
+import 'package:trikcuan_app/core/bloc/auth/auth_bloc.dart';
+import 'package:trikcuan_app/core/bloc/auth/auth_event.dart';
+import 'package:trikcuan_app/core/bloc/auth/auth_state.dart';
+import 'package:trikcuan_app/core/model/account_model.dart';
+import 'package:trikcuan_app/pages/topup_saldo.dart';
+import 'package:trikcuan_app/utilities/app_consts.dart';
 import 'package:intl/intl.dart';
+import 'package:trikcuan_app/widget/box.dart';
+import 'package:trikcuan_app/widget/button.dart';
+import 'package:trikcuan_app/login_page.dart';
+import 'package:trikcuan_app/widget/dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Profil extends StatefulWidget {
   @override
@@ -14,617 +24,312 @@ class Profil extends StatefulWidget {
 }
 
 class _ProfilState extends State<Profil> {
-  bool _crossFadeStateShowFirst = true;
-  final money = NumberFormat("#,##0","en_US");
+  final money = NumberFormat("#,##0", "en_US");
   final nominal = TextEditingController();
+
+  final bloc = AuthBloc();
+  final accountBloc = AccountBloc();
+
+  Account account;
+  bool isLoadingConsultation = false;
+  bool isLoadingLiveTrading = false;
 
   @override
   void initState() {
+    accountBloc.add(GetAccount());
     super.initState();
   }
+
   @override
   void dispose() {
     nominal.dispose();
     super.dispose();
   }
 
-
-  void _crossFade() {
-    setState(() {
-      _crossFadeStateShowFirst =
-      _crossFadeStateShowFirst ? false : true;
-    });
-  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        backgroundColor: Colors.limeAccent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.menu, color: Colors.blueGrey[600],),
-          onPressed: () {},
+    return MultiBlocListener(
+      listeners: [
+        BlocListener(
+          cubit: bloc,
+          listener: (context, state) {
+            if(state is AuthUnauthenticated) {
+              Navigator.pushReplacement(context, MaterialPageRoute(
+                builder: (context) => LoginPage()
+              ));
+            }
+          },
         ),
-      ),
-      body: ListView(
-        children: [
-          Container(
-    decoration: BoxDecoration(
-    gradient: LinearGradient(
-    begin: Alignment.topCenter,
-    end: Alignment.bottomRight,
-    stops: [0.2, 0.4, 0.7],
-    colors: [
-    Colors.limeAccent,
-    Colors.limeAccent[100],
-    Colors.white,
-    ],
-    ),
-    ),
-            child: Padding(
+        BlocListener(
+          cubit: accountBloc,
+          listener: (context, state) {
+            if(state is AccountSuccess) {
+              setState(() {
+                account = state.data;
+              });
+            }
+            else if(state is BuyConsultationSuccess) {
+              setState(() {
+                account = state.data;
+                isLoadingConsultation = false;
+              });
+              whatsappConsultation();
+            }
+            else if(state is BuyLiveTradingSuccess) {
+              setState(() {
+                account = state.data;
+                isLoadingLiveTrading= false;
+              });
+              whatsappLiveTrading();
+            }
+            else if(state is AccountFailure) {
+              Toast.show(state.error, context);
+              setState(() {
+                isLoadingConsultation = false;
+                isLoadingLiveTrading = false;
+              });
+            }
+          },
+        )
+      ],
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Color(0xFF009eeb),
+          leading: Icon(Icons.arrow_back_ios, color: Color(0xFF009eeb)),
+          title: Text('PROFIL', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+          centerTitle: true,
+          elevation: 1
+        ),
+        body: ListView(
+          children: [
+            Padding(
               padding: EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Halo,\nADAM SATRIA',
-                    style: kTitleStyle,
+                    "Halo,",
+                    style: TextStyle(
+                      fontFamily: 'CM Sans Serif',
+                      height: 1.5,
+                     // fontWeight: FontWeight.bold,
+                      fontSize: 18.0,
+                      color: Colors.black54
+                    ),
                   ),
-                   SizedBox(height: 10.0),
-                   Center(
-                       child: AnimatedCrossFade(
-                          duration: Duration(milliseconds: 500),
-                          sizeCurve: Curves.easeIn,
-                          crossFadeState: _crossFadeStateShowFirst ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                         firstChild: Container(width: 300.0, height: 150.0,
-                              padding: EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                              color: Colors.white,
-                              gradient: LinearGradient(
-                              colors: [Colors.grey[200], Colors.limeAccent],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                                ),
-                              borderRadius: BorderRadius.circular(20.0)),
-                              child: GestureDetector(
-                                onTap: _crossFade,
-                                child: Column(
-                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                  SizedBox(height: 5.0),
-                                   Container(
-                                      child: Text(
-                                    'Saldo', style: TextStyle(
-                                    color: Colors.blueGrey[600],
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.bold,
+                  SizedBox(height: 5.0),
+                  Text(
+                    "${account?.name}",
+                    style: TextStyle(
+                        fontFamily: 'CM Sans Serif',
+                        height: 1.5,
+                       // fontWeight: FontWeight.bold,
+                        fontSize: 22.0,
+                        color: Colors.black54
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Box(
+                    borderRadius: 16,
+                    borderColor: Color(0xFF009eeb),
+                    color: Colors.white,
+                    boxShadow: [AppBoxShadow.type3],
+                    child: Column(
+                      children: [
+                        Box(
+                          padding: 16,
+                          color: Colors.transparent,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                child: Text(
+                                  'Saldo',
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontFamily: 'Monserrat',
                                     fontSize: 15.0
-                                    ),
-                                    ),),
-                                      SizedBox(height: 5.0),
-                                    Container(
-                                        child: Text(
-                                    'Rp. 500.000', style: TextStyle(
-                                     color: Colors.blueGrey[600],
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 35.0
-                                    ),
-                                    ),),
-                                    SizedBox(height: 10.0,),
-                                    Divider(height: 5.0, thickness: 2.0),
-                                    SizedBox(height: 5.0),
-                                    Container(
-                                      child: Text(
-                                        'Klik Disini Untuk Top Up Saldo', style: TextStyle(
-                                          color: Colors.blueGrey[600],
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15.0
-                                      ),
-                                        textAlign: TextAlign.left,  ),),
-                                  ],),),),
-                                secondChild: Container(width: 300.0, height: 375.0,
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                color: Colors.white,
-                                  gradient: LinearGradient(
-                                  colors: [Colors.grey[200], Colors.limeAccent],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                    ),
-                                borderRadius: BorderRadius.circular(20.0)),
-                                   child: GestureDetector(
-                                     onTap: _crossFade,
-                                      child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                SizedBox(height: 5.0),
-                                Container(
-                                  child: Text(
-                                  'MASUKKAN NOMINAL', style: TextStyle(
-                                   color: Colors.blueGrey[600],
-                                  fontFamily: 'Poppins',
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold
-                                  ),
-                                  textAlign: TextAlign.left,  ),),
-                                SizedBox(height: 10.0),
-                                TextField(
-                                  inputFormatters: [
-                                    WhitelistingTextInputFormatter.digitsOnly,
-                                    CurrencyFormat()
-                                  ],
-                                  controller: nominal,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                  hoverColor: Colors.blueGrey[600],
-                                  hintText: 'Rp0',
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey,
-                                  fontSize: 15.0,
-                                  ),
-                                        ),),
-                                SizedBox(height: 20.0,),
-                                Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      RaisedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                        nominal.text = "Rp10,000";
-                                        });
-                                        },
-                                        padding: EdgeInsets.all(0.0),
-                                        shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20)),
-                                        color: Colors.transparent,
-                                        child: Container(width: 75.0,height: 75.0,
-                                        decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                        colors: [Colors.lightGreen[400], Colors.lightGreen[700]],
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        ),
-                                        borderRadius: BorderRadius.circular(20)),
-                                          child: Center(
-                                            child: Icon(
-                                            Icons.attach_money,
-                                            color: Colors.grey.shade300,
-                                            size: 25.0,
-                                            ),
-                                      ),
-                                      ),
-                                      ),
-                                      RaisedButton(
-                                      onPressed: () {
-                                      setState(() {
-                                      nominal.text = "Rp50,000";
-                                      });
-                                      },
-                                        padding: EdgeInsets.all(0.0),
-                                          shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20)),
-                                        color: Colors.transparent,
-                                        child: Container(width: 75.0,height: 75.0,
-                                          decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                          colors: [Colors.indigo[300], Colors.indigo[700]],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          ),
-                                            borderRadius: BorderRadius.circular(20)),
-                                          child: Center(
-                                            child: Icon(
-                                              Icons.attach_money,
-                                              color: Colors.grey.shade300,
-                                              size: 35.0,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
                                   ),
                                 ),
-                                SizedBox(height: 5.0,),
-                                Container(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: <Widget>[
-                                        Text('Rp.10.000     ',
-                                        style: TextStyle(
-                                          fontSize: 10.0,
-                                          color: Colors.blueGrey[600],
-                                          fontWeight: FontWeight.bold,
-                                        ),),
-                                        Text('Rp.50.000',
-                                          style: TextStyle(
-                                            fontSize: 10.0,
-                                            color: Colors.blueGrey[600],
-                                            fontWeight: FontWeight.bold,
-                                          ),),],
-                                    ),
+                              ),
+                              SizedBox(height: 5.0),
+                              Container(
+                                child: Text(
+                                  rupiah(account?.balance),
+                                  style: TextStyle(
+                                    color: Colors.black87,
+                                    fontFamily: 'Monserrat',
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 28
                                   ),
-                                SizedBox(height: 10.0,),
-                                Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                RaisedButton(
-                                  onPressed: () {
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(color: Color(0xFF009eeb), thickness: 1,),
+                        Box(
+                          color: Colors.transparent,
+                          padding: 16,
+                          onPressed: () => Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => TopupSaldoPage()
+                          )),
+                          child: Text(
+                            'Klik Disini Untuk Top Up Saldo',
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontFamily: 'Monserrat',
+                              fontSize: 14.0
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 24),
+                  RaisedButtonCustom(
+                    color: Colors.white,
+                    elevation: 2,
+                    onPressed: () {
+                      launchURL("https://api.whatsapp.com/send?phone=${account?.contactPerson}");
+                    },
+                    textColor: Colors.black54,
+                    text: "Daftar Kelas Trik Cuan"
+                  ),
+                  SizedBox(height: 8),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: RaisedButtonCustom(
+                        color: Colors.white,
+                        elevation: 2,
+                        isLoading: isLoadingConsultation,
+                        onPressed: () {
+                          if(account.consultation) {
+                            whatsappConsultation();
+                          } else {
+                            dialogConfirmation(
+                              context: context,
+                              message: int.parse(account?.balance) < account?.consultationPrice ? "Saldo Anda tidak mencukupi. Untuk mengakses fitur ini dikenakan potongan sebesar ${rupiah(account?.consultationPrice)}" : "Untuk mengakses fitur ini dikenakan potongan sebesar ${rupiah(account?.consultationPrice)}, apakah Anda setuju?",
+                              textCancel: "Batal",
+                              textConfirm: int.parse(account?.balance) < account?.consultationPrice ? "Isi Saldo" : "OK",
+                              callback: () {
+                                Navigator.pop(context);
+                                if(int.parse(account?.balance) < account?.consultationPrice) {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => TopupSaldoPage()
+                                  ));
+                                } else {
+                                  accountBloc.add(BuyConsultation());
                                   setState(() {
-                                    nominal.text = "Rp100,000";
-                                    });
-                                    },
-                                  padding: EdgeInsets.all(0.0),
-                                  shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                                  color: Colors.transparent,
-                                    child: Container(width: 75.0,height: 75.0,
-                                        decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                        colors: [Colors.red[300], Colors.red[700]],
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        ),
-                                          borderRadius: BorderRadius.circular(20)),
-                                      child: Center(
-                                        child: Icon(
-                                          Icons.attach_money,
-                                          color: Colors.grey.shade300,
-                                          size: 45.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    RaisedButton(
-                                      onPressed: () {
-                                      setState(() {
-                                      nominal.text = "Rp200,000";
-                                      });
-                                      },
-                                          padding: EdgeInsets.all(0.0),
-                                          shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(20)),
-                                          color: Colors.transparent,
-                                      child: Container(width: 75.0,height: 75.0,
-                                          decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                          colors: [Colors.blueGrey[300], Colors.blueGrey[700]],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          ),
-                                          borderRadius: BorderRadius.circular(20)),
-                                          child: Center(
-                                            child: Icon(
-                                            Icons.attach_money,
-                                            color: Colors.grey.shade300,
-                                            size: 55.0,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                  SizedBox(height: 5.0,),
-                                  Container(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: <Widget>[
-                                        Text('Rp.100.000   ',
-                                          style: TextStyle(
-                                            fontSize: 10.0,
-                                            color: Colors.blueGrey[600],
-                                            fontWeight: FontWeight.bold,
-                                          ),),
-                                        Text('Rp.200.000',
-                                          style: TextStyle(
-                                            fontSize: 10.0,
-                                            color: Colors.blueGrey[600],
-                                            fontWeight: FontWeight.bold,
-                                          ),),],
-                                    ),
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  GestureDetector(
-                                    onTap: (){
-                                      _confirmPaymentModalBottomSheet(context);
-                                    },
-                                    child: Container( height: 40.0, width: double.infinity,
-                                      decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            colors: [Colors.green[300], Colors.green[600]],
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                          ),
-                                          border: Border.all(
-                                            width: 2.0,
-                                            color: Colors.grey.shade500
-                                          ),
-                                          borderRadius: BorderRadius.circular(20)),
-                                      child: Center(
-                                        child: Text(
-                                          'PROSES'
-                                    ),
-                                  )
-                                    ),),],
-                                      ),
-                                   ),
-                                ),
-                         layoutBuilder: (topChild, topChildKey, bottomChild, bottomChildKey) {
-                           return Stack(
-                             overflow: Overflow.visible,
-                             alignment: Alignment.center,
-                             children: <Widget>[
-                               Positioned(
-                                 key: bottomChildKey,
-                                 top: 0.0,
-                                 child: bottomChild,
-                               ),
-                               Positioned(
-                                   key: topChildKey,
-                                   child: topChild
-                               )
-                             ],
-                           );
-                           }),
-                   ),
-                        SizedBox(height: 20.0),
-                        Container(
-                          child: Center(
-                          child: Container(width: 300.0,height: 50.0,
-                          decoration: BoxDecoration(
-                          color: Colors.white,
-                            boxShadow: [
-                            BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            offset: Offset(5, 5),
-                            blurRadius: 10,
-                              ),
-                            BoxShadow(
-                            color: Colors.grey.shade200,
-                            offset: Offset(-5, -5),
-                            blurRadius: 10,
-                            ),],
-                            gradient: LinearGradient(
-                              colors: [Colors.grey[200], Colors.grey[300]],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,),
-                            borderRadius: BorderRadius.circular(20.0)),
-                              child: GestureDetector(
-                               onTap: () {
-                                Navigator.push(context, new MaterialPageRoute(
-                                  builder: (context) => DaftarKelas())
-                                  );
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                    child: Center(
-                                        child: Text('Daftar Kelas TrikCuan', style: TextStyle(
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.blueGrey[600],
-                                            ),),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                        ),
-                  SizedBox(height: 15.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Container(
-                        child: Container(width: 125.0,height: 50.0,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  offset: Offset(5, 5),
-                                  blurRadius: 10,
-                                ),
-                                BoxShadow(
-                                  color: Colors.grey.shade200,
-                                  offset: Offset(-5, -5),
-                                  blurRadius: 10,
-                                ),],
-                              gradient: LinearGradient(
-                                colors: [Colors.grey[200], Colors.grey[300]],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,),
-                              borderRadius: BorderRadius.circular(20.0)),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(context, new MaterialPageRoute(
-                                  builder: (context) => DataPerusahaan())
-                              );
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(
-                                child: Text('Data Perusahaan', style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontSize: 10.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blueGrey[600],
-                                ),),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 50.0,
-                        child: Container(width: 125.0,height: 50.0,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  offset: Offset(5, 5),
-                                  blurRadius: 10,
-                                ),
-                                BoxShadow(
-                                  color: Colors.grey.shade200,
-                                  offset: Offset(-5, -5),
-                                  blurRadius: 10,
-                                ),],
-                              gradient: LinearGradient(
-                                colors: [Colors.grey[200], Colors.grey[300]],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,),
-                              borderRadius: BorderRadius.circular(20.0)),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(context, new MaterialPageRoute(
-                                  builder: (context) => Corporate())
-                              );
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(
-                                child: Text('Corporate Action', style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10.0,
-                                  color: Colors.blueGrey[600],
-                                ),),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20.0),
-                  Center(
-                    child: Container(width: 300,height: 50,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              offset: Offset(5, 5),
-                              blurRadius: 10,
-                            ),
-                            BoxShadow(
-                              color: Colors.grey.shade200,
-                              offset: Offset(-5, -5),
-                              blurRadius: 10,
-                            ),],
-                          gradient: LinearGradient(
-                            colors: [Colors.red[300], Colors.red],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,),
-                          borderRadius: BorderRadius.circular(20)),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, new MaterialPageRoute(
-                              builder: (context) => LoginPage())
-                          );
+                                    isLoadingConsultation = true;
+                                  });
+                                }
+                              }
+                            );
+                          }
                         },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: Text('Log Out', style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blueGrey[600],
-                            ),),
-                          ),
-                        ),
-                      ),
+                        textColor: Colors.black54,
+                        text: "Konsultasi Saham Mbah Giso"
                     ),
                   ),
-    ],
-          ),
-          ),
-          ),
-          ],),
-      );
-  }
-}
-
-void _confirmPaymentModalBottomSheet(context) {
-  showModalBottomSheet(context: context, builder: (BuildContext payment) {
-    return Container(height: 225.0, width: double.infinity,
-        padding: EdgeInsets.all(5),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.close,
-              color: Colors.red[400],
-              size: 30.0),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            Text(
-              '   KONFIRMASI ISI SALDO',
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 15),
-            Container(
-              padding: EdgeInsets.only(left:15.0, right: 15.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'Jumlah Isi Saldo'
-                  ),
-                  Text("Rp.")
-                ],
-              ),
-            ),
-            SizedBox(height: 10.0),
-            Container(
-              padding: EdgeInsets.only(left: 15.0, right: 15.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'Biaya Admin'
-                  ),
-                  Text(
-                    'Rp.2000'
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 15.0),
-            GestureDetector(
-              onTap: (){
-                Navigator.pop(context);
-              },
-              child: Container( height: 40.0, width: double.infinity,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.green[300], Colors.green[600]],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      border: Border.all(
-                          width: 2.0,
-                          color: Colors.grey.shade500
-                      ),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Center(
-                    child: Text(
-                        'ISI SALDO SEKARANG'
+                  SizedBox(height: 8),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: RaisedButtonCustom(
+                        color: Colors.white,
+                        elevation: 2,
+                        isLoading: isLoadingLiveTrading,
+                        onPressed: () {
+                          print("LIVE");
+                          if(account?.liveTrading ?? false) {
+                            whatsappLiveTrading();
+                          } else {
+                            print("CONG");
+                            dialogConfirmation(
+                              context: context,
+                              message: int.parse(account?.balance) < account?.liveTradingPrice ? "Saldo Anda tidak mencukupi. Untuk mengakses fitur ini dikenakan potongan sebesar ${rupiah(account?.liveTradingPrice)}" : "Untuk mengakses fitur ini dikenakan potongan sebesar ${rupiah(account?.liveTradingPrice)}, apakah Anda setuju?",
+                              textCancel: "Batal",
+                              textConfirm: int.parse(account?.balance) < account?.liveTradingPrice ? "Isi Saldo" : "OK",
+                              callback: () {
+                                Navigator.pop(context);
+                                if(int.parse(account?.balance) < account?.liveTradingPrice) {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => TopupSaldoPage()
+                                  ));
+                                } else {
+                                  accountBloc.add(BuyLiveTrading());
+                                  setState(() {
+                                    isLoadingLiveTrading = true;
+                                  });
+                                }
+                              }
+                            );
+                          }
+                        },
+                        textColor: Colors.black54,
+                        text: "Live Trading"
                     ),
+                  ),
+                  SizedBox(height: 16),
+                  RaisedButtonCustomSecondary(
+                    color: Color(0xFFf05d59),
+                    onPressed: () => bloc.add(Logout()),
+                    elevation: 2,
+                    textColor: Colors.white,
+                    text: "Logout"
                   )
-              ),),],
+                ],
+              ),
+            ),
+          ],
         ),
-      );
-    });
+      ),
+    );
+  }
+
+  launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  whatsappConsultation() {
+    var desc = "Semangat pagi Mbah Giso, saya\n\n";
+    desc += "nama: ${account.name}\n";
+    desc += "username: ${account.username}\n\n";
+    desc += "Mau bertanya\n\n";
+    desc += "<PERTANYAAN_ANDA_DISINI>";
+    var url = Uri(
+      scheme: "https",
+      host: "api.whatsapp.com",
+      path: "send",
+      queryParameters: {
+        "phone": account?.consultationCp,
+        "text": desc
+      }
+    );
+    launchURL(url.toString());
+  }
+  
+  whatsappLiveTrading() {
+    var desc = "Semangat pagi Mbah Giso, saya\n\n";
+    desc += "nama: ${account.name}\n";
+    desc += "username: ${account.username}\n\n";
+    desc += "Mau Live Trading\n\n";
+    desc += "<PERTANYAAN_ANDA_DISINI>";
+    var url = Uri(
+      scheme: "https",
+      host: "api.whatsapp.com",
+      path: "send",
+      queryParameters: {
+        "phone": account?.liveTradingCp,
+        "text": desc
+      }
+    );
+    launchURL(url.toString());
+  }
 }

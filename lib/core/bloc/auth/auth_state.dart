@@ -16,7 +16,14 @@ class AuthLoading extends AuthState {}
 
 class AuthChecking extends AuthState {}
 
-class AuthAuthenticated extends AuthState {}
+class AuthAuthenticated extends AuthState {
+  final Account data;
+
+  const AuthAuthenticated({@required this.data});
+
+  @override
+  List<Object> get props => [data];
+}
 
 class AuthLoginSuccess extends AuthState {
   final Account data;

@@ -18,42 +18,36 @@ class InputLabel extends StatelessWidget {
 
 class TextFieldBox extends StatelessWidget {
   const TextFieldBox({
-    Key key, 
-    this.icon, 
-    this.isObsecure = false, 
+    Key key,
+    this.prefixIcon,
+    this.isObsecure = false,
     this.textHint,
     this.validatorText = "",
     this.inputType = TextInputType.text,
     this.controller, 
     this.validator,
-    this.backgroundColor,
-    this.borderColor,
-    this.iconColor,
-    this.textColor,
-    this.inputFormatters,
-    this.fontSize,
     this.inputAction,
+    this.fontWeight,
     this.onFieldSubmitted,
-    this.focusNode,
     this.enable = true,
+    this.autofocus = false,
+    this.focusNode,
+    this.onChanged,
   }) : super(key: key);
 
   final TextEditingController controller;
   final String textHint, validatorText;
-  final IconData icon;
+  final IconData prefixIcon;
   final bool isObsecure;
   final bool enable;
-  final TextInputType inputType;
-  final FormFieldValidator<String> validator;
-  final Color backgroundColor;
-  final Color borderColor;
-  final Color iconColor;
-  final Color textColor;
-  final int fontSize;
-  final List<TextInputFormatter> inputFormatters;
+  final bool autofocus;
+  final FontWeight fontWeight;
   final FocusNode focusNode;
+  final TextInputType inputType;
   final TextInputAction inputAction;
+  final FormFieldValidator<String> validator;
   final Function(String) onFieldSubmitted;
+  final Function(String) onChanged;
   
   @override
   Widget build(BuildContext context) {
@@ -61,41 +55,48 @@ class TextFieldBox extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
-          padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
-          decoration: BoxDecoration(
-            border: Border.all(color: borderColor ?? Colors.grey[300]),
-            color: backgroundColor ?? Colors.grey[100],
-            borderRadius: BorderRadius.circular(4)
-          ),
-          child: TextFormField(
-            controller: controller,
-            focusNode: focusNode,
-            textInputAction: inputAction,
-            onFieldSubmitted: onFieldSubmitted,
-            inputFormatters: inputFormatters,
-            cursorColor: textColor ?? Colors.black87,
-            enabled: enable,
-            style: TextStyle(
-              color: enable ? (textColor ?? Colors.black87) : Colors.grey, 
-              fontSize: fontSize ?? 16,
-              fontWeight: FontWeight.w600
-            ),
-            obscureText: isObsecure,
-            keyboardType: inputType,
-            validator: validator,
-            decoration: InputDecoration(
-              icon: icon != null ? Icon(icon, color: iconColor ?? Colors.black12) : null,
-              hintText: textHint,
-              border: InputBorder.none,
-              hintStyle: TextStyle(color: textColor != null ? textColor.withOpacity(0.5) : Colors.black38, fontSize: fontSize ?? 14),
-              contentPadding: icon != null ? EdgeInsets.all(0) : EdgeInsets.symmetric(horizontal: 8, vertical: 0)
+          height: 50,
+          color: Colors.transparent,
+          child: Padding(
+            padding: const EdgeInsets.all(0),
+            child: TextFormField(
+              controller: controller,
+              focusNode: focusNode,
+              textInputAction: inputAction,
+              onFieldSubmitted: onFieldSubmitted,
+              onChanged: onChanged,
+              keyboardType: inputType,
+              cursorColor: Colors.black54,
+              enabled: enable,
+              autofocus: autofocus,
+              style: TextStyle(color: enable ? Colors.black87 : Colors.grey, fontWeight: fontWeight ?? FontWeight.w500, fontSize: 14.0),
+              obscureText: isObsecure,
+              validator: validator,
+              decoration: InputDecoration(
+                fillColor: Colors.grey.shade200,
+                filled: true,
+                prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: Colors.black87, size: 20) : null,
+                hintText: textHint,
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                hintStyle: TextStyle(color: Colors.black38),
+                contentPadding: EdgeInsets.all(0)
+              ),
             ),
           ),
         ),
         validatorText != null && validatorText != "" ? Container(
-          padding: EdgeInsets.only(top: 4, left: 4, right: 4),
-          child: Text(validatorText, style: TextStyle(color: Colors.red, fontSize: 12)),
-        ) : Container()
+          padding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+          width: MediaQuery.of(context).size.width,
+          color: Colors.grey[100],
+          child: Text(
+            validatorText,
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: 12
+            ),
+          )
+        ) : Container(),
+        Divider()
       ],
     );
   }
@@ -177,6 +178,7 @@ class TextFieldBorderBottom extends StatelessWidget {
   const TextFieldBorderBottom({
     Key key,
     this.icon,
+    this.maxLength,
     this.isObsecure = false,
     this.textHint,
     this.validatorText = "",
@@ -190,11 +192,13 @@ class TextFieldBorderBottom extends StatelessWidget {
     this.autofocus = false,
     this.focusNode,
     this.onChanged,
+    this.inputFormatters
   }) : super(key: key);
 
   final TextEditingController controller;
   final String textHint, validatorText;
   final IconData icon;
+  final int maxLength;
   final bool isObsecure;
   final bool enable;
   final bool autofocus;
@@ -205,9 +209,15 @@ class TextFieldBorderBottom extends StatelessWidget {
   final FormFieldValidator<String> validator;
   final Function(String) onFieldSubmitted;
   final Function(String) onChanged;
+  final List<TextInputFormatter> inputFormatters;
   
   @override
   Widget build(BuildContext context) {
+    List<TextInputFormatter> formaters = [];
+    formaters.add(LengthLimitingTextInputFormatter(maxLength));
+    if(inputFormatters != null) {
+      formaters.addAll(inputFormatters);
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -217,6 +227,7 @@ class TextFieldBorderBottom extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(0),
             child: TextFormField(
+              inputFormatters: formaters,
               controller: controller,
               focusNode: focusNode,
               textInputAction: inputAction,
@@ -230,7 +241,7 @@ class TextFieldBorderBottom extends StatelessWidget {
               obscureText: isObsecure,
               validator: validator,
               decoration: InputDecoration(
-                icon: icon != null ? Icon(icon, color: Colors.black87, size: 20) : null,
+                icon: icon != null ? Icon(icon, color: Colors.black54, size: 18) : null,
                 hintText: textHint,
                 border: InputBorder.none,
                 hintStyle: TextStyle(color: Colors.black38),

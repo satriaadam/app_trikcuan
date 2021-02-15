@@ -1,132 +1,113 @@
 import 'package:flutter/material.dart';
-import 'package:trikcuan_app/pages/rekomendasi.dart';
-import 'package:tuple/tuple.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:toast/toast.dart';
+import 'package:trikcuan_app/core/bloc/recomendation/recomendation_bloc.dart';
+import 'package:trikcuan_app/core/bloc/recomendation/recomendation_event.dart';
+import 'package:trikcuan_app/core/bloc/recomendation/recomendation_state.dart';
+import 'package:trikcuan_app/core/model/recomendation_model.dart';
+import 'package:trikcuan_app/core/model/recomendation_price_model.dart';
+import 'package:trikcuan_app/pages/recomendation_detail.dart';
+import 'package:trikcuan_app/widget/box.dart';
+import 'package:trikcuan_app/widget/text.dart';
 
-class Investing extends StatelessWidget {
+class Investing extends StatefulWidget {
   const Investing({Key key}) : super(key: key);
 
-  static const List<Tuple3> investingpage = [
-    const Tuple3<String, String, String>(
-      'BRIS',
-      'PT. Bank Rakyat Indonesia Syariah (Tbk.)',
-      'Nilai',
-    ),
-    const Tuple3<String, String, String>(
-      'Nama Emiten',
-      'Nama Perusahaan',
-      'Nilai',
-    ),
-    const Tuple3<String, String, String>(
-      'Nama Emiten',
-      'Nama Perusahaan',
-      'Nilai',
-    ),
-    const Tuple3<String, String, String>(
-      'Nama Emiten',
-      'Nama Perusahaan',
-      'Nilai',
-    ),
-    const Tuple3<String, String, String>(
-      'Nama Emiten',
-      'Nama Perusahaan',
-      'Nilai',
-    ),
-    const Tuple3<String, String, String>(
-      'Nama Emiten',
-      'Nama Perusahaan',
-      'Nilai',
-    ),
-  ];
+  @override
+  _InvestingState createState() => _InvestingState();
+}
+
+class _InvestingState extends State<Investing> {
+
+  List<RecomendationModel> data = <RecomendationModel>[];
+  final bloc = RecomendationBloc();
+  bool isLoading = true;
+  bool showRecomendation = true;
+  RecomendationPriceModel price;
+  final RefreshController refreshController = RefreshController();
+  
+  @override
+  void initState() {
+    bloc.add(LoadRecomendation(type: "invest"));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: investingpage.map((investingpage) => _buildListItem(context, investingpage)).toList(),
+    return MultiBlocListener(
+      listeners: [
+        BlocListener(
+          cubit: bloc,
+          listener: (context, state) {
+            if(state is RecomendationTradingLoaded) {
+              setState(() {
+                refreshController.refreshCompleted();
+                isLoading = false;
+                data = state.data;
+              });
+            } else if(state is RecomendationFailure) {
+              Toast.show(state.error, context);
+              setState(() {
+                isLoading = false;
+                refreshController.refreshCompleted();
+              });
+            }
+          }
+        )
+      ],
+      child: SmartRefresher(
+        controller: refreshController,
+        onRefresh: () => onRefresh(),
+        child: ListView.separated(
+          separatorBuilder: (context, index) => Divider(),
+          itemCount: isLoading ? 3 : data.length,
+          itemBuilder: (context, index) {
+            return isLoading ? shimmerData(context) : Box(
+              onPressed: () => Navigator.push(context, MaterialPageRoute(
+                builder: (context) => RecomendationDetailpage(
+                  recomendation: data[index],
+                  type: "trading",
+                )
+              )),
+              padding: 16,
+              color: Colors.white,
+              child: TextCustom(
+                data[index].kodeSaham,
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+              ),
+            );
+          }, 
+        ),
+      )
     );
   }
-}
 
-Widget _buildListItem(BuildContext context, Tuple3 investingpage) {
-  return GestureDetector(
-    onTap: () {
-      Navigator.push(context, MaterialPageRoute(
-        builder: (investingpage) => Rekomendasi(),
-      ));
-    },
-    child: Container(
-      padding: const EdgeInsets.all(5.0),
-      child: Material(
-      color: Colors.white,
-      elevation: 14.0,
-      borderRadius: BorderRadius.circular(10.0),
-      shadowColor: Color(0x802196F3),
-        child: Padding(
-        padding: EdgeInsets.all(15.0),
-          child: myCurrencies(
-            investingpage
-          //   currencyVal,
-          //   currencyPercentage,
-          //   currencyStatus,
-          //   colorVal
+  Shimmer shimmerData(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300],
+      highlightColor: Colors.grey[100],
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Box(
+              width: MediaQuery.of(context).size.width,
+              height: 8,
+              borderRadius: 8
+            ),
+          ],
         ),
       ),
-    ),
-    ),
-  );
-}
+    );
+  }
 
-Widget myCurrencies(Tuple3 investingpage) {
-  return Column(
-    children: <Widget>[
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          myLeadingDetails(investingpage),
-          myCurrenciesDetails(investingpage),
-        ],)
-    ],);
-}
-
-
-Widget myLeadingDetails(Tuple3 investingpage) {
-  return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            child: Text(
-              investingpage.item1, style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0
-            ),
-              textAlign: TextAlign.left,  ),),
-          Container(
-            child: Text(
-              investingpage.item2, style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.bold,
-                fontSize: 10.0
-            ),
-              textAlign: TextAlign.left,  ),),
-        ],)
-  );
-}
-
-
-Widget myCurrenciesDetails(Tuple3 investingpage) {
-  return Container(child: Column(
-    children: <Widget>[
-      Container(child: Text(
-          'Potensi = ' + investingpage.item3 ,
-          style: TextStyle(
-              color: Colors.black,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w800,
-              fontSize: 20.0
-          ),
-      ),),
-      ],),);
+  onRefresh() {
+    bloc.add(LoadRecomendation(type: "trading"));
+    setState(() {
+      isLoading = true;
+    });
+  }
 }

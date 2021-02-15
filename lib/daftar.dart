@@ -24,14 +24,13 @@ class _DaftarState extends State<Daftar> {
   final emailController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final passwordController = TextEditingController();
-  final cityController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return BlocListener(
       cubit: bloc,
       listener: (context, state) {
-        if(state is AuthLoginSuccess) {
+        if(state is RegisterSuccess) {
           Navigator.pop(context);
           Navigator.pop(context);
           Navigator.push(context, MaterialPageRoute(
@@ -48,6 +47,7 @@ class _DaftarState extends State<Daftar> {
         }
       },
       child: Scaffold(
+        backgroundColor: Colors.grey.shade100,
         resizeToAvoidBottomPadding: false,
         body: ListView(
           padding: EdgeInsets.only(bottom: 80),
@@ -56,57 +56,54 @@ class _DaftarState extends State<Daftar> {
               child: Stack(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
-                    child: Text(
-                      'Daftar',
-                      style:
-                      TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
-                    ),
+                    padding: EdgeInsets.fromLTRB(20.0, 100.0, 0.0, 10.0),
+                  //  child: Text(
+                  //    'Registrasi',
+                  //    style: TextStyle(
+                  //        fontFamily: 'Poppins',
+                  //        fontSize: 30.0,
+                  //        color: Colors.grey.shade700,
+                  //    ),
+                  //  ),
                   ),
                 ]
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
+              padding: EdgeInsets.only(top: 15.0, left: 20.0, right: 20.0),
               child: Column(
                 children: <Widget>[
-                  TextFieldBorderBottom(
+                  TextFieldBox(
                     controller: nameController,
-                    textHint: "NAMA",
-                    icon: Icons.person,
+                    textHint: "Nama",
+                    prefixIcon: Icons.person,
                   ),
-                  SizedBox(height: 20.0),
-                  TextFieldBorderBottom(
+                  SizedBox(height: 15.0),
+                  TextFieldBox(
                     controller: usernameController,
-                    textHint: "USERNAME",
-                    icon: Icons.account_circle,
+                    textHint: "Username",
+                    prefixIcon: Icons.account_circle,
                   ),
-                  SizedBox(height: 20.0),
-                  TextFieldBorderBottom(
+                  SizedBox(height: 15.0),
+                  TextFieldBox(
                     controller: emailController,
-                    textHint: "EMAIL",
+                    textHint: "Email",
                     inputType: TextInputType.emailAddress,
-                    icon: Icons.phone,
+                    prefixIcon: Icons.mail,
                   ),
-                  SizedBox(height: 20.0),
-                  TextFieldBorderBottom(
+                  SizedBox(height: 15.0),
+                  TextFieldBox(
                     controller: phoneNumberController,
                     inputType: TextInputType.phone,
-                    textHint: "NO HP",
-                    icon: Icons.phone,
+                    textHint: "No Hp",
+                    prefixIcon: Icons.phone,
                   ),
                   SizedBox(height: 20.0),
-                  TextFieldBorderBottom(
-                    controller: cityController,
-                    textHint: "KOTA",
-                    icon: Icons.location_city,
-                  ),
-                  SizedBox(height: 20.0),
-                  TextFieldBorderBottom(
+                  TextFieldBox(
                     controller: passwordController,
-                    textHint: "PASSWORD",
+                    textHint: "Password",
                     isObsecure: true,
-                    icon: Icons.lock,
+                    prefixIcon: Icons.lock,
                   ),
                   SizedBox(height: 50.0),
                   Container(
@@ -116,16 +113,18 @@ class _DaftarState extends State<Daftar> {
                       isLoading: isLoading,
                       radius: 50,
                       padding: 16,
+                      fontSize: 14,
                       onPressed: () => !isLoading ? register() : null,
                     ),
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 10.0),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     child: OutlineButtonPrimary(
                       radius: 50,
                       padding: 16,
                       text: "KEMBALI",
+                      fontSize: 14,
                       onPressed: () => Navigator.pop(context),
                     ),
                   ),
@@ -139,16 +138,29 @@ class _DaftarState extends State<Daftar> {
   }
 
   register() {
-    print("REGISTER");
-    final data = RegisterAccount();
-    data.username = usernameController.text;
-    data.name = nameController.text;
-    data.phoneNumber = phoneNumberController.text;
-    data.password = passwordController.text;
-    data.city = cityController.text;
-    bloc.add(Register(data: data));
-    setState(() {
-      isLoading = true;
-    });
+    if(nameController.text == null || nameController.text == "")
+      Toast.show("Nama harus diisi", context);
+    else if(usernameController.text == null || usernameController.text == "")
+      Toast.show("Username harus diisi", context);
+    else if(emailController.text == null || emailController.text == "")
+      Toast.show("Email harus diisi", context);
+    else if(phoneNumberController.text == null || phoneNumberController.text == "")
+      Toast.show("Nomor HP harus diisi", context);
+    else if(passwordController.text == null || passwordController.text == "")
+      Toast.show("Password harus diisi", context);
+    else if(passwordController.text.length < 6)
+      Toast.show("Password minimal 6 karakter", context);
+    else {
+      final data = RegisterAccount();
+      data.name = nameController.text;
+      data.username = usernameController.text;
+      data.email = emailController.text;
+      data.phoneNumber = phoneNumberController.text;
+      data.password = passwordController.text;
+      bloc.add(Register(data: data));
+      setState(() {
+        isLoading = true;
+      });
+    }
   }
 }

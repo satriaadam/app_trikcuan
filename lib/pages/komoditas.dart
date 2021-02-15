@@ -1,167 +1,176 @@
 import 'package:flutter/material.dart';
-import 'package:tuple/tuple.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:toast/toast.dart';
+import 'package:trikcuan_app/core/bloc/account/account_bloc.dart';
+import 'package:trikcuan_app/core/bloc/account/account_event.dart';
+import 'package:trikcuan_app/core/bloc/account/account_state.dart';
+import 'package:trikcuan_app/core/bloc/market/market_bloc.dart';
+import 'package:trikcuan_app/core/bloc/market/market_event.dart';
+import 'package:trikcuan_app/core/bloc/market/market_state.dart';
+import 'package:trikcuan_app/core/model/account_model.dart';
+import 'package:trikcuan_app/core/model/market_model.dart';
+import 'package:trikcuan_app/core/model/market_price_model.dart';
+import 'package:trikcuan_app/widget/box.dart';
+import 'package:trikcuan_app/widget/text.dart';
 
-class Komoditas extends StatelessWidget {
+class Komoditas extends StatefulWidget {
   const Komoditas({Key key}) : super(key: key);
 
-  static const List<Tuple5> komoditaspage = [
-    const Tuple5<String, String, String, String, String>(
-      'OIL',
-      'Crude Oil',
-      '43.34',
-      '-0.01',
-      '(-0.02%)',
-    ),
-    const Tuple5<String, String, String, String, String>(
-      'BRENT',
-      'Brent Oil',
-      '46.40',
-      '+0.11',
-      '(+0.24%)',
-    ),
-    const Tuple5<String, String, String, String, String>(
-      'CPO',
-      'Palm Oil',
-      '2,770.00',
-      '-28.00',
-      '(+1.00%)',
+  @override
+  _KomoditasState createState() => _KomoditasState();
+}
 
-    ),
-    const Tuple5<String, String, String, String, String>(
-      'GAS',
-      'Natural Gas',
-      '2.58',
-      '+0.01',
-      '(+0.23%)',
-    ),
-    const Tuple5<String, String, String, String, String>(
-        'XAU',
-        'Gold',
-        '1,931.85',
-        '-8.75',
-        '(+0.45%)'
-    ),
-    const Tuple5<String, String, String, String, String>(
-      'SILVER',
-      'Silver',
-      '26.45',
-      '+0.18',
-      '(+0.67%)',
-    ),
-    const Tuple5<String, String, String, String, String>(
-      'NICKEL',
-      'Nickel',
-      '15,055.00',
-      '+57.50',
-      '(+0.38%)',
-    ),
-    const Tuple5<String, String, String, String, String>(
-      'COPPER',
-      'Copper',
-      '6,545.25',
-      '+9.75',
-      '(+0.15%)',
-    ),
-    const Tuple5<String, String, String, String, String>(
-      'TIN',
-      'Tin',
-      '17,457.50',
-      '-57.50',
-      '(+0.33%)',
-    ),
-  ];
+class _KomoditasState extends State<Komoditas> {
+
+  List<MarketModel> data = <MarketModel>[];
+  final bloc = MarketBloc();
+  bool isLoading = true;
+  bool showMarket = true;
+  MarketPriceModel price;
+  final RefreshController refreshController = RefreshController();
+  
+  final accountBloc = AccountBloc();
+  Account account;
+
+  @override
+  void initState() {
+    bloc.add(LoadMarket(type: "komoditas"));
+    accountBloc.add(GetAccount());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: komoditaspage.map((komoditaspage) => _buildListItem(komoditaspage)).toList(),
+    return MultiBlocListener(
+      listeners: [
+        BlocListener(
+          cubit: bloc,
+          listener: (context, state) {
+            if(state is MarketLoaded) {
+              setState(() {
+                refreshController.refreshCompleted();
+                isLoading = false;
+                data = state.data;
+              });
+            } else if(state is MarketFailure) {
+              Toast.show(state.error, context);
+              setState(() {
+                isLoading = false;
+                refreshController.refreshCompleted();
+              });
+            }
+          }
+        ),
+        BlocListener(
+          cubit: accountBloc,
+          listener: (context, state) {
+            if(state is AccountSuccess) {
+              setState(() {
+                account = state.data;
+              });
+            }
+          }
+        ),
+      ],
+      child: SmartRefresher(
+        controller: refreshController,
+        onRefresh: () => onRefresh(),
+        child: ListView(
+          children: [
+            ListView.separated(
+              shrinkWrap: true,
+              physics: ClampingScrollPhysics(),
+              separatorBuilder: (context, index) => Divider(color: Colors.grey.shade300,),
+              itemCount: isLoading ? 3 : data.length,
+              itemBuilder: (context, index) {
+                return isLoading ? shimmerData(context) : Box(
+                  padding: 8,
+                  color: Colors.white,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextCustom(
+                              data[index].code,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                            ),
+                            TextCustom(
+                              data[index].description,
+                              maxLines: 3,
+                              fontSize: 12,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 16),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          TextCustom(
+                            data[index].price.toStringAsFixed(2),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: data[index].priceChange > 0 ? Colors.green : Colors.red,
+                          ),
+                          TextCustom(
+                            "${data[index].priceChange.toStringAsFixed(2)} (${data[index].percentageChange.toStringAsFixed(2)}%)",
+                            color: data[index].priceChange > 0 ? Colors.green : Colors.red,
+                            fontSize: 12,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 16),
+            account?.catatanKomoditas != null ? Box(
+              padding: 8,
+              child: ListView(
+                shrinkWrap: true,
+                physics: ClampingScrollPhysics(),
+                children: [
+                  SubtitleText("Catatan"),
+                  Text(account?.catatanKomoditas)
+                ],
+              )
+            ) : Container()
+          ],
+        ),
+      )
     );
   }
-}
 
-Widget _buildListItem(Tuple5 komoditaspage) {
-  return Padding(
-    padding: const EdgeInsets.all(5.0),
-    child: Material(
-      color: Colors.white,
-      elevation: 14.0,
-      borderRadius: BorderRadius.circular(10.0),
-      shadowColor: Color(0x802196F3),
+  Shimmer shimmerData(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300],
+      highlightColor: Colors.grey[100],
       child: Padding(
-        padding: EdgeInsets.all(15.0),
-        child: myCurrencies(
-            komoditaspage
-          //   currencyVal,
-          //   currencyPercentage,
-          //   currencyStatus,
-          //   colorVal
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Box(
+                width: MediaQuery.of(context).size.width,
+                height: 8,
+                borderRadius: 8
+            ),
+          ],
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget myCurrencies(Tuple5 komoditaspage) {
-  return Column(
-    children: <Widget>[
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          myLeadingDetails(komoditaspage),
-          myCurrenciesDetails(komoditaspage),
-        ],)
-    ],);
-}
-
-
-Widget myLeadingDetails(Tuple5 komoditaspage) {
-  return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            child: Text(
-              komoditaspage.item1, style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0
-            ),
-              textAlign: TextAlign.left,  ),),
-          Container(
-            child: Text(
-              komoditaspage.item2, style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.bold,
-                fontSize: 10.0
-            ),
-              textAlign: TextAlign.left,  ),),
-        ],)
-  );
-}
-
-
-Widget myCurrenciesDetails(Tuple5 komoditaspage) {
-  return Container(child: Column(
-    children: <Widget>[
-      Container(child: Text(
-          komoditaspage.item3,
-          style: TextStyle(
-              color: Colors.green,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w800,
-              fontSize: 20.0
-          )
-      ),),
-      Container(child: Text(
-          komoditaspage.item4 + komoditaspage.item5,
-          style: TextStyle(
-            fontFamily: 'Poppins',
-            fontSize: 10.0,
-            fontWeight: FontWeight.bold,
-          )
-      ),),
-    ],
-  ));
+  onRefresh() {
+    bloc.add(LoadMarket(type: "komoditas"));
+    setState(() {
+      isLoading = true;
+    });
+  }
 }

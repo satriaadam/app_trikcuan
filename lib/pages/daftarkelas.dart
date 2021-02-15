@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:trikcuan_app/pages/home_page.dart';
 
 class DaftarKelas extends StatefulWidget {
   @override
@@ -15,13 +14,13 @@ class _DaftarKelasState extends State<DaftarKelas> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.blueGrey[600],),
           onPressed: () {
-            Navigator.push(context, new MaterialPageRoute(
-                builder: (context) => HomePage())
-            );},
+            Navigator.pop(context);
+          },
         ),
         title: Text('Daftar Kelas', style: TextStyle(
           color: Colors.blueGrey[600],
         ),),
+        centerTitle: true,
         elevation: 0.0,
         backgroundColor: Colors.transparent,
       ),

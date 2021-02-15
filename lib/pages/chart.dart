@@ -20,24 +20,39 @@ class _ChartState extends State<Chart> {
 
   @override
   Widget build(BuildContext context) {
+    TabBar myTabBar = TabBar(
+      indicatorColor: Color(0xFF009eec),
+      indicatorWeight: 3.0,
+      labelColor: Colors.white,
+      tabs: _pages
+          .map<Tab>((Tuple2 page) => Tab(text: page.item1))
+          .toList(),
+    );
+    
     return DefaultTabController(
       length: _pages.length,
       child: Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-        icon: Icon(Icons.menu, color: Colors.blueGrey[600],),
-        onPressed: () {},
+        shadowColor: Colors.grey,
+        backgroundColor: Color(0xFF009eeb),
+        centerTitle: true,
+        bottomOpacity: 0.8,
+        leading: Icon(Icons.arrow_back_ios, color: Color(0xFF009eeb)),
+        title: Text('MARKET', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+        bottom:
+        PreferredSize(
+          preferredSize: Size.fromHeight(myTabBar.preferredSize.height),
+          child: Container(color: Color(0xFF48d25f), child: myTabBar)),
         ),
-        backgroundColor: Colors.limeAccent,
-        title: Text('MARKET', style: TextStyle(color: Colors.blueGrey[600], fontWeight: FontWeight.bold),),
-        bottom: TabBar(
-          indicatorColor: Colors.blueGrey[600],
-          labelColor: Colors.blueGrey[600],
-          tabs: _pages
-              .map<Tab>((Tuple2 page) => Tab(text: page.item1))
-              .toList(),
-        ),
-      ),
+       // TabBar(
+       //   indicatorColor: Colors.redAccent,
+       //   indicatorWeight: 3.0,
+       //   labelColor: Colors.black54,
+       //   tabs: _pages
+       //       .map<Tab>((Tuple2 page) => Tab(text: page.item1))
+       //       .toList(),
+       // ),
+     // ),
         body: TabBarView(
           children: _pages.map<Widget>((Tuple2 page) => page.item2).toList(),
         ),

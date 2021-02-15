@@ -18,27 +18,31 @@ class _RekomendasiState extends State<Rekomendasi> {
     Tuple2('INVESTING', Investing()),
   ];
 
-
-
   @override
   Widget build(BuildContext context) {
+    TabBar myTabBar = TabBar(
+      indicatorColor: Color(0xFF009eec),
+      indicatorWeight: 3.0,
+      unselectedLabelColor: Color(0xFFFEFFFE),
+      tabs: _pages
+          .map<Tab>((Tuple2 page) => Tab(text: page.item1))
+          .toList(),
+    );
+
     return DefaultTabController(
       length: _pages.length,
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.menu, color: Colors.blueGrey[600],),
-          onPressed: () {},
-          ),
-          backgroundColor: Colors.limeAccent,
-          title: Text('REKOMENDASI', style: TextStyle(color: Colors.blueGrey[600], fontWeight: FontWeight.bold),),
-          bottom: TabBar(
-            labelColor: Colors.blueGrey[600],
-            indicatorColor: Colors.blueGrey[600],
-            tabs: _pages
-                .map<Tab>((Tuple2 page) => Tab(text: page.item1))
-                .toList(),
-          ),
+          elevation: 0,
+          centerTitle: true,
+          bottomOpacity: 0.8,
+          backgroundColor: Color(0xFF009eeb),
+            leading: Icon(Icons.arrow_back_ios, color: Color(0xFF009eeb)),
+          title: Text('REKOMENDASI', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(myTabBar.preferredSize.height),
+            child: Container(color: Color(0xFF48d25f), child: myTabBar,)
+          )
         ),
         body: TabBarView(
           children: _pages.map<Widget>((Tuple2 page) => page.item2).toList(),

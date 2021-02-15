@@ -1,8 +1,7 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:trikcuan_app/pages/berita.dart';
 import 'package:trikcuan_app/pages/chart.dart';
-import 'package:trikcuan_app/pages/dividen.dart';
+import 'package:trikcuan_app/pages/lq45.dart';
 import 'package:trikcuan_app/pages/profil.dart';
 import 'package:trikcuan_app/pages/rekomendasi.dart';
 
@@ -18,25 +17,53 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: [
         Chart(),
-        Dividen(),
+        LQ45Page(),
         Rekomendasi(),
-        Berita(),
+        NewsPage(),
         Profil(),
       ].elementAt(_selectedIndex),
-      bottomNavigationBar: CurvedNavigationBar(
-        index: _selectedIndex,
-        items: <Widget>[
-          Icon(Icons.timeline, size: 35.0, color: Colors.blueGrey[600]),
-          Icon(Icons.equalizer, size: 35.0, color: Colors.blueGrey[600]),
-          Icon(Icons.blur_on, size: 45.0, color: Colors.blueGrey[600]),
-          Icon(Icons.library_books, size: 35.0, color: Colors.blueGrey[600]),
-          Icon(Icons.person, size: 35.0, color: Colors.blueGrey[600]),
+      bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Colors.black54,
+        type: BottomNavigationBarType.fixed,
+        elevation: 5.0,
+        showUnselectedLabels: true,
+        selectedItemColor: Color(0xFF009eeb),
+        iconSize: 30.0,
+        backgroundColor: Colors.white,
+        selectedFontSize: 12.0,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.timeline),
+            title: Text('Market', style:TextStyle(
+              fontSize: 10.0
+            )),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.equalizer),
+            title: Text('Saham LQ 45', style: TextStyle(
+              fontSize: 10.0
+            )),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.blur_on),
+            title: Text('Rekomendasi', style: TextStyle(
+              fontSize: 10.0
+            )),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.library_books),
+            title: Text('Berita', style: TextStyle(
+              fontSize: 10.0
+            )),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            title: Text('Profil', style: TextStyle(
+              fontSize: 10.0
+            )),
+          ),
         ],
-        color: Colors.limeAccent,
-        buttonBackgroundColor: Colors.limeAccent,
-        backgroundColor: Colors.transparent,
-        animationCurve: Curves.easeInOut,
-        animationDuration: Duration(milliseconds: 300),
+        currentIndex: _selectedIndex,
         onTap: _OnBarItemTap,
           ),
       );

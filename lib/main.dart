@@ -4,10 +4,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_bloc.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_event.dart';
 import 'package:trikcuan_app/core/bloc/auth/auth_state.dart';
+import 'package:trikcuan_app/login_page.dart';
 import 'package:trikcuan_app/onboarding_screen.dart';
+import 'package:trikcuan_app/pages/admin/admin_page.dart';
 import 'package:trikcuan_app/pages/home_page.dart';
 import 'package:trikcuan_app/utilities/bloc_delegate.dart';
-import 'login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +22,29 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        appBarTheme: AppBarTheme(
+          color: Color(0xFF009eeb),
+          elevation: 1,
+          textTheme: TextTheme(
+            headline6: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w700
+            )
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.white
+          )
+        ),
+        dividerTheme: DividerThemeData(
+          color: Colors.grey[300],
+          thickness: 1,
+          space: 0,
+          indent: 0
+        )
+      ),
       routes: {
         'onboarding_screen':(context)=> OnboardingScreen(),
         'login_screen':(context)=> LoginPage()
@@ -61,7 +85,7 @@ class _SplashScreenState extends State<SplashScreen> {
           else if(state is AuthAuthenticated) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => state.data.roleId == "2" ? HomePage() : AdminPage()),
             );
           } 
         },
